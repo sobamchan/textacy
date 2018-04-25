@@ -4920,53 +4920,103 @@ not already present in order to write <code class="docutils literal notranslate"
 </div>
 <span class="target" id="module-textacy.io.spacy"></span><div class="section" id="id7">
 <h3>spaCy<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p>Functions for reading from and writing to disk spacy documents in pickle format.</p>
+<p>Functions for reading from and writing to disk spacy documents in either
+pickle or binary format. Be warned: Both formats have pros and cons.</p>
 <dl class="function">
 <dt id="textacy.io.spacy.read_spacy_docs">
-<code class="descclassname">textacy.io.spacy.</code><code class="descname">read_spacy_docs</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/io/spacy.html#read_spacy_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.io.spacy.read_spacy_docs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the contents of a pickle file at <code class="docutils literal notranslate"><span class="pre">fname</span></code>, all at once but then
-streaming docs one at a time.</p>
+<code class="descclassname">textacy.io.spacy.</code><code class="descname">read_spacy_docs</code><span class="sig-paren">(</span><em>fname</em>, <em>format='pickle'</em>, <em>lang=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/io/spacy.html#read_spacy_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.io.spacy.read_spacy_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the contents of a file at <code class="docutils literal notranslate"><span class="pre">fname</span></code>, written either in pickle or binary
+format.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to file on disk from which data will be read.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to file on disk from which data will be read.</li>
+<li><strong>format</strong> (<em>{&quot;pickle&quot;</em><em>, </em><em>&quot;binary&quot;}</em>) – <p>Format of the data that was written to disk.
+If ‘pickle’, use <code class="docutils literal notranslate"><span class="pre">pickle</span></code> in python’s stdlib; if ‘binary’, use
+the 3rd-party <code class="docutils literal notranslate"><span class="pre">msgpack</span></code> library.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Docs written in pickle format were saved all together
+as a list, which means they’re all loaded into memory at once
+before streaming one by one. Mind your RAM usage, especially when
+reading many docs!</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When writing docs in binary format, spaCy’s built-in
+<code class="docutils literal notranslate"><span class="pre">spacy.Doc.to_bytes()</span></code> method is used, but when reading the data
+back in <a class="reference internal" href="#textacy.io.spacy.read_spacy_docs" title="textacy.io.spacy.read_spacy_docs"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_spacy_docs()</span></code></a>, experimental and <em>unofficial</em>
+work-arounds are used to allow for all the docs in <code class="docutils literal notranslate"><span class="pre">data</span></code> to be
+read from the same file. If spaCy changes, this code could break,
+so use this functionality at your own risk!</p>
+</div>
+</li>
+<li><strong>lang</strong> (str or <code class="docutils literal notranslate"><span class="pre">spacy.Language</span></code>) – Already-instantiated <code class="docutils literal notranslate"><span class="pre">spacy.Language</span></code>
+object, or the string name by which it can be loaded, used to process
+the docs written to disk at <code class="docutils literal notranslate"><span class="pre">fname</span></code>. Note that this is only applicable
+when <code class="docutils literal notranslate"><span class="pre">format=&quot;binary&quot;</span></code>.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> – Next deserialized document.</td>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> – Next deserialized document.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if format is not “pickle” or “binary”, or if <code class="docutils literal notranslate"><span class="pre">lang</span></code> is not
+provided when <code class="docutils literal notranslate"><span class="pre">format=&quot;binary&quot;</span></code></p>
+</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The docs are pickled together, as a list, so they are all loaded into
-memory when reading from disk. Mind your RAM usage!</p>
-</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="textacy.io.spacy.write_spacy_docs">
-<code class="descclassname">textacy.io.spacy.</code><code class="descname">write_spacy_docs</code><span class="sig-paren">(</span><em>data</em>, <em>fname</em>, <em>make_dirs=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/io/spacy.html#write_spacy_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.io.spacy.write_spacy_docs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write one or more <code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> s to disk at <code class="docutils literal notranslate"><span class="pre">fname</span></code>, using pickle.</p>
+<code class="descclassname">textacy.io.spacy.</code><code class="descname">write_spacy_docs</code><span class="sig-paren">(</span><em>data</em>, <em>fname</em>, <em>make_dirs=False</em>, <em>format='pickle'</em>, <em>include_tensor=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/io/spacy.html#write_spacy_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.io.spacy.write_spacy_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write one or more <code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> s to disk at <code class="docutils literal notranslate"><span class="pre">fname</span></code> in either pickle or
+binary format.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> or Iterable[<code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code>]) – A single <code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code>
 or a sequence of <code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> s to write to disk.</li>
 <li><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to file on disk to which data will be written.</li>
 <li><strong>make_dirs</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True, automatically create (sub)directories if
 not already present in order to write <code class="docutils literal notranslate"><span class="pre">fname</span></code>.</li>
+<li><strong>format</strong> (<em>{&quot;pickle&quot;</em><em>, </em><em>&quot;binary&quot;}</em>) – <p>Format of the data written to disk.
+If “pickle”, use python’s stdlib <code class="docutils literal notranslate"><span class="pre">pickle</span></code>; if “binary”, use
+the 3rd-party <code class="docutils literal notranslate"><span class="pre">msgpack</span></code> library.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When writing docs in pickle format, all the docs in <code class="docutils literal notranslate"><span class="pre">data</span></code>
+must be saved as a list, which means they’re all loaded into memory.
+Mind your RAM usage, especially when writing many docs!</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When writing docs in binary format, spaCy’s built-in
+<code class="docutils literal notranslate"><span class="pre">spacy.Doc.to_bytes()</span></code> method is used, but when reading the data
+back in <a class="reference internal" href="#textacy.io.spacy.read_spacy_docs" title="textacy.io.spacy.read_spacy_docs"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_spacy_docs()</span></code></a>, experimental and <em>unofficial</em>
+work-arounds are used to allow for all the docs in <code class="docutils literal notranslate"><span class="pre">data</span></code> to be
+read from the same file. If spaCy changes, this code could break,
+so use this functionality at your own risk!</p>
+</div>
+</li>
+<li><strong>include_tensor</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If False, <code class="docutils literal notranslate"><span class="pre">spacy.Doc</span></code> tensors are not written
+to disk; otherwise, they are. Note that this is only applicable when
+<code class="docutils literal notranslate"><span class="pre">format=&quot;binary&quot;</span></code>. Also note that including tensors <em>significantly</em>
+increases the file size of serialized docs.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if format is not “pickle” or “binary”</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The docs are pickled together, as a list, so they are all loaded
-into memory when writing to disk. Mind your RAM usage!</p>
-</div>
 </dd></dl>
 
 </div>
