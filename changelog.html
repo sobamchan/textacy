@@ -180,31 +180,25 @@
 <div class="section" id="id1">
 <h2>0.6.2 (2018-07-19)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>Changes:</p>
-<ul>
-<li><p class="first">Add a <code class="docutils literal notranslate"><span class="pre">spacier.util</span></code> module, and add / reorganize relevant functionality
-- move (most) <code class="docutils literal notranslate"><span class="pre">spacy_util</span></code> functions here, and add a deprecation warning to</p>
-<blockquote>
-<div><p>the <code class="docutils literal notranslate"><span class="pre">spacy_util</span></code> module</p>
-</div></blockquote>
 <ul class="simple">
+<li>Add a <code class="docutils literal notranslate"><span class="pre">spacier.util</span></code> module, and add / reorganize relevant functionality<ul>
+<li>move (most) <code class="docutils literal notranslate"><span class="pre">spacy_util</span></code> functions here, and add a deprecation warning to
+the <code class="docutils literal notranslate"><span class="pre">spacy_util</span></code> module</li>
 <li>rename <code class="docutils literal notranslate"><span class="pre">normalized_str()</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">get_normalized_text()</span></code>, for consistency and clarity</li>
 <li>add a function to split long texts up into chunks but combine them into
 a single <code class="docutils literal notranslate"><span class="pre">Doc</span></code>. This is a workaround for a current limitation of spaCy’s
 neural models, whose RAM usage scales with the length of input text.</li>
 </ul>
 </li>
-<li><p class="first">Add experimental support for reading and writing spaCy docs in binary format,
+<li>Add experimental support for reading and writing spaCy docs in binary format,
 where multiple docs are contained in a single file. This functionality was
 supported by spaCy v1, but is not in spaCy v2; I’ve implemented a workaround
-that should work well in most situations, but YMMV.</p>
-</li>
-<li><p class="first">Package documentation is now “officially” hosted on GitHub pages. The docs
+that should work well in most situations, but YMMV.</li>
+<li>Package documentation is now “officially” hosted on GitHub pages. The docs
 are automatically built on and deployed from Travis via <code class="docutils literal notranslate"><span class="pre">doctr</span></code>, so they
 stay up-to-date with the master branch on GitHub. Maybe someday I’ll get
-ReadTheDocs to successfully build <code class="docutils literal notranslate"><span class="pre">textacy</span></code> once again…</p>
-</li>
-<li><p class="first">Minor improvements/updates to documentation</p>
-</li>
+ReadTheDocs to successfully build <code class="docutils literal notranslate"><span class="pre">textacy</span></code> once again…</li>
+<li>Minor improvements/updates to documentation</li>
 </ul>
 <p>Bugfixes:</p>
 <ul class="simple">
