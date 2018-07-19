@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; textacy 0.6.1 documentation</title>
+  <title>API Reference &mdash; textacy 0.6.2 documentation</title>
   
 
   
@@ -874,7 +874,7 @@ then add it to the corpus.</p>
 
 <dl class="method">
 <dt id="textacy.corpus.Corpus.add_texts">
-<code class="descname">add_texts</code><span class="sig-paren">(</span><em>texts</em>, <em>metadatas=None</em>, <em>n_threads=47</em>, <em>batch_size=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/corpus.html#Corpus.add_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.corpus.Corpus.add_texts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_texts</code><span class="sig-paren">(</span><em>texts</em>, <em>metadatas=None</em>, <em>n_threads=31</em>, <em>batch_size=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/corpus.html#Corpus.add_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.corpus.Corpus.add_texts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process a stream of texts (and a corresponding stream of metadata dicts,
 optionally) in parallel with spaCy; add as <a class="reference internal" href="#textacy.doc.Doc" title="textacy.doc.Doc"><code class="xref py py-class docutils literal notranslate"><span class="pre">Doc</span></code></a> s
 to the corpus.</p>
@@ -1165,7 +1165,7 @@ are either “House” or “Senate”, with a small number of “Extensions”.
 Foundation’s <a class="reference external" href="http://sunlightlabs.github.io/Capitol-Words/">Capitol Words API</a>.</p>
 <dl class="class">
 <dt id="textacy.datasets.capitol_words.CapitolWords">
-<em class="property">class </em><code class="descclassname">textacy.datasets.capitol_words.</code><code class="descname">CapitolWords</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.1-py3.6.egg/textacy/data/capitol_words'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/capitol_words.html#CapitolWords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.capitol_words.CapitolWords" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.capitol_words.</code><code class="descname">CapitolWords</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/capitol_words'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/capitol_words.html#CapitolWords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.capitol_words.CapitolWords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream Congressional speeches from a compressed json file on disk, either
 as texts (str) or records (dict) with both text content and metadata.</p>
 <p>Download a Python version-specific compressed json file from the
@@ -1411,7 +1411,7 @@ naming, citation ids, and decision dates, a very small percentage of texts
 may be incorrectly matched to metadata. (Sorry.)</p>
 <dl class="class">
 <dt id="textacy.datasets.supreme_court.SupremeCourt">
-<em class="property">class </em><code class="descclassname">textacy.datasets.supreme_court.</code><code class="descname">SupremeCourt</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.1-py3.6.egg/textacy/data/supreme_court'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/supreme_court.html#SupremeCourt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.supreme_court.SupremeCourt" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.supreme_court.</code><code class="descname">SupremeCourt</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/supreme_court'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/supreme_court.html#SupremeCourt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.supreme_court.SupremeCourt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream U.S. Supreme Court decisions from a compressed json file on disk,
 either as texts (str) or records (dict) with both text content and metadata.</p>
 <p>Download a Python version-specific compressed json file from the
@@ -1634,7 +1634,7 @@ passing all filter params.</p>
 refer to <a class="reference external" href="https://meta.wikimedia.org/wiki/Data_dumps">https://meta.wikimedia.org/wiki/Data_dumps</a>.</p>
 <dl class="class">
 <dt id="textacy.datasets.wikipedia.Wikipedia">
-<em class="property">class </em><code class="descclassname">textacy.datasets.wikipedia.</code><code class="descname">Wikipedia</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.1-py3.6.egg/textacy/data/wikipedia'</em>, <em>lang='en'</em>, <em>version='latest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.wikipedia.</code><code class="descname">Wikipedia</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/wikipedia'</em>, <em>lang='en'</em>, <em>version='latest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream Wikipedia articles from versioned, language-specific database dumps,
 either as texts (str) or records (dict) with both text content and metadata.</p>
 <p>Download a database dump for a given language and version:</p>
@@ -1829,7 +1829,7 @@ APIS, and stored for posterity by the <a class="reference external" href="https:
 For more details, refer to <a class="reference external" href="https://archive.org/details/2015_reddit_comments_corpus">https://archive.org/details/2015_reddit_comments_corpus</a>.</p>
 <dl class="class">
 <dt id="textacy.datasets.reddit_comments.RedditComments">
-<em class="property">class </em><code class="descclassname">textacy.datasets.reddit_comments.</code><code class="descname">RedditComments</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.1-py3.6.egg/textacy/data/reddit_comments'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/reddit_comments.html#RedditComments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.reddit_comments.RedditComments" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.reddit_comments.</code><code class="descname">RedditComments</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/reddit_comments'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/reddit_comments.html#RedditComments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.reddit_comments.RedditComments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream Reddit comments from 1 or more compressed files on disk, either
 as texts (str) or records (dict) with both text content and metadata.</p>
 <p>Download 1 or more files, optionally within a given date range:</p>
@@ -2023,7 +2023,7 @@ downloaded from that repo, and excluding some light cleaning of its metadata,
 is reproduced exactly here.</p>
 <dl class="class">
 <dt id="textacy.datasets.oxford_text_archive.OxfordTextArchive">
-<em class="property">class </em><code class="descclassname">textacy.datasets.oxford_text_archive.</code><code class="descname">OxfordTextArchive</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.1-py3.6.egg/textacy/data/oxford_text_archive'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/oxford_text_archive.html#OxfordTextArchive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.oxford_text_archive.OxfordTextArchive" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.oxford_text_archive.</code><code class="descname">OxfordTextArchive</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/oxford_text_archive'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/oxford_text_archive.html#OxfordTextArchive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.oxford_text_archive.OxfordTextArchive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream literary works from a zip file on disk, either as texts (str) or
 records (dict) with both text content and metadata.</p>
 <p>Download the zip file from its GitHub repository:</p>
@@ -6515,7 +6515,7 @@ components accumulated chunk by chunk.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.6.1',
+            VERSION:'0.6.2',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
