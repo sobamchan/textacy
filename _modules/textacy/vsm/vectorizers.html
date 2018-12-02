@@ -1174,7 +1174,7 @@
             <span class="c1"># store the avg document length, used in bm25 weighting to normalize</span>
             <span class="c1"># term weights by the length of the containing documents</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_avg_doc_length</span> <span class="o">=</span> <span class="n">get_doc_lengths</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">grp_term_matrix</span>
 
@@ -1262,7 +1262,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016 Chartbeat, Inc..
+        &copy; Copyright 2016 Chartbeat, Inc.
 
     </p>
   </div>
@@ -1281,21 +1281,13 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0.6.2',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    
 
   
 
