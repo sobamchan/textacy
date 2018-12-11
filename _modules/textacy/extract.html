@@ -371,6 +371,9 @@
         <span class="n">nes</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">spacy_doc</span><span class="o">.</span><span class="n">ents</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">nes</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span>
+    <span class="c1"># HACK: spacy&#39;s models have been erroneously tagging whitespace as entities</span>
+    <span class="c1"># https://github.com/explosion/spaCy/commit/1e6725e9b734862e61081a916baf440697b9971e</span>
+    <span class="n">nes</span> <span class="o">=</span> <span class="p">(</span><span class="n">ne</span> <span class="k">for</span> <span class="n">ne</span> <span class="ow">in</span> <span class="n">nes</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ne</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">isspace</span><span class="p">())</span>
     <span class="n">include_types</span> <span class="o">=</span> <span class="n">_parse_ne_types</span><span class="p">(</span><span class="n">include_types</span><span class="p">,</span> <span class="s2">&quot;include&quot;</span><span class="p">)</span>
     <span class="n">exclude_types</span> <span class="o">=</span> <span class="n">_parse_ne_types</span><span class="p">(</span><span class="n">exclude_types</span><span class="p">,</span> <span class="s2">&quot;exclude&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">include_types</span><span class="p">:</span>
