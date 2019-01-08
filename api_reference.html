@@ -1850,7 +1850,7 @@ passing all filter params.</p>
 refer to <a class="reference external" href="https://meta.wikimedia.org/wiki/Data_dumps">https://meta.wikimedia.org/wiki/Data_dumps</a>.</p>
 <dl class="class">
 <dt id="textacy.datasets.wikipedia.Wikipedia">
-<em class="property">class </em><code class="descclassname">textacy.datasets.wikipedia.</code><code class="descname">Wikipedia</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/wikipedia'</em>, <em>lang='en'</em>, <em>version='latest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">textacy.datasets.wikipedia.</code><code class="descname">Wikipedia</code><span class="sig-paren">(</span><em>data_dir='/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/textacy-0.6.2-py3.6.egg/textacy/data/wikipedia'</em>, <em>lang='en'</em>, <em>version='latest'</em>, <em>project='wikipedia'</em>, <em>namespace='0'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stream Wikipedia articles from versioned, language-specific database dumps,
 either as texts (str) or records (dict) with both text content and metadata.</p>
 <p>Download a database dump for a given language and version:</p>
@@ -1882,7 +1882,7 @@ either as texts (str) or records (dict) with both text content and metadata.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>data_dir</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Path to directory on disk under which database dump
 files are stored. Each file is expected as
-<code class="docutils literal notranslate"><span class="pre">{lang}wiki/{version}/{lang}wiki-{version}-pages-articles.xml.bz2</span></code>
+<code class="docutils literal notranslate"><span class="pre">{lang}{project}/{version}/{lang}{project}-{version}-pages-articles.xml.bz2</span></code>
 immediately under this directory.</li>
 <li><strong>lang</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Standard two-letter language code, e.g. “en” =&gt; “English”,
 “de” =&gt; “German”. <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes</a></li>
@@ -1890,6 +1890,10 @@ immediately under this directory.</li>
 most recently available version or a date formatted as “YYYYMMDD”.
 Dumps are produced intermittently; check for available versions at
 <a class="reference external" href="https://meta.wikimedia.org/wiki/Data_dumps">https://meta.wikimedia.org/wiki/Data_dumps</a>.</li>
+<li><strong>project</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of wikimedia project. Currently, only ‘wikipedia’
+(default) and ‘wikinews’ are supported.</li>
+<li><strong>namespace</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Allows one to specify a namespace other than ‘0’
+(the default) to extract content from</li>
 </ul>
 </td>
 </tr>
@@ -1953,6 +1957,23 @@ Wikipedia database dump, found under the <code class="docutils literal notransla
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="textacy.datasets.wikipedia.Wikipedia.project">
+<code class="descname">project</code><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia.project" title="Permalink to this definition">¶</a></dt>
+<dd><p>the canonical name for the wikimedia project which is
+used as a component of <code class="docutils literal notranslate"><span class="pre">filestub</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>Namespace values can be discovered via <code class="docutils literal notranslate"><span class="pre">bzcat</span> <span class="pre">dumpfile.xml.bz2</span> <span class="pre">|</span> <span class="pre">head</span></code></p>
 <dl class="method">
 <dt id="textacy.datasets.wikipedia.Wikipedia.download">
 <code class="descname">download</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia.download" title="Permalink to this definition">¶</a></dt>
@@ -2010,10 +2031,8 @@ method is used to extract article text.</li>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This function requires <a class="reference external" href="mwparserfromhell.readthedocs.org">mwparserfromhell</a>.</p>
-</div>
+<p class="rubric">Notes</p>
+<p>This function requires <a class="reference external" href="mwparserfromhell.readthedocs.org">mwparserfromhell</a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -2038,11 +2057,9 @@ if -1, all pages in the db dump are iterated over.</li>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Page and section titles appear immediately before the text content
+<p class="rubric">Notes</p>
+<p>Page and section titles appear immediately before the text content
 that they label, separated by an empty line.</p>
-</div>
 </dd></dl>
 
 </dd></dl>
