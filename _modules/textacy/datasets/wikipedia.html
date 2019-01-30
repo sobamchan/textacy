@@ -454,14 +454,19 @@
         <span class="n">wikicode</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
         <span class="n">parsed_content</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cat_link</span> <span class="o">=</span> <span class="n">MAPPING_CAT</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">]</span>
+        <span class="c1"># catch category links errantly marked up in lowercase</span>
+        <span class="n">lc_cat_link</span> <span class="o">=</span> <span class="n">cat_link</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
         <span class="n">wikilinks</span> <span class="o">=</span> <span class="p">[</span><span class="n">unicode_</span><span class="p">(</span><span class="n">wc</span><span class="o">.</span><span class="n">title</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikicode</span><span class="o">.</span><span class="n">ifilter_wikilinks</span><span class="p">()]</span>
-        <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">wc</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
-            <span class="k">if</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">MAPPING_CAT</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">])]</span>
+            <span class="k">if</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cat_link</span><span class="p">)</span> <span class="ow">or</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">lc_cat_link</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categories</span>
         <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;wiki_links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">wc</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">MAPPING_CAT</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="k">if</span> <span class="n">wc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">categories</span> <span class="ow">and</span>
             <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;File:&#39;</span><span class="p">)</span> <span class="ow">and</span>
             <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Image:&#39;</span><span class="p">)]</span>
         <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;ext_links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
