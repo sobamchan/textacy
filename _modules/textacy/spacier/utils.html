@@ -248,7 +248,7 @@
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">spans</span> <span class="o">=</span> <span class="p">[(</span><span class="n">span</span><span class="o">.</span><span class="n">start_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">end_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
                  <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">start_char</span><span class="p">,</span> <span class="n">end_char</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">ents</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">start_char</span><span class="p">,</span> <span class="n">end_char</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">:</span>
             <span class="n">doc</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">start_char</span><span class="p">,</span> <span class="n">end_char</span><span class="p">,</span> <span class="n">ent_type</span><span class="o">=</span><span class="n">label</span><span class="p">)</span></div>
 
 
