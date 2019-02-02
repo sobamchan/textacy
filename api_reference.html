@@ -2567,7 +2567,7 @@ or more linebreaks with a single newline. Also strip leading/trailing whitespace
 
 <dl class="function">
 <dt id="textacy.preprocess.preprocess_text">
-<code class="descclassname">textacy.preprocess.</code><code class="descname">preprocess_text</code><span class="sig-paren">(</span><em>text</em>, <em>fix_unicode=False</em>, <em>lowercase=False</em>, <em>transliterate=False</em>, <em>no_urls=False</em>, <em>no_emails=False</em>, <em>no_phone_numbers=False</em>, <em>no_numbers=False</em>, <em>no_currency_symbols=False</em>, <em>no_punct=False</em>, <em>no_contractions=False</em>, <em>no_accents=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/preprocess.html#preprocess_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.preprocess.preprocess_text" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">textacy.preprocess.</code><code class="descname">preprocess_text</code><span class="sig-paren">(</span><em>text</em>, <em>fix_unicode=False</em>, <em>lowercase=False</em>, <em>no_urls=False</em>, <em>no_emails=False</em>, <em>no_phone_numbers=False</em>, <em>no_numbers=False</em>, <em>no_currency_symbols=False</em>, <em>no_punct=False</em>, <em>no_contractions=False</em>, <em>no_accents=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/preprocess.html#preprocess_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.preprocess.preprocess_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize various aspects of a raw text doc before parsing it with Spacy.
 A convenience function for applying all other preprocessing functions in one go.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2579,8 +2579,6 @@ A convenience function for applying all other preprocessing functions in one go.
 <li><strong>fix_unicode</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, fix “broken” unicode such as
 mojibake and garbled HTML entities</li>
 <li><strong>lowercase</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, all text is lower-cased</li>
-<li><strong>transliterate</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, convert non-ascii characters
-into their closest ascii equivalents</li>
 <li><strong>no_urls</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, replace all URL strings with ‘<em>URL</em>’</li>
 <li><strong>no_emails</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, replace all email strings with ‘<em>EMAIL</em>’</li>
 <li><strong>no_phone_numbers</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, replace all phone number strings
@@ -2594,8 +2592,7 @@ empty string)</li>
 <li><strong>no_contractions</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, replace <em>English</em> contractions
 with their unshortened forms</li>
 <li><strong>no_accents</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – if True, replace all accented characters
-with unaccented versions; NB: if <cite>transliterate</cite> is True, this option
-is redundant</li>
+with unaccented versions</li>
 </ul>
 </td>
 </tr>
@@ -2719,16 +2716,6 @@ otherwise, pass in a string with which to replace all symbols
 <dt id="textacy.preprocess.replace_urls">
 <code class="descclassname">textacy.preprocess.</code><code class="descname">replace_urls</code><span class="sig-paren">(</span><em>text</em>, <em>replace_with='*URL*'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/preprocess.html#replace_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.preprocess.replace_urls" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace all URLs in <code class="docutils literal notranslate"><span class="pre">text</span></code> str with <code class="docutils literal notranslate"><span class="pre">replace_with</span></code> str.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="textacy.preprocess.transliterate_unicode">
-<code class="descclassname">textacy.preprocess.</code><code class="descname">transliterate_unicode</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/preprocess.html#transliterate_unicode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.preprocess.transliterate_unicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Try to represent unicode data in ascii characters similar to what a human
-with a US keyboard would choose.</p>
-<p>Works great for languages of Western origin, worse the farther the language
-gets from Latin-based alphabets. It’s based on hand-tuned character mappings
-that also contain ascii approximations for symbols and non-Latin alphabets.</p>
 </dd></dl>
 
 <dl class="function">

@@ -163,7 +163,6 @@
 <span class="kn">import</span> <span class="nn">unicodedata</span>
 
 <span class="kn">from</span> <span class="nn">ftfy</span> <span class="k">import</span> <span class="n">fix_text</span>
-<span class="kn">from</span> <span class="nn">unidecode</span> <span class="k">import</span> <span class="n">unidecode</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
 
@@ -188,18 +187,6 @@
 <span class="sd">        str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">fix_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">normalization</span><span class="o">=</span><span class="n">normalization</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="transliterate_unicode"><a class="viewcode-back" href="../../api_reference.html#textacy.preprocess.transliterate_unicode">[docs]</a><span class="k">def</span> <span class="nf">transliterate_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Try to represent unicode data in ascii characters similar to what a human</span>
-<span class="sd">    with a US keyboard would choose.</span>
-
-<span class="sd">    Works great for languages of Western origin, worse the farther the language</span>
-<span class="sd">    gets from Latin-based alphabets. It&#39;s based on hand-tuned character mappings</span>
-<span class="sd">    that also contain ascii approximations for symbols and non-Latin alphabets.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">unidecode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="normalize_whitespace"><a class="viewcode-back" href="../../api_reference.html#textacy.preprocess.normalize_whitespace">[docs]</a><span class="k">def</span> <span class="nf">normalize_whitespace</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
@@ -327,7 +314,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="preprocess_text"><a class="viewcode-back" href="../../api_reference.html#textacy.preprocess.preprocess_text">[docs]</a><span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">fix_unicode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">transliterate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="preprocess_text"><a class="viewcode-back" href="../../api_reference.html#textacy.preprocess.preprocess_text">[docs]</a><span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">fix_unicode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">no_urls</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_emails</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_phone_numbers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">no_numbers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_currency_symbols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_punct</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">no_contractions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_accents</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -340,8 +327,6 @@
 <span class="sd">        fix_unicode (bool): if True, fix &quot;broken&quot; unicode such as</span>
 <span class="sd">            mojibake and garbled HTML entities</span>
 <span class="sd">        lowercase (bool): if True, all text is lower-cased</span>
-<span class="sd">        transliterate (bool): if True, convert non-ascii characters</span>
-<span class="sd">            into their closest ascii equivalents</span>
 <span class="sd">        no_urls (bool): if True, replace all URL strings with &#39;*URL*&#39;</span>
 <span class="sd">        no_emails (bool): if True, replace all email strings with &#39;*EMAIL*&#39;</span>
 <span class="sd">        no_phone_numbers (bool): if True, replace all phone number strings</span>
@@ -355,8 +340,7 @@
 <span class="sd">        no_contractions (bool): if True, replace *English* contractions</span>
 <span class="sd">            with their unshortened forms</span>
 <span class="sd">        no_accents (bool): if True, replace all accented characters</span>
-<span class="sd">            with unaccented versions; NB: if `transliterate` is True, this option</span>
-<span class="sd">            is redundant</span>
+<span class="sd">            with unaccented versions</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: input ``text`` processed according to function args</span>
@@ -367,8 +351,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">fix_unicode</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">fix_bad_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">normalization</span><span class="o">=</span><span class="s1">&#39;NFC&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">transliterate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">transliterate_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">no_urls</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">replace_urls</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">no_emails</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
