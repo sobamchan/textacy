@@ -2008,7 +2008,7 @@ the <code class="docutils literal notranslate"><span class="pre">lang</span></co
 
 <dl class="method">
 <dt id="textacy.datasets.wikipedia.Wikipedia.records">
-<code class="descname">records</code><span class="sig-paren">(</span><em>min_len=100</em>, <em>limit=-1</em>, <em>fast=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia.records"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia.records" title="Permalink to this definition">¶</a></dt>
+<code class="descname">records</code><span class="sig-paren">(</span><em>min_len=100</em>, <em>limit=-1</em>, <em>fast=False</em>, <em>include_headings=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textacy/datasets/wikipedia.html#Wikipedia.records"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textacy.datasets.wikipedia.Wikipedia.records" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over pages (parsed text and metadata) in a Wikipedia database dump,
 optionally filtering by text length.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2023,6 +2023,8 @@ if -1, all pages in the db dump are iterated over.</li>
 <li><strong>fast</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True, text is extracted using a faster method but
 which gives lower quality results. Otherwise, a slower but better
 method is used to extract article text.</li>
+<li><strong>include_headings</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Whether to include section headings and
+the page title as part of the page’s text. Default: True</li>
 </ul>
 </td>
 </tr>
@@ -4336,7 +4338,7 @@ tf or tfidf, a term’s doc freq will be the same.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of document frequencies, with length equal to
 the # of unique terms (# of columns) in <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code> doesn’t have any non-zero entries.</td>
 </tr>
@@ -4367,7 +4369,7 @@ linear; if ‘sqrt’, dl =&gt; sqrt(dl); if ‘log’, dl =&gt; log(dl) + 1.</l
 the # of documents (# of rows) in <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code>.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <code class="docutils literal notranslate"><span class="pre">type_</span></code> isn’t one of {“linear”, “sqrt”, “log”}.</p>
@@ -4399,7 +4401,7 @@ tf or tfidf, a term’s information content will be the same.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of term information content values, with
 length equal to the # of unique terms (# of columns) in <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code> doesn’t have any non-zero entries.</td>
 </tr>
@@ -4435,7 +4437,7 @@ terms to have negative idf weights.</li>
 equal to the # of unique terms (# of columns) in <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code>.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <code class="docutils literal notranslate"><span class="pre">type_</span></code> isn’t one of {“standard”, “smooth”, “bm25”}.</p>
@@ -4468,7 +4470,7 @@ linear; if ‘sqrt’, tf =&gt; sqrt(tf); if ‘log’, tf =&gt; log(tf) + 1.</l
 the # of unique terms (# of columns) in <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code>.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3.6/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if <code class="docutils literal notranslate"><span class="pre">doc_term_matrix</span></code> doesn’t have any non-zero entries, or
@@ -4598,7 +4600,7 @@ i.e. topic weights on each document sum to 1</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Document-topic matrix with shape (n_docs, n_topics).</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </td>
 </tr>
 </tbody>
@@ -4615,7 +4617,7 @@ to promote comparison of terms both within and across topics.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>doc_term_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> or sparse matrix) – corpus
+<li><strong>doc_term_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> or sparse matrix) – corpus
 represented as a document-term matrix with shape (n_docs, n_terms);
 may have tf- or tfidf-weighting</li>
 <li><strong>id2term</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>] or </em><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – object that returns the term string corresponding
@@ -4675,7 +4677,7 @@ Visual Interfaces. ACM, 2012.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
+<li><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
 (n_docs, n_topics), the result of calling <a class="reference internal" href="#textacy.tm.topic_model.TopicModel.get_doc_topic_matrix" title="textacy.tm.topic_model.TopicModel.get_doc_topic_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TopicModel.get_doc_topic_matrix()</span></code></a></li>
 <li><strong>docs</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em> or </em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>]</em>) – docs for which to return top topics;
 if -1, all docs’ top topics are returned</li>
@@ -4711,7 +4713,7 @@ related topics and their associated weights wrt the doc; for example:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
+<li><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
 (n_docs, n_topics), the result of calling <a class="reference internal" href="#textacy.tm.topic_model.TopicModel.get_doc_topic_matrix" title="textacy.tm.topic_model.TopicModel.get_doc_topic_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TopicModel.get_doc_topic_matrix()</span></code></a></li>
 <li><strong>topics</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em> or </em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>]</em>) – topic(s) for which to return top docs;
 if -1, all topics’ docs are returned</li>
@@ -4787,12 +4789,12 @@ or not. I suppose either way makes sense… o_O</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_topic_matrix</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – document-topic matrix with shape
 (n_docs, n_topics), the result of calling <a class="reference internal" href="#textacy.tm.topic_model.TopicModel.get_doc_topic_matrix" title="textacy.tm.topic_model.TopicModel.get_doc_topic_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TopicModel.get_doc_topic_matrix()</span></code></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the ith element is the ith topic’s overall weight</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></td>
 </tr>
 </tbody>
 </table>
