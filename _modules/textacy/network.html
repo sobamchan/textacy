@@ -221,9 +221,8 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s1">&#39;`window_width` = </span><span class="si">{}</span><span class="s1"> is invalid; value must be &gt;= 2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window_width</span><span class="p">))</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">terms</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;`terms` = </span><span class="si">{}</span><span class="s1"> is invalid; it must contain at least 1 term &#39;</span>
-            <span class="s1">&#39;in the form of a string or spacy token&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">terms</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;input `terms` is empty, so output graph is also empty&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 
     <span class="c1"># if len(terms) &lt; window_width, cytoolz throws a StopIteration error</span>
     <span class="c1"># which we don&#39;t want</span>
