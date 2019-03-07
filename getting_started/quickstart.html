@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="API Reference" href="../api_reference.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -89,9 +91,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#working-with-text">Working with Text</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#make-a-doc">Make a Doc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#analyze-a-doc">Analyze a Doc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#working-with-many-texts">Working with <em>Many</em> Texts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-many-texts">Working with Many Texts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#make-a-corpus">Make a Corpus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#analyze-a-corpus">Analyze a Corpus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-many-languages">Working with Many Languages</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
@@ -374,7 +377,7 @@ and term inclusion criteria:</p>
 </div>
 </div>
 <div class="section" id="working-with-many-texts">
-<h2>Working with <em>Many</em> Texts<a class="headerlink" href="#working-with-many-texts" title="Permalink to this headline">¶</a></h2>
+<h2>Working with Many Texts<a class="headerlink" href="#working-with-many-texts" title="Permalink to this headline">¶</a></h2>
 <p>Many NLP tasks require datasets comprised of a large number of texts, which
 are often stored on disk in one or multiple files. <code class="docutils literal notranslate"><span class="pre">textacy</span></code> makes it easy
 to efficiently stream text (+metadata) records from disk, regardless of the
@@ -506,11 +509,53 @@ weighting, and filtering of terms:</p>
 <span class="go">topic 9 : security   homeland   funding   9/11   commission   risk   department   threat   emergency   police</span>
 </pre></div>
 </div>
-<p>And we’re just getting started! For now, though, I encourage you to pick a dataset
+<p>And that’s just getting started! For now, though, I encourage you to pick a dataset
 — either your own or one already included in <code class="docutils literal notranslate"><span class="pre">textacy</span></code> — and start exploring
 the data. <em>Most</em> functionality is well-documented via in-code docstrings; to see
 that information all together in nicely-formatted HTML, be sure to check out
 the <a class="reference internal" href="../api_reference.html#ref-api-reference"><span class="std std-ref">API Reference</span></a>.</p>
+</div>
+<div class="section" id="working-with-many-languages">
+<h2>Working with Many Languages<a class="headerlink" href="#working-with-many-languages" title="Permalink to this headline">¶</a></h2>
+<p>Since a <code class="docutils literal notranslate"><span class="pre">Corpus</span></code> uses the same spacy language pipeline to process all input texts,
+it only works in a <em>monolingual</em> context. In some cases, though, your collection
+of texts may contain more than one language; for example, if I occasionally tweeted
+in Spanish (sí, ¡se habla español!), the <code class="docutils literal notranslate"><span class="pre">burton-tweets.txt</span></code> dataset couldn’t
+be fed in its entirety into a single <code class="docutils literal notranslate"><span class="pre">Corpus</span></code>. This is irritating, I know, but
+there are some workarounds.</p>
+<p>If you haven’t already, download spacy models for the languages you want to analyze —
+see <a class="reference internal" href="installation.html#installation-downloading-data"><span class="std std-ref">Downloading Data</span></a> for details. Then, if your use case
+doesn’t require <code class="docutils literal notranslate"><span class="pre">Corpus</span></code> functionality, you can iterate over the texts and
+only analyze those for which models are available:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">doc</span> <span class="o">=</span> <span class="n">textacy</span><span class="o">.</span><span class="n">Doc</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">continue</span>
+<span class="gp">... </span>    <span class="c1"># do stuff...</span>
+</pre></div>
+</div>
+<p>When the <code class="docutils literal notranslate"><span class="pre">lang</span></code> param is unspecified, textacy tries to auto-detect the text’s
+language and load the corresponding model; if that model is unavailable, spacy
+will raise an <code class="docutils literal notranslate"><span class="pre">IOError</span></code>. This try/except also handles the case where
+language detection fails and returns, say, “un” for “unknown”.</p>
+<p>If you do need a <code class="docutils literal notranslate"><span class="pre">Corpus</span></code>, you can split the input texts by language into
+distinct collections, then instantiate monolingual corpora on those collections.
+For example:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">en_corpus</span> <span class="o">=</span> <span class="n">textacy</span><span class="o">.</span><span class="n">Corpus</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">texts</span><span class="o">=</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">textacy</span><span class="o">.</span><span class="n">text_utils</span><span class="o">.</span><span class="n">detect_language</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">es_corpus</span> <span class="o">=</span> <span class="n">textacy</span><span class="o">.</span><span class="n">Corpus</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;es&quot;</span><span class="p">,</span> <span class="n">texts</span><span class="o">=</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">textacy</span><span class="o">.</span><span class="n">text_utils</span><span class="o">.</span><span class="n">detect_language</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;es&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Both of these options are less convenient than we’d like, but hopefully they
+get the job done.</p>
 </div>
 </div>
 
@@ -525,7 +570,7 @@ the <a class="reference internal" href="../api_reference.html#ref-api-reference"
         <a href="../api_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -551,26 +596,16 @@ the <a class="reference internal" href="../api_reference.html#ref-api-reference"
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

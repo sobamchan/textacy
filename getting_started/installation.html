@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Quickstart" href="quickstart.html" />
     <link rel="prev" title="textacy: NLP, before and after spaCy" href="../index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -158,7 +160,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>The simplest way to install <code class="docutils literal notranslate"><span class="pre">textacy</span></code> is via <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install textacy
 </pre></div>
@@ -179,7 +181,7 @@ and unzip the source <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<span id="installation-dependencies"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Given the multi-purpose breadth of its functionality, <code class="docutils literal notranslate"><span class="pre">textacy</span></code> depends on a
 number of other Python packages. Most of these are typical components in the
 PyData stack, but a few are more niche, and a couple have been known to cause
@@ -190,11 +192,15 @@ you’ll need <code class="docutils literal notranslate"><span class="pre">cld2-
 <p>…</p>
 </div>
 <div class="section" id="downloading-data">
-<h2>Downloading Data<a class="headerlink" href="#downloading-data" title="Permalink to this headline">¶</a></h2>
+<span id="installation-downloading-data"></span><h2>Downloading Data<a class="headerlink" href="#downloading-data" title="Permalink to this headline">¶</a></h2>
 <p>For most uses of <code class="docutils literal notranslate"><span class="pre">textacy</span></code>, language-specific model data in <code class="docutils literal notranslate"><span class="pre">spacy</span></code> is
 required. Fortunately, <code class="docutils literal notranslate"><span class="pre">spacy</span></code> makes the process of getting this data easy and
 flexible; just follow <a class="reference external" href="https://spacy.io/docs/usage/models">the instructions in its docs</a>,
 which also includes a list of <a class="reference external" href="https://spacy.io/usage/models#section-available">currently-supported languages and their models</a>.</p>
+<p>Note: If you install specific versions of a given language’s model data
+(e.g. “en_core_web_sm” instead of just “en”), you’ll probably want to create
+a shortcut link to the standard two-letter form of the language so that it will
+work as expected with textacy’s automatic language detection.</p>
 <p><code class="docutils literal notranslate"><span class="pre">textacy</span></code> itself features convenient access to several datasets comprised of
 thousands of text + metadata records. Data can be downloaded via the <code class="docutils literal notranslate"><span class="pre">.download()</span></code>
 method on corresponding dataset classes (see <a class="reference internal" href="../api_reference.html#ref-api-datasets"><span class="std std-ref">Datasets</span></a> for details)
@@ -223,7 +229,7 @@ served in the U.S. Congress). For more options, run</p>
         <a href="quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="textacy: NLP, before and after spaCy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="textacy: NLP, before and after spaCy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -249,26 +255,16 @@ served in the U.S. Congress). For more options, run</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
