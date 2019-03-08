@@ -179,6 +179,7 @@
 <span class="kn">from</span> <span class="nn">xml.etree.cElementTree</span> <span class="k">import</span> <span class="n">iterparse</span>
 
 <span class="kn">import</span> <span class="nn">ftfy</span>
+
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">mwparserfromhell</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -192,13 +193,15 @@
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;wikipedia&#39;</span>
-<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;All articles for a given language- and version-specific &#39;</span>
-               <span class="s1">&#39;Wikipedia site snapshot.&#39;</span><span class="p">)</span>
-<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s1">&#39;https://meta.wikimedia.org/wiki/Data_dumps&#39;</span>
+<span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;wikipedia&quot;</span>
+<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;All articles for a given language- and version-specific &quot;</span>
+    <span class="s2">&quot;Wikipedia site snapshot.&quot;</span>
+<span class="p">)</span>
+<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://meta.wikimedia.org/wiki/Data_dumps&quot;</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span>
 
-<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s1">&#39;https://dumps.wikimedia.org/&#39;</span>
+<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s2">&quot;https://dumps.wikimedia.org/&quot;</span>
 
 <span class="n">MAPPING_CAT</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;cs&quot;</span><span class="p">:</span> <span class="s2">&quot;Kategorie:&quot;</span><span class="p">,</span>
@@ -212,37 +215,90 @@
 <span class="p">}</span>
 
 <span class="c1"># project name -&gt; canonical wikimedia dump project name</span>
-<span class="n">PROJECTS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;wikipedia&#39;</span><span class="p">:</span> <span class="s1">&#39;wiki&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;wikinews&#39;</span><span class="p">:</span> <span class="s1">&#39;wikinews&#39;</span><span class="p">,</span>
-<span class="p">}</span>
+<span class="n">PROJECTS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;wikipedia&quot;</span><span class="p">:</span> <span class="s2">&quot;wiki&quot;</span><span class="p">,</span> <span class="s2">&quot;wikinews&quot;</span><span class="p">:</span> <span class="s2">&quot;wikinews&quot;</span><span class="p">}</span>
 <span class="c1"># useful for error messages</span>
 <span class="n">PROJECTS_INV</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">PROJECTS</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
 <span class="c1"># nowiki tags: take contents verbatim</span>
-<span class="n">re_nowiki</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;nowiki&gt;(.*?)&lt;/nowiki&gt;&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">re_nowiki</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&lt;nowiki&gt;(.*?)&lt;/nowiki&gt;&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
 
-<span class="n">self_closing_tags</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="s1">&#39;hr&#39;</span><span class="p">,</span> <span class="s1">&#39;nobr&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;references&#39;</span><span class="p">)</span>
+<span class="n">self_closing_tags</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;br&quot;</span><span class="p">,</span> <span class="s2">&quot;hr&quot;</span><span class="p">,</span> <span class="s2">&quot;nobr&quot;</span><span class="p">,</span> <span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="s2">&quot;references&quot;</span><span class="p">)</span>
 <span class="n">re_self_closing_html_tags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s1">&#39;&lt;\s?(</span><span class="si">%s</span><span class="s1">)\b[^&gt;]*/\s?&gt;&#39;</span> <span class="o">%</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">self_closing_tags</span><span class="p">),</span>
-    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="sa">r</span><span class="s2">&quot;&lt;\s?(</span><span class="si">%s</span><span class="s2">)\b[^&gt;]*/\s?&gt;&quot;</span> <span class="o">%</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">self_closing_tags</span><span class="p">),</span>
+    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">ignored_html_tags</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;abbr&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="s1">&#39;blockquote&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;cite&#39;</span><span class="p">,</span> <span class="s1">&#39;em&#39;</span><span class="p">,</span> <span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">,</span> <span class="s1">&#39;h2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;h3&#39;</span><span class="p">,</span> <span class="s1">&#39;h4&#39;</span><span class="p">,</span> <span class="s1">&#39;hiero&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;kbd&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;plaintext&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="s1">&#39;strike&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;strong&#39;</span><span class="p">,</span> <span class="s1">&#39;tt&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="s1">&#39;math&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">)</span>  <span class="c1"># are math and code okay here?</span>
+    <span class="s2">&quot;abbr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;b&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;big&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blockquote&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cite&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;em&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;font&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;h4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hiero&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;i&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kbd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plaintext&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;span&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;strike&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;strong&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;u&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;var&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;math&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+<span class="p">)</span>  <span class="c1"># are math and code okay here?</span>
 <span class="n">re_ignored_html_tags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s1">&#39;&lt;(</span><span class="si">%s</span><span class="s1">)\b.*?&gt;(.*?)&lt;/\s*\1&gt;&#39;</span> <span class="o">%</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ignored_html_tags</span><span class="p">),</span>
-    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="sa">r</span><span class="s2">&quot;&lt;(</span><span class="si">%s</span><span class="s2">)\b.*?&gt;(.*?)&lt;/\s*\1&gt;&quot;</span> <span class="o">%</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ignored_html_tags</span><span class="p">),</span>
+    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">dropped_elements</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;caption&#39;</span><span class="p">,</span> <span class="s1">&#39;dd&#39;</span><span class="p">,</span> <span class="s1">&#39;dir&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;dl&#39;</span><span class="p">,</span> <span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;form&#39;</span><span class="p">,</span> <span class="s1">&#39;gallery&#39;</span><span class="p">,</span> <span class="s1">&#39;imagemap&#39;</span><span class="p">,</span> <span class="s1">&#39;img&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;indicator&#39;</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="s1">&#39;menu&#39;</span><span class="p">,</span> <span class="s1">&#39;noinclude&#39;</span><span class="p">,</span> <span class="s1">&#39;ol&#39;</span><span class="p">,</span> <span class="s1">&#39;option&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;references&#39;</span><span class="p">,</span> <span class="s1">&#39;select&#39;</span><span class="p">,</span> <span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span> <span class="s1">&#39;sup&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;td&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;textarea&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;tr&#39;</span><span class="p">,</span> <span class="s1">&#39;ul&#39;</span><span class="p">)</span>
+    <span class="s2">&quot;caption&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dir&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;div&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;form&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gallery&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;imagemap&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;img&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indicator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;input&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;li&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;menu&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;noinclude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ol&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;option&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pre&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ref&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;references&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;select&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;small&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sup&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;td&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;textarea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;timeline&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ul&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">re_dropped_elements</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s1">&#39;&lt;\s*(</span><span class="si">%s</span><span class="s1">)\b[^&gt;/]*&gt;.*?&lt;\s*/\s*\1&gt;&#39;</span> <span class="o">%</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dropped_elements</span><span class="p">),</span>
-    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="sa">r</span><span class="s2">&quot;&lt;\s*(</span><span class="si">%s</span><span class="s2">)\b[^&gt;/]*&gt;.*?&lt;\s*/\s*\1&gt;&quot;</span> <span class="o">%</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dropped_elements</span><span class="p">),</span>
+    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="c1"># text formatting</span>
 <span class="n">re_italic_quote</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&#39;&#39;</span><span class="se">\&quot;</span><span class="s2">([^</span><span class="se">\&quot;</span><span class="s2">]*?)</span><span class="se">\&quot;</span><span class="s2">&#39;&#39;&quot;</span><span class="p">)</span>
@@ -250,32 +306,47 @@
 <span class="n">re_quote_quote</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&quot;&quot;([^&quot;]*?)&quot;&quot;&#39;</span><span class="p">)</span>
 
 <span class="c1"># text normalization</span>
-<span class="n">re_spaces</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; {2,}&#39;</span><span class="p">)</span>
-<span class="n">re_linebreaks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n{3,}&#39;</span><span class="p">)</span>
-<span class="n">re_dots</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.{4,}&#39;</span><span class="p">)</span>
-<span class="n">re_brackets</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[\s?\]|\(\s?\)&#39;</span><span class="p">)</span>
+<span class="n">re_spaces</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot; {2,}&quot;</span><span class="p">)</span>
+<span class="n">re_linebreaks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\n{3,}&quot;</span><span class="p">)</span>
+<span class="n">re_dots</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\.{4,}&quot;</span><span class="p">)</span>
+<span class="n">re_brackets</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[\s?\]|\(\s?\)&quot;</span><span class="p">)</span>
 
-<span class="n">re_comments</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&lt;!--.*?--&gt;&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+<span class="n">re_comments</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;&lt;!--.*?--&gt;&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 
 <span class="n">re_categories</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s1">&#39;\[\[(</span><span class="si">{}</span><span class="s1">)[^\]\[]*\]\]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MAPPING_CAT</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span>
-    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-<span class="n">re_link_trails</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-<span class="n">re_ext_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;!\[)\[([^\[\]]*?)\]&#39;</span><span class="p">)</span>
-<span class="n">re_table_formatting</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">\s*(({\|)|(\|-+)|(\|})).*?(?=</span><span class="se">\n</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-<span class="n">re_table_cell_formatting</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">\s*(\||\!)(.*?\|)*([^|]*?)&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-<span class="n">re_headings</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(={2,6})\s*(.*?)\s*\1&#39;</span><span class="p">)</span>
+    <span class="sa">r</span><span class="s2">&quot;\[\[(</span><span class="si">{}</span><span class="s2">)[^\]\[]*\]\]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MAPPING_CAT</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span>
+    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">re_link_trails</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\w+&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">re_ext_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;!\[)\[([^\[\]]*?)\]&quot;</span><span class="p">)</span>
+<span class="n">re_table_formatting</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">\s*(({\|)|(\|-+)|(\|})).*?(?=</span><span class="se">\n</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">re_table_cell_formatting</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">\s*(\||\!)(.*?\|)*([^|]*?)&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">re_headings</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(={2,6})\s*(.*?)\s*\1&quot;</span><span class="p">)</span>
 <span class="n">re_files_images</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">\[\[(?:Image|File)(?:.*?)(\|.*?)*\|(.*?)\]\]&#39;</span><span class="p">,</span>
-    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-<span class="n">re_random_cruft</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39; (,:\.\)\]»)|(\[\(«) &#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">\[\[(?:Image|File)(?:.*?)(\|.*?)*\|(.*?)\]\]&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span>
+<span class="p">)</span>
+<span class="n">re_random_cruft</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot; (,:\.\)\]»)|(\[\(«) &quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
 
 <span class="n">magic_words</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;__NOTOC__&#39;</span><span class="p">,</span> <span class="s1">&#39;__FORCETOC__&#39;</span><span class="p">,</span> <span class="s1">&#39;__TOC__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NEWSECTIONLINK__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NONEWSECTIONLINK__&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;__NOGALLERY__&#39;</span><span class="p">,</span> <span class="s1">&#39;__HIDDENCAT__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NOCONTENTCONVERT__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NOCC__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NOTITLECONVERT__&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;__NOTC__&#39;</span><span class="p">,</span> <span class="s1">&#39;__START__&#39;</span><span class="p">,</span> <span class="s1">&#39;__END__&#39;</span><span class="p">,</span> <span class="s1">&#39;__INDEX__&#39;</span><span class="p">,</span> <span class="s1">&#39;__NOINDEX__&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;__STATICREDIRECT__&#39;</span><span class="p">,</span> <span class="s1">&#39;__DISAMBIG__&#39;</span><span class="p">)</span>
-<span class="n">re_magic_words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">magic_words</span><span class="p">))</span>
+    <span class="s2">&quot;__NOTOC__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__FORCETOC__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__TOC__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NEWSECTIONLINK__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NONEWSECTIONLINK__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOGALLERY__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__HIDDENCAT__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOCONTENTCONVERT__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOCC__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOTITLECONVERT__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOTC__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__START__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__END__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__INDEX__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__NOINDEX__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__STATICREDIRECT__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__DISAMBIG__&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">re_magic_words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">magic_words</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="Wikipedia"><a class="viewcode-back" href="../../../api_reference.html#textacy.datasets.wikipedia.Wikipedia">[docs]</a><span class="k">class</span> <span class="nc">Wikipedia</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -336,20 +407,27 @@
 <span class="sd">        Namespace values can be discovered via ``bzcat dumpfile.xml.bz2 | head``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;latest&#39;</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="s1">&#39;wikipedia&#39;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_dir</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+        <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="s2">&quot;latest&quot;</span><span class="p">,</span>
+        <span class="n">project</span><span class="o">=</span><span class="s2">&quot;wikipedia&quot;</span><span class="p">,</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Wikipedia</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">lang</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
         <span class="k">if</span> <span class="n">project</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PROJECTS</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Invalid or unsupported wikimedia project: </span><span class="si">{project}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">project</span><span class="o">=</span><span class="n">project</span>
-            <span class="p">))</span>
+                <span class="s2">&quot;Invalid or unsupported wikimedia project: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">project</span> <span class="o">=</span> <span class="n">PROJECTS</span><span class="p">[</span><span class="n">project</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{lang}{project}</span><span class="s1">/</span><span class="si">{version}</span><span class="s1">/</span><span class="si">{lang}{project}</span><span class="s1">-</span><span class="si">{version}</span><span class="s1">-pages-articles.xml.bz2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{lang}{project}</span><span class="s2">/</span><span class="si">{version}</span><span class="s2">/</span><span class="si">{lang}{project}</span><span class="s2">-</span><span class="si">{version}</span><span class="s2">-pages-articles.xml.bz2&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span> <span class="o">=</span> <span class="n">namespace</span>
 
@@ -371,7 +449,7 @@
             <span class="c1"># invalid dump file url. check that {lang}{project} exists</span>
             <span class="n">lang_project_url</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span>
                 <span class="n">DOWNLOAD_ROOT</span><span class="p">,</span>
-                <span class="s2">&quot;</span><span class="si">{lang}{project}</span><span class="s2">/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="p">)</span>
+                <span class="s2">&quot;</span><span class="si">{lang}{project}</span><span class="s2">/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="n">res2</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">lang_project_url</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">res2</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
@@ -398,15 +476,13 @@
         <span class="n">url</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">DOWNLOAD_ROOT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span><span class="p">)</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;File </span><span class="si">%s</span><span class="s1"> already exists; skipping download...&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">%s</span><span class="s2"> already exists; skipping download...&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s1">&#39;Downloading data from </span><span class="si">%s</span><span class="s1"> and writing it to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading data from </span><span class="si">%s</span><span class="s2"> and writing it to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_dump_file_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">io</span><span class="o">.</span><span class="n">write_http_stream</span><span class="p">(</span>
-            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span></div>
+            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -417,30 +493,33 @@
 <span class="sd">            Tuple[str, str, str]: Page id, title, content with wikimedia markup.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> file not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> file not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">events</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,)</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open_sesame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open_sesame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># Python 2 can&#39;t open bzip in text mode :(</span>
-            <span class="n">events</span> <span class="o">=</span> <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;end&#39;</span><span class="p">,)</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open_sesame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;end&quot;</span><span class="p">,)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open_sesame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">f</span><span class="p">:</span>
 
             <span class="n">elems</span> <span class="o">=</span> <span class="p">(</span><span class="n">elem</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">iterparse</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">))</span>
 
             <span class="n">elem</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">elems</span><span class="p">)</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^{(.*?)}&#39;</span><span class="p">,</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-            <span class="n">namespace</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">namespace</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;http://www.mediawiki.org/xml/export-&#39;</span><span class="p">):</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^{(.*?)}&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">namespace</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">namespace</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http://www.mediawiki.org/xml/export-&quot;</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;namespace &quot;</span><span class="si">{}</span><span class="s1">&quot; not a valid MediaWiki dump namespace&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+                    <span class="s1">&#39;namespace &quot;</span><span class="si">{}</span><span class="s1">&quot; not a valid MediaWiki dump namespace&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">namespace</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
 
-            <span class="n">page_tag</span> <span class="o">=</span> <span class="s1">&#39;{</span><span class="si">%s</span><span class="s1">}page&#39;</span> <span class="o">%</span> <span class="n">namespace</span>
-            <span class="n">ns_path</span> <span class="o">=</span> <span class="s1">&#39;./{</span><span class="si">%s</span><span class="s1">}ns&#39;</span> <span class="o">%</span> <span class="n">namespace</span>
-            <span class="n">page_id_path</span> <span class="o">=</span> <span class="s1">&#39;./{</span><span class="si">%s</span><span class="s1">}id&#39;</span> <span class="o">%</span> <span class="n">namespace</span>
-            <span class="n">title_path</span> <span class="o">=</span> <span class="s1">&#39;./{</span><span class="si">%s</span><span class="s1">}title&#39;</span> <span class="o">%</span> <span class="n">namespace</span>
-            <span class="n">text_path</span> <span class="o">=</span> <span class="s1">&#39;./{</span><span class="si">%s</span><span class="s1">}revision/{</span><span class="si">%s</span><span class="s1">}text&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+            <span class="n">page_tag</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="si">%s</span><span class="s2">}page&quot;</span> <span class="o">%</span> <span class="n">namespace</span>
+            <span class="n">ns_path</span> <span class="o">=</span> <span class="s2">&quot;./{</span><span class="si">%s</span><span class="s2">}ns&quot;</span> <span class="o">%</span> <span class="n">namespace</span>
+            <span class="n">page_id_path</span> <span class="o">=</span> <span class="s2">&quot;./{</span><span class="si">%s</span><span class="s2">}id&quot;</span> <span class="o">%</span> <span class="n">namespace</span>
+            <span class="n">title_path</span> <span class="o">=</span> <span class="s2">&quot;./{</span><span class="si">%s</span><span class="s2">}title&quot;</span> <span class="o">%</span> <span class="n">namespace</span>
+            <span class="n">text_path</span> <span class="o">=</span> <span class="s2">&quot;./{</span><span class="si">%s</span><span class="s2">}revision/{</span><span class="si">%s</span><span class="s2">}text&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">page_tag</span><span class="p">:</span>
@@ -448,13 +527,13 @@
                     <span class="n">title</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">title_path</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
                     <span class="n">ns</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">ns_path</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
                     <span class="k">if</span> <span class="n">ns</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span><span class="p">:</span>
-                        <span class="n">content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">content</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">text_path</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
                     <span class="k">if</span> <span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">unicode_</span><span class="p">):</span>
-                        <span class="n">content</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">bytes_to_unicode</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">bytes_to_unicode</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
                     <span class="k">yield</span> <span class="n">page_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">content</span>
                     <span class="n">elem</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
@@ -469,28 +548,39 @@
 
         <span class="n">wikilinks</span> <span class="o">=</span> <span class="p">[</span><span class="n">unicode_</span><span class="p">(</span><span class="n">wc</span><span class="o">.</span><span class="n">title</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikicode</span><span class="o">.</span><span class="n">ifilter_wikilinks</span><span class="p">()]</span>
         <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">wc</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
+            <span class="n">wc</span>
+            <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
             <span class="k">if</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cat_link</span><span class="p">)</span> <span class="ow">or</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">lc_cat_link</span><span class="p">)</span>
         <span class="p">]</span>
-        <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categories</span>
-        <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;wiki_links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">wc</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
-            <span class="k">if</span> <span class="n">wc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">categories</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;File:&#39;</span><span class="p">)</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Image:&#39;</span><span class="p">)]</span>
-        <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;ext_links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">unicode_</span><span class="p">(</span><span class="n">wc</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikicode</span><span class="o">.</span><span class="n">ifilter_external_links</span><span class="p">()]</span>
+        <span class="n">parsed_content</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categories</span>
+        <span class="n">parsed_content</span><span class="p">[</span><span class="s2">&quot;wiki_links&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">wc</span>
+            <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikilinks</span>
+            <span class="k">if</span> <span class="n">wc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">categories</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;File:&quot;</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">wc</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Image:&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">parsed_content</span><span class="p">[</span><span class="s2">&quot;ext_links&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">unicode_</span><span class="p">(</span><span class="n">wc</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="n">wc</span> <span class="ow">in</span> <span class="n">wikicode</span><span class="o">.</span><span class="n">ifilter_external_links</span><span class="p">()</span>
+        <span class="p">]</span>
 
         <span class="c1"># worse quality, but significantly faster</span>
         <span class="c1"># just strip the markup from unicode, as is done for `.texts()`</span>
         <span class="k">if</span> <span class="n">fast</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strip_markup</span><span class="p">(</span><span class="n">unicode_</span><span class="p">(</span><span class="n">wikicode</span><span class="p">))</span>
+            <span class="n">parsed_content</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strip_markup</span><span class="p">(</span><span class="n">unicode_</span><span class="p">(</span><span class="n">wikicode</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">re_image_wl</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-                <span class="s1">&#39;^(?:File|Image|Media):&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+                <span class="s2">&quot;^(?:File|Image|Media):&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span>
+            <span class="p">)</span>
             <span class="n">bad_template_names</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;reflist&#39;</span><span class="p">,</span> <span class="s1">&#39;notelist&#39;</span><span class="p">,</span> <span class="s1">&#39;notelist-ua&#39;</span><span class="p">,</span> <span class="s1">&#39;notelist-lr&#39;</span><span class="p">,</span> <span class="s1">&#39;notelist-ur&#39;</span><span class="p">,</span> <span class="s1">&#39;notelist-lg&#39;</span><span class="p">}</span>
-            <span class="n">bad_tags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">}</span>
+                <span class="s2">&quot;reflist&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;notelist&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;notelist-ua&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;notelist-lr&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;notelist-ur&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;notelist-lg&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">bad_tags</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="s2">&quot;table&quot;</span><span class="p">}</span>
 
             <span class="k">def</span> <span class="nf">is_bad_wikilink</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re_image_wl</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">unicode_</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">title</span><span class="p">)))</span>
@@ -504,13 +594,21 @@
             <span class="n">texts</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="c1"># strip out references, tables, and file/image links</span>
             <span class="c1"># then concatenate the stripped text of each section</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">section</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">wikicode</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_lead</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_headings</span><span class="o">=</span><span class="n">include_headings</span><span class="p">)):</span>
-                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">ifilter_wikilinks</span><span class="p">(</span><span class="n">matches</span><span class="o">=</span><span class="n">is_bad_wikilink</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">section</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                <span class="n">wikicode</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span>
+                    <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_lead</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_headings</span><span class="o">=</span><span class="n">include_headings</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">ifilter_wikilinks</span><span class="p">(</span>
+                    <span class="n">matches</span><span class="o">=</span><span class="n">is_bad_wikilink</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">section</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                         <span class="k">continue</span>
-                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">ifilter_templates</span><span class="p">(</span><span class="n">matches</span><span class="o">=</span><span class="n">is_bad_template</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">ifilter_templates</span><span class="p">(</span>
+                    <span class="n">matches</span><span class="o">=</span><span class="n">is_bad_template</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">section</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -522,7 +620,7 @@
                         <span class="k">continue</span>
                 <span class="n">texts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">strip_code</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 
-            <span class="n">parsed_content</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+            <span class="n">parsed_content</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">parsed_content</span>
 
@@ -549,7 +647,7 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="k">yield</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">text</span>
+            <span class="k">yield</span> <span class="n">title</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">text</span>
 
             <span class="n">n_pages</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">n_pages</span> <span class="o">==</span> <span class="n">limit</span><span class="p">:</span>
@@ -580,21 +678,22 @@
             <span class="n">mwparserfromhell</span>
         <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-                <span class="s1">&#39;`mwparserfromhell` is not installed, so :meth:`Wikipedia.records()` &#39;</span>
-                <span class="s1">&#39;won</span><span class="se">\&#39;</span><span class="s1">t work; install it via `$ pip install mwparserfromhell`.&#39;</span>
-                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">For details, see http://pythonhosted.org/mwparserfromhell/.&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;`mwparserfromhell` is not installed, so :meth:`Wikipedia.records()` &quot;</span>
+                <span class="s2">&quot;won&#39;t work; install it via `$ pip install mwparserfromhell`.&quot;</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">For details, see http://pythonhosted.org/mwparserfromhell/.&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">parser</span> <span class="o">=</span> <span class="n">mwparserfromhell</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">Parser</span><span class="p">()</span>
 
         <span class="n">n_pages</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">page_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">content</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_content</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">fast</span><span class="p">,</span> <span class="n">include_headings</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">page</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">page</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
-            <span class="n">page</span><span class="p">[</span><span class="s1">&#39;page_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page_id</span>
+            <span class="n">page</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
+            <span class="n">page</span><span class="p">[</span><span class="s2">&quot;page_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page_id</span>
             <span class="k">if</span> <span class="n">include_headings</span><span class="p">:</span>
-                <span class="n">page</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+                <span class="n">page</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">page</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
 
             <span class="k">yield</span> <span class="n">page</span>
 
@@ -615,53 +714,55 @@
 <span class="sd">        str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">wikitext</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
     <span class="c1"># remove templates</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">_remove_templates</span><span class="p">(</span><span class="n">wikitext</span><span class="p">)</span>
 
     <span class="c1"># remove irrelevant spans</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_comments</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_ignored_html_tags</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\2&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_self_closing_html_tags</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_dropped_elements</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_categories</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_files_images</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># TODO: keep file/image captions?</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_comments</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_ignored_html_tags</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\2&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_self_closing_html_tags</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_dropped_elements</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_categories</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_files_images</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># TODO: keep file/image captions?</span>
 
     <span class="c1"># replace external links with just labels or just URLs</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">_replace_external_links</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># drop magic words behavioral switches</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_magic_words</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_magic_words</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># replace internal links with just their labels</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">_replace_internal_links</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="c1"># text = _replace_internal_links(text)  # TODO: is this needed?</span>
 
     <span class="c1"># remove table markup</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;||&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">|&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;!!&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">!&#39;</span><span class="p">)</span>  <span class="c1"># put each cell on a separate line</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_table_formatting</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># remove formatting lines</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_table_cell_formatting</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\\</span><span class="s1">3&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># leave only cell content</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;||&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">|&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+        <span class="s2">&quot;!!&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">!&quot;</span>
+    <span class="p">)</span>  <span class="c1"># put each cell on a separate line</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_table_formatting</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># remove formatting lines</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_table_cell_formatting</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\\</span><span class="s2">3&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>  <span class="c1"># leave only cell content</span>
 
     <span class="c1"># strip out text formatting</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re_italic_quote</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&quot;\1&quot;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_bold_italic</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_bold_italic</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re_quote_quote</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&quot;\1&quot;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># unescape html entities</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">ftfy</span><span class="o">.</span><span class="n">fixes</span><span class="o">.</span><span class="n">unescape_html</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># final cleanup</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_headings</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\n\2\n\n&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_dots</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_brackets</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[[&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;«&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;»&#39;</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_random_cruft</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\W+?\n&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\n&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,,&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,.&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_spaces</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re_linebreaks</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n\n&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_headings</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\n\n\2\n\n&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_dots</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_brackets</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[[&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;«&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;»&quot;</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_random_cruft</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\n\W+?\n&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\n&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,,&quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,.&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_spaces</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re_linebreaks</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\n\n&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
 
@@ -676,10 +777,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">cur_idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="n">open_delim</span><span class="o">=</span><span class="s1">&#39;{{&#39;</span><span class="p">,</span> <span class="n">close_delim</span><span class="o">=</span><span class="s1">&#39;}}&#39;</span><span class="p">):</span>
-        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:</span> <span class="n">s</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="n">open_delim</span><span class="o">=</span><span class="s2">&quot;{{&quot;</span><span class="p">,</span> <span class="n">close_delim</span><span class="o">=</span><span class="s2">&quot;}}&quot;</span><span class="p">):</span>
+        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:</span><span class="n">s</span><span class="p">])</span>
         <span class="n">cur_idx</span> <span class="o">=</span> <span class="n">e</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
     <span class="c1"># below is gensim&#39;s solution; it&#39;s slow...</span>
     <span class="c1"># n_openings = 0</span>
     <span class="c1"># n_closings = 0</span>
@@ -709,7 +810,7 @@
     <span class="c1">#     for opening_idx, closing_idx in zip(opening_idxs + [None], [-1] + closing_idxs))</span>
 
 
-<span class="k">def</span> <span class="nf">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="n">open_delim</span><span class="o">=</span><span class="s1">&#39;[[&#39;</span><span class="p">,</span> <span class="n">close_delim</span><span class="o">=</span><span class="s1">&#39;]]&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="n">open_delim</span><span class="o">=</span><span class="s2">&quot;[[&quot;</span><span class="p">,</span> <span class="n">close_delim</span><span class="o">=</span><span class="s2">&quot;]]&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        wikitext (str)</span>
@@ -723,7 +824,8 @@
     <span class="n">open_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">open_delim</span><span class="p">)</span>
     <span class="n">re_open</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">open_pattern</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
     <span class="n">re_open_or_close</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-        <span class="n">open_pattern</span> <span class="o">+</span> <span class="s1">&#39;|&#39;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">close_delim</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+        <span class="n">open_pattern</span> <span class="o">+</span> <span class="s2">&quot;|&quot;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">close_delim</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span>
+    <span class="p">)</span>
 
     <span class="n">openings</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">cur_idx</span> <span class="o">=</span> <span class="mi">0</span>
@@ -763,28 +865,28 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pieces</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">cur_idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="s1">&#39;[[&#39;</span><span class="p">,</span> <span class="s1">&#39;]]&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">_get_delimited_spans</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="s2">&quot;[[&quot;</span><span class="p">,</span> <span class="s2">&quot;]]&quot;</span><span class="p">):</span>
         <span class="n">link_trail</span> <span class="o">=</span> <span class="n">re_link_trails</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">wikitext</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">link_trail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">link_trail</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
             <span class="n">link_trail</span> <span class="o">=</span> <span class="n">link_trail</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">e</span>
-            <span class="n">link_trail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">span_content</span> <span class="o">=</span> <span class="n">wikitext</span><span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span> <span class="n">e</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="n">pipe_idx</span> <span class="o">=</span> <span class="n">span_content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="n">link_trail</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">span_content</span> <span class="o">=</span> <span class="n">wikitext</span><span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">e</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">pipe_idx</span> <span class="o">=</span> <span class="n">span_content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pipe_idx</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="n">span_content</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">last_pipe_idx</span> <span class="o">=</span> <span class="n">span_content</span><span class="p">[</span><span class="n">pipe_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="n">span_content</span><span class="p">[</span><span class="n">pipe_idx</span> <span class="o">+</span> <span class="n">last_pipe_idx</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:</span> <span class="n">s</span><span class="p">])</span>
+            <span class="n">last_pipe_idx</span> <span class="o">=</span> <span class="n">span_content</span><span class="p">[</span><span class="n">pipe_idx</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">span_content</span><span class="p">[</span><span class="n">pipe_idx</span> <span class="o">+</span> <span class="n">last_pipe_idx</span> <span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:</span><span class="n">s</span><span class="p">])</span>
         <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
         <span class="n">cur_idx</span> <span class="o">=</span> <span class="n">end</span>
     <span class="c1"># add leftovers</span>
     <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:])</span>
 
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_replace_external_links</span><span class="p">(</span><span class="n">wikitext</span><span class="p">):</span>
@@ -799,15 +901,15 @@
     <span class="n">cur_idx</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re_ext_link</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">wikitext</span><span class="p">):</span>
         <span class="n">content</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">space_idx</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">space_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">space_idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">content</span>
-        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()])</span>
+        <span class="n">space_idx</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">space_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span> <span class="k">if</span> <span class="n">space_idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">content</span>
+        <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span> <span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()])</span>
         <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
         <span class="n">cur_idx</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
     <span class="c1"># add leftovers</span>
     <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wikitext</span><span class="p">[</span><span class="n">cur_idx</span><span class="p">:])</span>
 
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
 </pre></div>
 
            </div>

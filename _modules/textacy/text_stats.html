@@ -250,8 +250,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">n_sents</span>
         <span class="c1"># get objs for basic count computations</span>
         <span class="n">hyphenator</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">load_hyphenator</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
-        <span class="n">words</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">filter_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filter_stops</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_nums</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-        <span class="n">syllables_per_word</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hyphenator</span><span class="o">.</span><span class="n">positions</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower_</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">filter_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filter_stops</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_nums</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">syllables_per_word</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">hyphenator</span><span class="o">.</span><span class="n">positions</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower_</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span>
+        <span class="p">)</span>
         <span class="n">chars_per_word</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span>
         <span class="c1"># compute basic counts needed for most readability stats</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
@@ -269,15 +273,15 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">flesch_reading_ease</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">flesch_reading_ease</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
-            <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">flesch_readability_ease</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;For backwards compatibility. Deprecated.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">flesch_readability_ease</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
-            <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">smog_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -306,35 +310,45 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">wiener_sachtextformel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">wiener_sachtextformel</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_polysyllable_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_monosyllable_words</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_long_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
-            <span class="n">variant</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_polysyllable_words</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_monosyllable_words</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_long_words</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
+            <span class="n">variant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">basic_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;n_sents&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
-                <span class="s1">&#39;n_words&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span>
-                <span class="s1">&#39;n_chars&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_chars</span><span class="p">,</span>
-                <span class="s1">&#39;n_syllables&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span>
-                <span class="s1">&#39;n_unique_words&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_unique_words</span><span class="p">,</span>
-                <span class="s1">&#39;n_long_words&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_long_words</span><span class="p">,</span>
-                <span class="s1">&#39;n_monosyllable_words&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_monosyllable_words</span><span class="p">,</span>
-                <span class="s1">&#39;n_polysyllable_words&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_polysyllable_words</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;n_sents&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_sents</span><span class="p">,</span>
+            <span class="s2">&quot;n_words&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span>
+            <span class="s2">&quot;n_chars&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_chars</span><span class="p">,</span>
+            <span class="s2">&quot;n_syllables&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_syllables</span><span class="p">,</span>
+            <span class="s2">&quot;n_unique_words&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_unique_words</span><span class="p">,</span>
+            <span class="s2">&quot;n_long_words&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_long_words</span><span class="p">,</span>
+            <span class="s2">&quot;n_monosyllable_words&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_monosyllable_words</span><span class="p">,</span>
+            <span class="s2">&quot;n_polysyllable_words&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_polysyllable_words</span><span class="p">,</span>
+        <span class="p">}</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">readability_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;readability stats can&#39;t be computed because doc has 0 words&quot;</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;readability stats can&#39;t be computed because doc has 0 words&quot;</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;flesch_kincaid_grade_level&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flesch_kincaid_grade_level</span><span class="p">,</span>
-                <span class="s1">&#39;flesch_reading_ease&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flesch_reading_ease</span><span class="p">,</span>
-                <span class="s1">&#39;smog_index&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">smog_index</span><span class="p">,</span>
-                <span class="s1">&#39;gunning_fog_index&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gunning_fog_index</span><span class="p">,</span>
-                <span class="s1">&#39;coleman_liau_index&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">coleman_liau_index</span><span class="p">,</span>
-                <span class="s1">&#39;automated_readability_index&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">automated_readability_index</span><span class="p">,</span>
-                <span class="s1">&#39;lix&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lix</span><span class="p">,</span>
-                <span class="s1">&#39;gulpease_index&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gulpease_index</span><span class="p">,</span>
-                <span class="s1">&#39;wiener_sachtextformel&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wiener_sachtextformel</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;flesch_kincaid_grade_level&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flesch_kincaid_grade_level</span><span class="p">,</span>
+            <span class="s2">&quot;flesch_reading_ease&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flesch_reading_ease</span><span class="p">,</span>
+            <span class="s2">&quot;smog_index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">smog_index</span><span class="p">,</span>
+            <span class="s2">&quot;gunning_fog_index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gunning_fog_index</span><span class="p">,</span>
+            <span class="s2">&quot;coleman_liau_index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">coleman_liau_index</span><span class="p">,</span>
+            <span class="s2">&quot;automated_readability_index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">automated_readability_index</span><span class="p">,</span>
+            <span class="s2">&quot;lix&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lix</span><span class="p">,</span>
+            <span class="s2">&quot;gulpease_index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">gulpease_index</span><span class="p">,</span>
+            <span class="s2">&quot;wiener_sachtextformel&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wiener_sachtextformel</span><span class="p">,</span>
+        <span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="flesch_kincaid_grade_level"><a class="viewcode-back" href="../../api_reference.html#textacy.text_stats.flesch_kincaid_grade_level">[docs]</a><span class="k">def</span> <span class="nf">flesch_kincaid_grade_level</span><span class="p">(</span><span class="n">n_syllables</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">n_sents</span><span class="p">):</span>
@@ -367,25 +381,26 @@
 <span class="sd">        Dutch: ?</span>
 <span class="sd">        Russian: https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D0%B4%D0%B5%D0%BA%D1%81_%D1%83%D0%B4%D0%BE%D0%B1%D0%BE%D1%87%D0%B8%D1%82%D0%B0%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D0%B8</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;en&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">206.835</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.015</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">84.6</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;de&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">180.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">58.5</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;es&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;es&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">206.84</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.02</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">60.0</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;fr&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;fr&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">207.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.015</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">73.6</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;it&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;it&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">217.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">60.0</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;nl&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;nl&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">206.84</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.93</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">77.0</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s1">&#39;ru&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">lang</span> <span class="o">==</span> <span class="s2">&quot;ru&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">206.835</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">60.1</span> <span class="o">*</span> <span class="n">n_syllables</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">langs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;ru&#39;</span><span class="p">]</span>
+        <span class="n">langs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">,</span> <span class="s2">&quot;es&quot;</span><span class="p">,</span> <span class="s2">&quot;fr&quot;</span><span class="p">,</span> <span class="s2">&quot;it&quot;</span><span class="p">,</span> <span class="s2">&quot;nl&quot;</span><span class="p">,</span> <span class="s2">&quot;ru&quot;</span><span class="p">]</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;Flesch Reading Ease is only implemented for these languages: </span><span class="si">{}</span><span class="s1">. &#39;</span>
-            <span class="s1">&#39;Passing `lang=None` falls back to &quot;en&quot; (English)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">langs</span><span class="p">))</span></div>
+            <span class="s2">&quot;Flesch Reading Ease is only implemented for these languages: </span><span class="si">{}</span><span class="s2">. &quot;</span>
+            <span class="s1">&#39;Passing `lang=None` falls back to &quot;en&quot; (English)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">langs</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="flesch_readability_ease"><a class="viewcode-back" href="../../api_reference.html#textacy.text_stats.flesch_readability_ease">[docs]</a><span class="k">def</span> <span class="nf">flesch_readability_ease</span><span class="p">(</span><span class="n">n_syllables</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">n_sents</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -395,9 +410,10 @@
 <span class="sd">    Deprecated!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">utils</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
-        <span class="s1">&#39;`flesch_readability_ease()` is an alias for `flesch_reading_ease()` &#39;</span>
-        <span class="s1">&#39;for backwards compatibility; it will be removed in a future version.&#39;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;once&#39;</span><span class="p">)</span>
+        <span class="s2">&quot;`flesch_readability_ease()` is an alias for `flesch_reading_ease()` &quot;</span>
+        <span class="s2">&quot;for backwards compatibility; it will be removed in a future version.&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;once&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">flesch_reading_ease</span><span class="p">(</span><span class="n">n_syllables</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">n_sents</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">)</span></div>
 
 
@@ -412,7 +428,7 @@
 <span class="sd">        https://en.wikipedia.org/wiki/SMOG</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">n_sents</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;SMOG score may be unreliable for n_sents &lt; 30&#39;</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;SMOG score may be unreliable for n_sents &lt; 30&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="mf">1.0430</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="n">n_polysyllable_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">))</span> <span class="o">+</span> <span class="mf">3.1291</span></div>
 
 
@@ -464,9 +480,14 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">n_words</span> <span class="o">/</span> <span class="n">n_sents</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">n_long_words</span> <span class="o">/</span> <span class="n">n_words</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="wiener_sachtextformel"><a class="viewcode-back" href="../../api_reference.html#textacy.text_stats.wiener_sachtextformel">[docs]</a><span class="k">def</span> <span class="nf">wiener_sachtextformel</span><span class="p">(</span><span class="n">n_words</span><span class="p">,</span> <span class="n">n_polysyllable_words</span><span class="p">,</span> <span class="n">n_monosyllable_words</span><span class="p">,</span>
-                          <span class="n">n_long_words</span><span class="p">,</span> <span class="n">n_sents</span><span class="p">,</span>
-                          <span class="n">variant</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="wiener_sachtextformel"><a class="viewcode-back" href="../../api_reference.html#textacy.text_stats.wiener_sachtextformel">[docs]</a><span class="k">def</span> <span class="nf">wiener_sachtextformel</span><span class="p">(</span>
+    <span class="n">n_words</span><span class="p">,</span>
+    <span class="n">n_polysyllable_words</span><span class="p">,</span>
+    <span class="n">n_monosyllable_words</span><span class="p">,</span>
+    <span class="n">n_long_words</span><span class="p">,</span>
+    <span class="n">n_sents</span><span class="p">,</span>
+    <span class="n">variant</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Readability score for German-language texts, whose value estimates the grade</span>
 <span class="sd">    level required to understand a text. Higher value =&gt; more difficult text.</span>
@@ -487,7 +508,7 @@
     <span class="k">elif</span> <span class="n">variant</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">0.2744</span> <span class="o">*</span> <span class="n">ms</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.2656</span> <span class="o">*</span> <span class="n">sl</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.693</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;``variant`` value invalid; must be 1, 2, 3, or 4&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;``variant`` value invalid; must be 1, 2, 3, or 4&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="gulpease_index"><a class="viewcode-back" href="../../api_reference.html#textacy.text_stats.gulpease_index">[docs]</a><span class="k">def</span> <span class="nf">gulpease_index</span><span class="p">(</span><span class="n">n_chars</span><span class="p">,</span> <span class="n">n_words</span><span class="p">,</span> <span class="n">n_sents</span><span class="p">):</span>

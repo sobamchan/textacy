@@ -180,7 +180,7 @@
 <span class="c1"># TODO: Do something smarter for averaging emotional valences?</span>
 
 
-<div class="viewcode-block" id="emotional_valence"><a class="viewcode-back" href="../../api_reference.html#textacy.lexicon_methods.emotional_valence">[docs]</a><span class="k">def</span> <span class="nf">emotional_valence</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dm_data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dm_weighting</span><span class="o">=</span><span class="s1">&#39;normfreq&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="emotional_valence"><a class="viewcode-back" href="../../api_reference.html#textacy.lexicon_methods.emotional_valence">[docs]</a><span class="k">def</span> <span class="nf">emotional_valence</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dm_data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dm_weighting</span><span class="o">=</span><span class="s2">&quot;normfreq&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get average emotional valence over all words for the following emotions --</span>
 <span class="sd">    AFRAID, AMUSED, ANGRY, ANNOYED, DONT_CARE, HAPPY, INSPIRED, SAD -- using</span>
@@ -209,12 +209,12 @@
 <span class="sd">        :func:`cache.load_depechemood() &lt;textacy.cache.load_depechemood&gt;`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dm</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">load_depechemood</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">dm_data_dir</span><span class="p">,</span> <span class="n">weighting</span><span class="o">=</span><span class="n">dm_weighting</span><span class="p">)</span>
-    <span class="n">pos_to_letter</span> <span class="o">=</span> <span class="p">{</span><span class="n">NOUN</span><span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">ADJ</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">ADV</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">VERB</span><span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">}</span>
+    <span class="n">pos_to_letter</span> <span class="o">=</span> <span class="p">{</span><span class="n">NOUN</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="n">ADJ</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">ADV</span><span class="p">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">VERB</span><span class="p">:</span> <span class="s2">&quot;v&quot;</span><span class="p">}</span>
     <span class="n">emo_matches</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">emo_scores</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">pos</span> <span class="ow">in</span> <span class="n">pos_to_letter</span><span class="p">:</span>
-            <span class="n">lemma_pos</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">lemma_</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="n">pos_to_letter</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span>
+            <span class="n">lemma_pos</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">lemma_</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">pos_to_letter</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">emo</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">dm</span><span class="p">[</span><span class="n">lemma_pos</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
@@ -239,29 +239,33 @@
 <span class="sd">            on disk under ``data_dir``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">,</span> <span class="s1">&#39;depechemood&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;DepecheMood_V1.0&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">,</span> <span class="s2">&quot;depechemood&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;DepecheMood_V1.0&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s1">&#39;DepecheMood data already exists in </span><span class="si">%s</span><span class="s1">; skipping download...&#39;</span><span class="p">,</span>
-            <span class="n">data_dir</span><span class="p">)</span>
+            <span class="s2">&quot;DepecheMood data already exists in </span><span class="si">%s</span><span class="s2">; skipping download...&quot;</span><span class="p">,</span> <span class="n">data_dir</span>
+        <span class="p">)</span>
         <span class="k">return</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/marcoguerini/DepecheMood/releases/download/v1.0/DepecheMood_V1.0.zip&#39;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/marcoguerini/DepecheMood/releases/download/v1.0/DepecheMood_V1.0.zip&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-            <span class="s1">&#39;Unable to download DepecheMood from </span><span class="si">%s</span><span class="s1">; URL status code = </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="n">url</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+            <span class="s2">&quot;Unable to download DepecheMood from </span><span class="si">%s</span><span class="s2">; URL status code = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">url</span><span class="p">,</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">raise</span>
     <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DepecheMood_V1.0/DepecheMood_freq.txt&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;DepecheMood_V1.0/DepecheMood_normfreq.txt&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;DepecheMood_V1.0/DepecheMood_tfidf.txt&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;DepecheMood_V1.0/README.txt&#39;</span><span class="p">]</span>
+        <span class="n">members</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;DepecheMood_V1.0/DepecheMood_freq.txt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DepecheMood_V1.0/DepecheMood_normfreq.txt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DepecheMood_V1.0/DepecheMood_tfidf.txt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DepecheMood_V1.0/README.txt&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
         <span class="n">f</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">members</span><span class="o">=</span><span class="n">members</span><span class="p">)</span>
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="s1">&#39;Downloaded DepecheMood (4MB) from </span><span class="si">%s</span><span class="s1"> and wrote it to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-        <span class="n">url</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">)</span></div>
+        <span class="s2">&quot;Downloaded DepecheMood (4MB) from </span><span class="si">%s</span><span class="s2"> and wrote it to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data_dir</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

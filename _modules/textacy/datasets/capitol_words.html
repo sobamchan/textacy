@@ -192,11 +192,13 @@
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;capitol_words&#39;</span>
-<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Collection of ~11k speeches in the Congressional Record given by &#39;</span>
-               <span class="s1">&#39;notable U.S. politicians between Jan 1996 and Jun 2016.&#39;</span><span class="p">)</span>
-<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s1">&#39;http://sunlightlabs.github.io/Capitol-Words/&#39;</span>  <span class="c1"># TODO: change to propublica?</span>
-<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/bdewilde/textacy-data/releases/download/&#39;</span>
+<span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;capitol_words&quot;</span>
+<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Collection of ~11k speeches in the Congressional Record given by &quot;</span>
+    <span class="s2">&quot;notable U.S. politicians between Jan 1996 and Jun 2016.&quot;</span>
+<span class="p">)</span>
+<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">&quot;http://sunlightlabs.github.io/Capitol-Words/&quot;</span>  <span class="c1"># TODO: change to propublica?</span>
+<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/bdewilde/textacy-data/releases/download/&quot;</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span>
 
 
@@ -264,22 +266,35 @@
 <span class="sd">            speeches were given, e.g. 114.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">min_date</span> <span class="o">=</span> <span class="s1">&#39;1996-01-01&#39;</span>
-    <span class="n">max_date</span> <span class="o">=</span> <span class="s1">&#39;2016-06-30&#39;</span>
+    <span class="n">min_date</span> <span class="o">=</span> <span class="s2">&quot;1996-01-01&quot;</span>
+    <span class="n">max_date</span> <span class="o">=</span> <span class="s2">&quot;2016-06-30&quot;</span>
     <span class="n">speaker_names</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;Barack Obama&#39;</span><span class="p">,</span> <span class="s1">&#39;Bernie Sanders&#39;</span><span class="p">,</span> <span class="s1">&#39;Hillary Clinton&#39;</span><span class="p">,</span> <span class="s1">&#39;Jim Webb&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Joe Biden&#39;</span><span class="p">,</span> <span class="s1">&#39;John Kasich&#39;</span><span class="p">,</span> <span class="s1">&#39;Joseph Biden&#39;</span><span class="p">,</span> <span class="s1">&#39;Lincoln Chafee&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Lindsey Graham&#39;</span><span class="p">,</span> <span class="s1">&#39;Marco Rubio&#39;</span><span class="p">,</span> <span class="s1">&#39;Mike Pence&#39;</span><span class="p">,</span> <span class="s1">&#39;Rand Paul&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Rick Santorum&#39;</span><span class="p">,</span> <span class="s1">&#39;Ted Cruz&#39;</span><span class="p">}</span>
-    <span class="n">speaker_parties</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">}</span>
-    <span class="n">chambers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Extensions&#39;</span><span class="p">,</span> <span class="s1">&#39;House&#39;</span><span class="p">,</span> <span class="s1">&#39;Senate&#39;</span><span class="p">}</span>
+        <span class="s2">&quot;Barack Obama&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Bernie Sanders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Hillary Clinton&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Jim Webb&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Joe Biden&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;John Kasich&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Joseph Biden&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Lincoln Chafee&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Lindsey Graham&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Marco Rubio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Mike Pence&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Rand Paul&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Rick Santorum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Ted Cruz&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">speaker_parties</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">}</span>
+    <span class="n">chambers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Extensions&quot;</span><span class="p">,</span> <span class="s2">&quot;House&quot;</span><span class="p">,</span> <span class="s2">&quot;Senate&quot;</span><span class="p">}</span>
     <span class="n">congresses</span> <span class="o">=</span> <span class="p">{</span><span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">114</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CapitolWords</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span> <span class="o">=</span> <span class="s1">&#39;capitol-words-py</span><span class="si">{py_version}</span><span class="s1">.json.gz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">py_version</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span> <span class="o">=</span> <span class="s2">&quot;capitol-words-py</span><span class="si">{py_version}</span><span class="s2">.json.gz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">py_version</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="mi">3</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -302,23 +317,29 @@
 <span class="sd">            force (bool): If True, download the dataset, even if it already</span>
 <span class="sd">                exists on disk under ``data_dir``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">release_tag</span> <span class="o">=</span> <span class="s1">&#39;capitol_words_py</span><span class="si">{py_version}</span><span class="s1">_v</span><span class="si">{data_version}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">py_version</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="mi">3</span><span class="p">,</span>
-            <span class="n">data_version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">DOWNLOAD_ROOT</span><span class="p">,</span> <span class="n">release_tag</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span><span class="p">)</span>
+        <span class="n">release_tag</span> <span class="o">=</span> <span class="s2">&quot;capitol_words_py</span><span class="si">{py_version}</span><span class="s2">_v</span><span class="si">{data_version}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">py_version</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="mi">3</span><span class="p">,</span> <span class="n">data_version</span><span class="o">=</span><span class="mf">1.0</span>
+        <span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">DOWNLOAD_ROOT</span><span class="p">,</span> <span class="n">release_tag</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">filestub</span><span class="p">)</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;File </span><span class="si">%s</span><span class="s1"> already exists; skipping download...&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">%s</span><span class="s2"> already exists; skipping download...&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s1">&#39;Downloading data from </span><span class="si">%s</span><span class="s1"> and writing it to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading data from </span><span class="si">%s</span><span class="s2"> and writing it to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
         <span class="n">io</span><span class="o">.</span><span class="n">write_http_stream</span><span class="p">(</span>
-            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span></div>
+            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="CapitolWords.texts"><a class="viewcode-back" href="../../../api_reference.html#textacy.datasets.capitol_words.CapitolWords.texts">[docs]</a>    <span class="k">def</span> <span class="nf">texts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speaker_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">speaker_party</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chamber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-              <span class="n">congress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_len</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="CapitolWords.texts"><a class="viewcode-back" href="../../../api_reference.html#textacy.datasets.capitol_words.CapitolWords.texts">[docs]</a>    <span class="k">def</span> <span class="nf">texts</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">speaker_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">speaker_party</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">chamber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">congress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">date_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_len</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over speeches (text-only) in this dataset, optionally filtering</span>
 <span class="sd">        by a variety of metadata and/or text length, in chronological order.</span>
@@ -349,14 +370,28 @@
 <span class="sd">            ValueError: If any filtering options are invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">texts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterate</span><span class="p">(</span>
-            <span class="kc">True</span><span class="p">,</span> <span class="n">speaker_name</span><span class="o">=</span><span class="n">speaker_name</span><span class="p">,</span> <span class="n">speaker_party</span><span class="o">=</span><span class="n">speaker_party</span><span class="p">,</span>
-            <span class="n">chamber</span><span class="o">=</span><span class="n">chamber</span><span class="p">,</span> <span class="n">congress</span><span class="o">=</span><span class="n">congress</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="n">date_range</span><span class="p">,</span>
-            <span class="n">min_len</span><span class="o">=</span><span class="n">min_len</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">speaker_name</span><span class="o">=</span><span class="n">speaker_name</span><span class="p">,</span>
+            <span class="n">speaker_party</span><span class="o">=</span><span class="n">speaker_party</span><span class="p">,</span>
+            <span class="n">chamber</span><span class="o">=</span><span class="n">chamber</span><span class="p">,</span>
+            <span class="n">congress</span><span class="o">=</span><span class="n">congress</span><span class="p">,</span>
+            <span class="n">date_range</span><span class="o">=</span><span class="n">date_range</span><span class="p">,</span>
+            <span class="n">min_len</span><span class="o">=</span><span class="n">min_len</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">text</span></div>
 
-<div class="viewcode-block" id="CapitolWords.records"><a class="viewcode-back" href="../../../api_reference.html#textacy.datasets.capitol_words.CapitolWords.records">[docs]</a>    <span class="k">def</span> <span class="nf">records</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speaker_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">speaker_party</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chamber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">congress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_len</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="CapitolWords.records"><a class="viewcode-back" href="../../../api_reference.html#textacy.datasets.capitol_words.CapitolWords.records">[docs]</a>    <span class="k">def</span> <span class="nf">records</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">speaker_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">speaker_party</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">chamber</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">congress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">date_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_len</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over speeches (text and metadata) in this dataset, optionally</span>
 <span class="sd">        filtering by a variety of metadata and/or text length, in chronological order.</span>
@@ -387,70 +422,90 @@
 <span class="sd">            ValueError: If any filtering options are invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterate</span><span class="p">(</span>
-            <span class="kc">False</span><span class="p">,</span> <span class="n">speaker_name</span><span class="p">,</span> <span class="n">speaker_party</span><span class="p">,</span> <span class="n">chamber</span><span class="p">,</span> <span class="n">congress</span><span class="p">,</span> <span class="n">date_range</span><span class="p">,</span>
-            <span class="n">min_len</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+            <span class="kc">False</span><span class="p">,</span>
+            <span class="n">speaker_name</span><span class="p">,</span>
+            <span class="n">speaker_party</span><span class="p">,</span>
+            <span class="n">chamber</span><span class="p">,</span>
+            <span class="n">congress</span><span class="p">,</span>
+            <span class="n">date_range</span><span class="p">,</span>
+            <span class="n">min_len</span><span class="p">,</span>
+            <span class="n">limit</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">record</span></div>
 
-    <span class="k">def</span> <span class="nf">_iterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_only</span><span class="p">,</span> <span class="n">speaker_name</span><span class="p">,</span> <span class="n">speaker_party</span><span class="p">,</span> <span class="n">chamber</span><span class="p">,</span> <span class="n">congress</span><span class="p">,</span>
-                 <span class="n">date_range</span><span class="p">,</span> <span class="n">min_len</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_iterate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">text_only</span><span class="p">,</span>
+        <span class="n">speaker_name</span><span class="p">,</span>
+        <span class="n">speaker_party</span><span class="p">,</span>
+        <span class="n">chamber</span><span class="p">,</span>
+        <span class="n">congress</span><span class="p">,</span>
+        <span class="n">date_range</span><span class="p">,</span>
+        <span class="n">min_len</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Low-level method to iterate over the records in this dataset. Used by</span>
 <span class="sd">        :meth:`CapitolWords.texts()` and :meth:`CapitolWords.records()`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> file not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> file not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">speaker_name</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">speaker_name</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
                 <span class="n">speaker_name</span> <span class="o">=</span> <span class="p">{</span><span class="n">speaker_name</span><span class="p">}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speaker_names</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">speaker_name</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;all values in `speaker_name` must be valid; &#39;</span>
-                    <span class="s1">&#39;see :attr:`CapitolWords.speaker_names`&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;all values in `speaker_name` must be valid; &quot;</span>
+                    <span class="s2">&quot;see :attr:`CapitolWords.speaker_names`&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">speaker_party</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">speaker_party</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
                 <span class="n">speaker_party</span> <span class="o">=</span> <span class="p">{</span><span class="n">speaker_party</span><span class="p">}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speaker_parties</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">speaker_party</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;all values in `speaker_party` must be valid; &#39;</span>
-                    <span class="s1">&#39;see :attr:`CapitolWords.speaker_parties`&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;all values in `speaker_party` must be valid; &quot;</span>
+                    <span class="s2">&quot;see :attr:`CapitolWords.speaker_parties`&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">chamber</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chamber</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
                 <span class="n">chamber</span> <span class="o">=</span> <span class="p">{</span><span class="n">chamber</span><span class="p">}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chambers</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">chamber</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;all values in `chamber` must be valid; &#39;</span>
-                    <span class="s1">&#39;see :attr:`CapitolWords.chambers`&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;all values in `chamber` must be valid; &quot;</span>
+                    <span class="s2">&quot;see :attr:`CapitolWords.chambers`&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">congress</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">congress</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="n">congress</span> <span class="o">=</span> <span class="p">{</span><span class="n">congress</span><span class="p">}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">congresses</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">congress</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;all values in `congress` must be valid; &#39;</span>
-                    <span class="s1">&#39;see :attr:`CapitolWords.congresses`&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;all values in `congress` must be valid; &quot;</span>
+                    <span class="s2">&quot;see :attr:`CapitolWords.congresses`&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">date_range</span><span class="p">:</span>
             <span class="n">date_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_date_range</span><span class="p">(</span><span class="n">date_range</span><span class="p">)</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;rb&#39;</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="s1">&#39;rt&#39;</span>  <span class="c1"># TODO: check this</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;rb&quot;</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="s2">&quot;rt&quot;</span>  <span class="c1"># TODO: check this</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">io</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
-            <span class="k">if</span> <span class="n">speaker_name</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;speaker_name&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">speaker_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">speaker_name</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;speaker_name&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">speaker_name</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">speaker_party</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;speaker_party&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">speaker_party</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">speaker_party</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;speaker_party&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">speaker_party</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">chamber</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;chamber&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">chamber</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">chamber</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;chamber&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">chamber</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">congress</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;congress&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">congress</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">congress</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;congress&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">congress</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">date_range</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">date_range</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">min_len</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">min_len</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">text_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">line</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+                <span class="k">yield</span> <span class="n">line</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">line</span>
 

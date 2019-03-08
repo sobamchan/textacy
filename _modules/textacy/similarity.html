@@ -167,10 +167,12 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">cytoolz</span> <span class="k">import</span> <span class="n">itertoolz</span>
-<span class="kn">from</span> <span class="nn">Levenshtein</span> <span class="k">import</span> <span class="p">(</span><span class="n">distance</span> <span class="k">as</span> <span class="n">_levenshtein</span><span class="p">,</span>
-                         <span class="n">hamming</span> <span class="k">as</span> <span class="n">_hamming</span><span class="p">,</span>
-                         <span class="n">jaro_winkler</span> <span class="k">as</span> <span class="n">_jaro_winkler</span><span class="p">,</span>
-                         <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">Levenshtein</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">distance</span> <span class="k">as</span> <span class="n">_levenshtein</span><span class="p">,</span>
+    <span class="n">hamming</span> <span class="k">as</span> <span class="n">_hamming</span><span class="p">,</span>
+    <span class="n">jaro_winkler</span> <span class="k">as</span> <span class="n">_jaro_winkler</span><span class="p">,</span>
+    <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pyemd</span> <span class="k">import</span> <span class="n">emd</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">pairwise_distances</span>
 
@@ -179,10 +181,10 @@
 <span class="kn">from</span> <span class="nn">.doc</span> <span class="k">import</span> <span class="n">Doc</span>
 
 
-<span class="n">NONWORDCHARS_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\W+&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+<span class="n">NONWORDCHARS_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\W+&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="word_movers"><a class="viewcode-back" href="../../api_reference.html#textacy.similarity.word_movers">[docs]</a><span class="k">def</span> <span class="nf">word_movers</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="n">doc2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="word_movers"><a class="viewcode-back" href="../../api_reference.html#textacy.similarity.word_movers">[docs]</a><span class="k">def</span> <span class="nf">word_movers</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="n">doc2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Measure the semantic similarity between two documents using Word Movers</span>
 <span class="sd">    Distance.</span>
@@ -213,21 +215,25 @@
         <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">has_vector</span> <span class="ow">and</span> <span class="n">word_idxs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">orth</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
             <span class="n">word_vecs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">vector</span><span class="p">)</span>
             <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">distance_mat</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">word_vecs</span><span class="p">),</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">distance_mat</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">word_vecs</span><span class="p">),</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">double</span>
+    <span class="p">)</span>
     <span class="n">distance_mat</span> <span class="o">/=</span> <span class="n">distance_mat</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
     <span class="n">vec1</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span>
-        <span class="n">word_idxs</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">orth</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">has_vector</span><span class="p">)</span>
-    <span class="n">vec1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vec1</span><span class="p">[</span><span class="n">word_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_idxs</span><span class="p">))])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+        <span class="n">word_idxs</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">orth</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc1</span><span class="p">)</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">has_vector</span>
+    <span class="p">)</span>
+    <span class="n">vec1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">vec1</span><span class="p">[</span><span class="n">word_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_idxs</span><span class="p">))]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
     <span class="n">vec1</span> <span class="o">/=</span> <span class="n">vec1</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># normalize word counts</span>
 
     <span class="n">vec2</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span>
-        <span class="n">word_idxs</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">orth</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc2</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">has_vector</span><span class="p">)</span>
-    <span class="n">vec2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vec2</span><span class="p">[</span><span class="n">word_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_idxs</span><span class="p">))])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+        <span class="n">word_idxs</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">orth</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">extract</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">doc2</span><span class="p">)</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">has_vector</span>
+    <span class="p">)</span>
+    <span class="n">vec2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">vec2</span><span class="p">[</span><span class="n">word_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_idxs</span><span class="p">))]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
     <span class="n">vec2</span> <span class="o">/=</span> <span class="n">vec2</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># normalize word counts</span>
 
     <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">emd</span><span class="p">(</span><span class="n">vec1</span><span class="p">,</span> <span class="n">vec2</span><span class="p">,</span> <span class="n">distance_mat</span><span class="p">)</span></div>
@@ -278,16 +284,19 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">match_threshold</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">match_threshold</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s1">&#39;`match_threshold` should be a float in [0.0, 1.0]; &#39;</span>
-            <span class="s1">&#39;it was automatically converted from the provided int in [0, 100]&#39;</span><span class="p">)</span>
+            <span class="s2">&quot;`match_threshold` should be a float in [0.0, 1.0]; &quot;</span>
+            <span class="s2">&quot;it was automatically converted from the provided int in [0, 100]&quot;</span>
+        <span class="p">)</span>
         <span class="n">match_threshold</span> <span class="o">/=</span> <span class="mi">100</span>
     <span class="n">set1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">obj1</span><span class="p">)</span>
     <span class="n">set2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">obj2</span><span class="p">)</span>
     <span class="n">intersection</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">set1</span> <span class="o">&amp;</span> <span class="n">set2</span><span class="p">)</span>
     <span class="n">union</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">set1</span> <span class="o">|</span> <span class="n">set2</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">fuzzy_match</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj2</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">fuzzy_match</span> <span class="ow">is</span> <span class="kc">True</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj2</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span>
+    <span class="p">):</span>
         <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">set1</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">set2</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">token_sort_ratio</span><span class="p">(</span><span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">)</span> <span class="k">for</span> <span class="n">item2</span> <span class="ow">in</span> <span class="n">set2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">match_threshold</span><span class="p">:</span>
                 <span class="n">intersection</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -295,7 +304,7 @@
             <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">token_sort_ratio</span><span class="p">(</span><span class="n">item2</span><span class="p">,</span> <span class="n">item1</span><span class="p">)</span> <span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">set1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">match_threshold</span><span class="p">:</span>
                 <span class="n">intersection</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">elif</span> <span class="n">fuzzy_match</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;fuzzy matching not possible with str inputs&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fuzzy matching not possible with str inputs&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">intersection</span> <span class="o">/</span> <span class="n">union</span></div>
 
@@ -407,7 +416,7 @@
 
 <span class="k">def</span> <span class="nf">_process_and_sort</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a processed string with tokens sorted then re-joined.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">_process</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">_process</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 
 
 <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -416,8 +425,8 @@
 <span class="sd">    and force everything to lower-case.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">return</span> <span class="n">NONWORDCHARS_REGEX</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">NONWORDCHARS_REGEX</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </pre></div>
 
            </div>

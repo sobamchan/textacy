@@ -191,12 +191,14 @@
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;oxford_text_archive&#39;</span>
-<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Collection of ~2.7k Creative Commons texts from the Oxford Text &#39;</span>
-               <span class="s1">&#39;Archive, containing primarily English-language 16th-20th century &#39;</span>
-               <span class="s1">&#39;literature and history.&#39;</span><span class="p">)</span>
-<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s1">&#39;https://ota.ox.ac.uk/&#39;</span>
-<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/mimno/ota/archive/master.zip&#39;</span>
+<span class="n">NAME</span> <span class="o">=</span> <span class="s2">&quot;oxford_text_archive&quot;</span>
+<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Collection of ~2.7k Creative Commons texts from the Oxford Text &quot;</span>
+    <span class="s2">&quot;Archive, containing primarily English-language 16th-20th century &quot;</span>
+    <span class="s2">&quot;literature and history.&quot;</span>
+<span class="p">)</span>
+<span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://ota.ox.ac.uk/&quot;</span>
+<span class="n">DOWNLOAD_ROOT</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/mimno/ota/archive/master.zip&quot;</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span>
 
 
@@ -254,13 +256,14 @@
 <span class="sd">            dataset, e.g. &quot;Shakespeare, William&quot;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">min_date</span> <span class="o">=</span> <span class="s1">&#39;0018-01-01&#39;</span>
-    <span class="n">max_date</span> <span class="o">=</span> <span class="s1">&#39;1990-01-01&#39;</span>
+    <span class="n">min_date</span> <span class="o">=</span> <span class="s2">&quot;0018-01-01&quot;</span>
+    <span class="n">max_date</span> <span class="o">=</span> <span class="s2">&quot;1990-01-01&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">OxfordTextArchive</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;ota-master.zip&#39;</span><span class="p">)</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">NAME</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span> <span class="n">site_url</span><span class="o">=</span><span class="n">SITE_URL</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;ota-master.zip&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_and_parse_metadata</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
@@ -289,14 +292,12 @@
         <span class="n">url</span> <span class="o">=</span> <span class="n">DOWNLOAD_ROOT</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;File </span><span class="si">%s</span><span class="s1"> already exists; skipping download...&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">%s</span><span class="s2"> already exists; skipping download...&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s1">&#39;Downloading data from </span><span class="si">%s</span><span class="s1"> and writing it to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading data from </span><span class="si">%s</span><span class="s2"> and writing it to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
         <span class="n">io</span><span class="o">.</span><span class="n">write_http_stream</span><span class="p">(</span>
-            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+            <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_and_parse_metadata</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_load_and_parse_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -306,44 +307,47 @@
 <span class="sd">        of the fields, and remove a couple fields that are identical throughout.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> file not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> file not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
 
-        <span class="n">re_extract_year</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d</span><span class="si">{4}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="n">re_extract_year</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d</span><span class="si">{4}</span><span class="s2">)&quot;</span><span class="p">)</span>
         <span class="n">re_extract_authors</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-            <span class="sa">r</span><span class="s1">&#39;(\D+)&#39;</span>
-            <span class="sa">r</span><span class="s1">&#39;(?:, &#39;</span>
-            <span class="sa">r</span><span class="s1">&#39;(?:[bdf]l?\. )?(?:ca. )?\d</span><span class="si">{4}</span><span class="s1">(?:\?| or \d{1,2})?(?:-(?:[bdf]l?\. )?(?:ca. )?\d</span><span class="si">{4}</span><span class="s1">(?:\?| or \d{1,2})?)?|&#39;</span>
-            <span class="sa">r</span><span class="s1">&#39;(?:\d</span><span class="si">{2}</span><span class="s1">th(?:/\d</span><span class="si">{2}</span><span class="s1">th)? cent\.)&#39;</span>
-            <span class="sa">r</span><span class="s1">&#39;\.?)&#39;</span><span class="p">)</span>
-        <span class="n">re_clean_authors</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[,;. ]+|[,.]+\s*?$&#39;</span><span class="p">)</span>
+            <span class="sa">r</span><span class="s2">&quot;(\D+)&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;(?:, &quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;(?:[bdf]l?\. )?(?:ca. )?\d</span><span class="si">{4}</span><span class="s2">(?:\?| or \d{1,2})?(?:-(?:[bdf]l?\. )?(?:ca. )?\d</span><span class="si">{4}</span><span class="s2">(?:\?| or \d{1,2})?)?|&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;(?:\d</span><span class="si">{2}</span><span class="s2">th(?:/\d</span><span class="si">{2}</span><span class="s2">th)? cent\.)&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;\.?)&quot;</span>
+        <span class="p">)</span>
+        <span class="n">re_clean_authors</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[,;. ]+|[,.]+\s*?$&quot;</span><span class="p">)</span>
 
         <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">subf</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;ota-master/metadata.tsv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">subf</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">subf</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;ota-master/metadata.tsv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">subf</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>
                 <span class="c1"># only include English-language works (99.9% of all works)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Language&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;English&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;English&quot;</span><span class="p">):</span>
                     <span class="k">continue</span>
                 <span class="c1"># clean up years</span>
-                <span class="n">year_match</span> <span class="o">=</span> <span class="n">re_extract_year</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">])</span>
+                <span class="n">year_match</span> <span class="o">=</span> <span class="n">re_extract_year</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">year_match</span><span class="p">:</span>
-                    <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year_match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="c1"># extract and clean up authors</span>
-                <span class="n">authors</span> <span class="o">=</span> <span class="n">re_extract_authors</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Author&#39;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Author&#39;</span><span class="p">]]</span>
-                <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">re_clean_authors</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span> <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">authors</span><span class="p">]</span>
+                <span class="n">authors</span> <span class="o">=</span> <span class="n">re_extract_authors</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Author&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Author&quot;</span><span class="p">]]</span>
+                <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Author&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">re_clean_authors</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span> <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">authors</span><span class="p">]</span>
                 <span class="c1"># get rid of uniform &quot;Language&quot; and &quot;License&quot; fields</span>
-                <span class="k">del</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Language&#39;</span><span class="p">]</span>
-                <span class="k">del</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;License&#39;</span><span class="p">]</span>
-                <span class="n">id_</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Language&quot;</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;License&quot;</span><span class="p">]</span>
+                <span class="n">id_</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ID&quot;</span><span class="p">)</span>
                 <span class="n">metadata</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
         <span class="c1"># set authors attribute</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">author</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">)}</span>
+            <span class="n">author</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
 
         <span class="k">return</span> <span class="n">metadata</span>
 
@@ -406,24 +410,25 @@
 <span class="sd">        :meth:`OxfordTextArchive.texts()` and :meth:`OxfordTextArchive.records()`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> file not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> file not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">author</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">author</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
                 <span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">author</span><span class="p">}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">author</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;all values in `author` must be valid; &#39;</span>
-                    <span class="s1">&#39;see :attr:`CapitolWords.authors`&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;all values in `author` must be valid; &quot;</span>
+                    <span class="s2">&quot;see :attr:`CapitolWords.authors`&quot;</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">date_range</span><span class="p">:</span>
             <span class="n">date_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_date_range</span><span class="p">(</span><span class="n">date_range</span><span class="p">)</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
 
                 <span class="c1"># other stuff in zip archive that isn&#39;t a text file</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ota-master/text/&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ota-master/text/&quot;</span><span class="p">):</span>
                     <span class="k">continue</span>
                 <span class="n">id_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">name</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
@@ -432,19 +437,24 @@
                     <span class="k">continue</span>
                 <span class="c1"># filter by metadata</span>
                 <span class="k">if</span> <span class="n">date_range</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="ow">not</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="p">):</span>
                         <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">author</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">a</span> <span class="ow">in</span> <span class="n">author</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+                        <span class="n">a</span> <span class="ow">in</span> <span class="n">author</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">]</span>
+                    <span class="p">):</span>
                         <span class="k">continue</span>
-                <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">min_len</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">:</span>
                     <span class="k">continue</span>
 
                 <span class="k">if</span> <span class="n">text_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">text</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+                    <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
                     <span class="k">yield</span> <span class="n">meta</span>
 
                 <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>

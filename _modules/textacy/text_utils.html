@@ -191,18 +191,20 @@
         <span class="n">cld2_detect</span>
     <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-            <span class="s1">&#39;`cld2-cffi` must be installed to use textacy</span><span class="se">\&#39;</span><span class="s1">s automatic language detection; &#39;</span>
-            <span class="s1">&#39;you may do so via `pip install cld2-cffi` or `pip install textacy[lang]`.&#39;</span>
-            <span class="p">)</span>
+            <span class="s2">&quot;`cld2-cffi` must be installed to use textacy&#39;s automatic language detection; &quot;</span>
+            <span class="s2">&quot;you may do so via `pip install cld2-cffi` or `pip install textacy[lang]`.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span><span class="p">:</span>
-        <span class="n">is_reliable</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">best_guesses</span> <span class="o">=</span> <span class="n">cld2_detect</span><span class="p">(</span><span class="n">compat</span><span class="o">.</span><span class="n">unicode_to_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">bestEffort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">is_reliable</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">best_guesses</span> <span class="o">=</span> <span class="n">cld2_detect</span><span class="p">(</span>
+            <span class="n">compat</span><span class="o">.</span><span class="n">unicode_to_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">bestEffort</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">is_reliable</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">best_guesses</span> <span class="o">=</span> <span class="n">cld2_detect</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">bestEffort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">is_reliable</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s1">&#39;Text language detected with low confidence; best guesses: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="n">best_guesses</span><span class="p">)</span>
+            <span class="s2">&quot;Text language detected with low confidence; best guesses: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">best_guesses</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">best_guesses</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
 
 
@@ -226,7 +228,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="c1"># don&#39;t allow spaces</span>
-    <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="c1"># 2-character acronyms can&#39;t have lower-case letters</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
@@ -235,8 +237,9 @@
     <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="c1"># acronyms must have at least one upper-case letter or start/end with a digit</span>
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">char</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">token</span><span class="p">)</span> <span class="ow">and</span>
-            <span class="ow">not</span> <span class="p">(</span><span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">char</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">token</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+        <span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
+    <span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="c1"># acronyms must have between 2 and 10 alphanumeric characters</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">token</span> <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isalnum</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
@@ -247,8 +250,9 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="keyword_in_context"><a class="viewcode-back" href="../../api_reference.html#textacy.text_utils.keyword_in_context">[docs]</a><span class="k">def</span> <span class="nf">keyword_in_context</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                       <span class="n">window_width</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">print_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="keyword_in_context"><a class="viewcode-back" href="../../api_reference.html#textacy.text_utils.keyword_in_context">[docs]</a><span class="k">def</span> <span class="nf">keyword_in_context</span><span class="p">(</span>
+    <span class="n">text</span><span class="p">,</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">window_width</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">print_only</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Search for ``keyword`` in ``text`` via regular expression, return or print strings</span>
 <span class="sd">    spanning ``window_width`` characters before and after each occurrence of keyword.</span>
@@ -273,16 +277,23 @@
     <span class="n">flags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span> <span class="k">if</span> <span class="n">ignore_case</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">print_only</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">):</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{pre}</span><span class="s1"> </span><span class="si">{kw}</span><span class="s1"> </span><span class="si">{post}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">pre</span><span class="o">=</span><span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">-</span> <span class="n">window_width</span><span class="p">):</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="n">window_width</span><span class="p">),</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{pre}</span><span class="s2"> </span><span class="si">{kw}</span><span class="s2"> </span><span class="si">{post}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">pre</span><span class="o">=</span><span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">-</span> <span class="n">window_width</span><span class="p">)</span> <span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span>
+                    <span class="n">window_width</span>
+                <span class="p">),</span>
                 <span class="n">kw</span><span class="o">=</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span>
-                <span class="n">post</span><span class="o">=</span><span class="n">text</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">():</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">+</span> <span class="n">window_width</span><span class="p">]</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">window_width</span><span class="p">))</span>
+                <span class="n">post</span><span class="o">=</span><span class="n">text</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">+</span> <span class="n">window_width</span><span class="p">]</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">window_width</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">((</span><span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">-</span> <span class="n">window_width</span><span class="p">):</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()],</span>
-                 <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span>
-                 <span class="n">text</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">():</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">+</span> <span class="n">window_width</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">text</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">-</span> <span class="n">window_width</span><span class="p">)</span> <span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()],</span>
+                <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span>
+                <span class="n">text</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">+</span> <span class="n">window_width</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <span class="n">KWIC</span> <span class="o">=</span> <span class="n">keyword_in_context</span>
@@ -307,28 +318,35 @@
 <span class="sd">        into a form that changes or obscures the original meaning of the term.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># get rid of leading/trailing junk characters</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">LEAD_TAIL_CRUFT_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">LEAD_HYPHEN_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">LEAD_TAIL_CRUFT_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">LEAD_HYPHEN_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
     <span class="c1"># handle dangling/backwards parens, don&#39;t allow &#39;(&#39; or &#39;)&#39; to appear without the other</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">term</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">term</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">term</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
-             <span class="k">else</span> <span class="n">term</span> <span class="k">if</span> <span class="s1">&#39;(&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">term</span>
-             <span class="k">else</span> <span class="n">constants</span><span class="o">.</span><span class="n">DANGLING_PARENS_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1\2\3&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">term</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">term</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">term</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">term</span>
+        <span class="k">if</span> <span class="s2">&quot;(&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">term</span>
+        <span class="k">else</span> <span class="n">constants</span><span class="o">.</span><span class="n">DANGLING_PARENS_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1\2\3&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span>
+    <span class="p">)</span>
     <span class="c1"># handle oddly separated hyphenated words</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">term</span> <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">term</span>
-             <span class="k">else</span> <span class="n">constants</span><span class="o">.</span><span class="n">NEG_DIGIT_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1\2&#39;</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">WEIRD_HYPHEN_SPACE_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">))</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">term</span>
+        <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">term</span>
+        <span class="k">else</span> <span class="n">constants</span><span class="o">.</span><span class="n">NEG_DIGIT_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;\1\2&quot;</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">WEIRD_HYPHEN_SPACE_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span>
+    <span class="p">)</span>
     <span class="c1"># handle oddly separated apostrophe&#39;d words</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">WEIRD_APOSTR_SPACE_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\1\2&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
-             <span class="k">if</span> <span class="s2">&quot;&#39;&quot;</span> <span class="ow">in</span> <span class="n">term</span> <span class="k">else</span> <span class="n">term</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">constants</span><span class="o">.</span><span class="n">WEIRD_APOSTR_SPACE_TERM_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\1\2&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;&#39;&quot;</span> <span class="ow">in</span> <span class="n">term</span> <span class="k">else</span> <span class="n">term</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span>
+    <span class="p">)</span>
     <span class="c1"># normalize whitespace</span>
-    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">NONBREAKING_SPACE_REGEX</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">NONBREAKING_SPACE_REGEX</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\w&quot;</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">term</span></div>
 </pre></div>
 

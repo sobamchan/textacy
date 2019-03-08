@@ -194,24 +194,24 @@
     <span class="c1"># Important mark as seen *before* entering recursion to gracefully handle</span>
     <span class="c1"># self-referential objects</span>
     <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">):</span>
         <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;__dict__&#39;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
-                <span class="n">d</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;__dict__&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;__dict__&quot;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;__dict__&quot;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isgetsetdescriptor</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">or</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismemberdescriptor</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
                     <span class="n">size</span> <span class="o">+=</span> <span class="n">_get_size</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">seen</span><span class="p">)</span>
                 <span class="k">break</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="n">size</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">_get_size</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">seen</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">size</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">_get_size</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">seen</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
         <span class="n">size</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">_get_size</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">seen</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">size</span>
 
 
 <span class="n">LRU_CACHE</span> <span class="o">=</span> <span class="n">LRUCache</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TEXTACY_MAX_CACHE_SIZE&#39;</span><span class="p">,</span> <span class="mi">2147483648</span><span class="p">),</span>
-    <span class="n">getsizeof</span><span class="o">=</span><span class="n">_get_size</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TEXTACY_MAX_CACHE_SIZE&quot;</span><span class="p">,</span> <span class="mi">2147483648</span><span class="p">),</span> <span class="n">getsizeof</span><span class="o">=</span><span class="n">_get_size</span>
+<span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;:class:`cachetools.LRUCache`: Least Recently Used (LRU) cache for loaded data.</span>
 
 <span class="sd">The max cache size may be set by the `TEXTACY_MAX_CACHE_SIZE` environment variable,</span>
@@ -225,7 +225,7 @@
     <span class="n">LRU_CACHE</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="load_spacy"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_spacy">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s1">&#39;spacy&#39;</span><span class="p">))</span>
+<div class="viewcode-block" id="load_spacy"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_spacy">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s2">&quot;spacy&quot;</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">load_spacy</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load a spaCy pipeline (model weights as binary data, ordered sequence of</span>
@@ -253,7 +253,7 @@
     <span class="k">return</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="n">disable</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_hyphenator"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_hyphenator">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s1">&#39;hyphenator&#39;</span><span class="p">))</span>
+<div class="viewcode-block" id="load_hyphenator"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_hyphenator">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s2">&quot;hyphenator&quot;</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">load_hyphenator</span><span class="p">(</span><span class="n">lang</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load an object that hyphenates words at valid points, as used in LaTex typesetting.</span>
@@ -272,12 +272,13 @@
 <span class="sd">        not all syllable divisions are valid hyphenation points. But it&#39;s decent.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">pyphen</span>
+
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading &quot;</span><span class="si">%s</span><span class="s1">&quot; language hyphenator&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pyphen</span><span class="o">.</span><span class="n">Pyphen</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_depechemood"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_depechemood">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s1">&#39;depechemood&#39;</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">load_depechemood</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weighting</span><span class="o">=</span><span class="s1">&#39;normfreq&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="load_depechemood"><a class="viewcode-back" href="../../api_reference.html#textacy.cache.load_depechemood">[docs]</a><span class="nd">@cached</span><span class="p">(</span><span class="n">LRU_CACHE</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">hashkey</span><span class="p">,</span> <span class="s2">&quot;depechemood&quot;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">load_depechemood</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weighting</span><span class="o">=</span><span class="s2">&quot;normfreq&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load DepecheMood lexicon text file from disk, munge into nested dictionary</span>
 <span class="sd">    for convenient lookup by lemma#POS. NB: English only!</span>
@@ -308,28 +309,34 @@
 <span class="sd">        :func:`download_depechemood &lt;textacy.lexicon_methods.download_depechemood&gt;`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">,</span> <span class="s1">&#39;depechemood&#39;</span><span class="p">,</span> <span class="s1">&#39;DepecheMood_V1.0&#39;</span><span class="p">)</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">,</span> <span class="s2">&quot;depechemood&quot;</span><span class="p">,</span> <span class="s2">&quot;DepecheMood_V1.0&quot;</span><span class="p">)</span>
     <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;DepecheMood_</span><span class="si">{weighting}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weighting</span><span class="o">=</span><span class="n">weighting</span><span class="p">))</span>
-    <span class="n">delimiter</span> <span class="o">=</span> <span class="n">compat</span><span class="o">.</span><span class="n">bytes_</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>  <span class="c1"># HACK: Py2&#39;s csv module fail</span>
+        <span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;DepecheMood_</span><span class="si">{weighting}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weighting</span><span class="o">=</span><span class="n">weighting</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">compat</span><span class="o">.</span><span class="n">bytes_</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">is_python2</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+    <span class="p">)</span>  <span class="c1"># HACK: Py2&#39;s csv module fail</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
             <span class="n">csvreader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
             <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csvreader</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">IOError</span><span class="p">):</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-            <span class="s1">&#39;Unable to load DepecheMood from </span><span class="si">%s</span><span class="s1">.&#39;</span>
-            <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">Have you downloaded the data? If not, you can use the &#39;</span>
-            <span class="s1">&#39;`textacy.lexicon_methods.download_depechemood()` function.&#39;</span>
-            <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">If so, have you given the correct `data_dir`? The directory &#39;</span>
-            <span class="s1">&#39;should have a `DepecheMood_V1.0` subdirectory, within which are &#39;</span>
-            <span class="s1">&#39;three text files and a README.&#39;</span><span class="p">,</span>
-            <span class="n">data_dir</span><span class="p">)</span>
+            <span class="s2">&quot;Unable to load DepecheMood from </span><span class="si">%s</span><span class="s2">.&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Have you downloaded the data? If not, you can use the &quot;</span>
+            <span class="s2">&quot;`textacy.lexicon_methods.download_depechemood()` function.&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">If so, have you given the correct `data_dir`? The directory &quot;</span>
+            <span class="s2">&quot;should have a `DepecheMood_V1.0` subdirectory, within which are &quot;</span>
+            <span class="s2">&quot;three text files and a README.&quot;</span><span class="p">,</span>
+            <span class="n">data_dir</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">raise</span>
-    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading DepecheMood lexicon from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading DepecheMood lexicon from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
     <span class="n">cols</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="p">{</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)}</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]}</span></div>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="p">{</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="p">}</span></div>
 </pre></div>
 
            </div>
