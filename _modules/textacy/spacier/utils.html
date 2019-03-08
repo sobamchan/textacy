@@ -209,7 +209,8 @@
         <span class="n">lang</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">load_spacy</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="n">SpacyLang</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s1">&#39;`lang` must be </span><span class="si">{}</span><span class="s1">, not </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="n">compat</span><span class="o">.</span><span class="n">unicode_</span><span class="p">,</span> <span class="n">SpacyLang</span><span class="p">},</span> <span class="nb">type</span><span class="p">(</span><span class="n">lang</span><span class="p">)))</span>
+            <span class="s2">&quot;`lang` must be </span><span class="si">{}</span><span class="s2">, not </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="n">compat</span><span class="o">.</span><span class="n">unicode_</span><span class="p">,</span> <span class="n">SpacyLang</span><span class="p">},</span> <span class="nb">type</span><span class="p">(</span><span class="n">lang</span><span class="p">))</span>
+        <span class="p">)</span>
 
     <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">spaces</span> <span class="o">=</span> <span class="p">[]</span>
@@ -219,7 +220,7 @@
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="c1"># iterate over text chunks and accumulate components needed to make a doc</span>
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">text_len</span><span class="p">:</span>
-        <span class="n">chunk_doc</span> <span class="o">=</span> <span class="n">lang</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">])</span>
+        <span class="n">chunk_doc</span> <span class="o">=</span> <span class="n">lang</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">])</span>
         <span class="n">words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">chunk_doc</span><span class="p">)</span>
         <span class="n">spaces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">whitespace_</span><span class="p">)</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">chunk_doc</span><span class="p">)</span>
         <span class="n">np_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk_doc</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">cols</span><span class="p">))</span>
@@ -245,11 +246,11 @@
             <span class="n">string_store</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span>
             <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">:</span>
                 <span class="n">retokenizer</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
-                    <span class="n">doc</span><span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">start</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">],</span>
-                    <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="o">.</span><span class="n">intify_attrs</span><span class="p">({</span><span class="s1">&#39;ent_type&#39;</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span><span class="p">},</span> <span class="n">string_store</span><span class="p">))</span>
+                    <span class="n">doc</span><span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">start</span> <span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">],</span>
+                    <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="o">.</span><span class="n">intify_attrs</span><span class="p">({</span><span class="s2">&quot;ent_type&quot;</span><span class="p">:</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span><span class="p">},</span> <span class="n">string_store</span><span class="p">),</span>
+                <span class="p">)</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="p">[(</span><span class="n">span</span><span class="o">.</span><span class="n">start_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">end_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">]</span>
+        <span class="n">spans</span> <span class="o">=</span> <span class="p">[(</span><span class="n">span</span><span class="o">.</span><span class="n">start_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">end_char</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">start_char</span><span class="p">,</span> <span class="n">end_char</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">:</span>
             <span class="n">doc</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">start_char</span><span class="p">,</span> <span class="n">end_char</span><span class="p">,</span> <span class="n">ent_type</span><span class="o">=</span><span class="n">label</span><span class="p">)</span></div>
 
@@ -268,7 +269,9 @@
 <span class="sd">        ValueError: If parent document has not been POS-tagged.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">is_tagged</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;parent doc of token &quot;</span><span class="si">{}</span><span class="s1">&quot; has not been POS-tagged&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">&#39;parent doc of token &quot;</span><span class="si">{}</span><span class="s1">&quot; has not been POS-tagged&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">PROPN</span> <span class="ow">or</span> <span class="n">text_utils</span><span class="o">.</span><span class="n">is_acronym</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
@@ -288,19 +291,25 @@
 <span class="sd">        str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">,</span> <span class="n">SpacyToken</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">span_or_token</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">preserve_case</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">)</span> <span class="k">else</span> <span class="n">span_or_token</span><span class="o">.</span><span class="n">lemma_</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">span_or_token</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">preserve_case</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">)</span> <span class="k">else</span> <span class="n">span_or_token</span><span class="o">.</span><span class="n">lemma_</span>
+        <span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">,</span> <span class="n">SpacySpan</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">preserve_case</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">else</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma_</span>
-                        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">span_or_token</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">preserve_case</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">else</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma_</span>
+            <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">span_or_token</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s1">&#39;input must be a spaCy Token or Span, not &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">)))</span></div>
+            <span class="s1">&#39;input must be a spaCy Token or Span, not &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">span_or_token</span><span class="p">))</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_main_verbs_of_sent"><a class="viewcode-back" href="../../../api_reference.html#textacy.spacier.utils.get_main_verbs_of_sent">[docs]</a><span class="k">def</span> <span class="nf">get_main_verbs_of_sent</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the main (non-auxiliary) verbs in a sentence.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">sent</span>
-            <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">VERB</span> <span class="ow">and</span> <span class="n">tok</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">sent</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">VERB</span> <span class="ow">and</span> <span class="n">tok</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span>
+    <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="get_subjects_of_verb"><a class="viewcode-back" href="../../../api_reference.html#textacy.spacier.utils.get_subjects_of_verb">[docs]</a><span class="k">def</span> <span class="nf">get_subjects_of_verb</span><span class="p">(</span><span class="n">verb</span><span class="p">):</span>
@@ -318,7 +327,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">verb</span><span class="o">.</span><span class="n">rights</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">OBJ_DEPS</span><span class="p">]</span>
     <span class="c1"># get open clausal complements (xcomp)</span>
-    <span class="n">objs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">verb</span><span class="o">.</span><span class="n">rights</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s1">&#39;xcomp&#39;</span><span class="p">)</span>
+    <span class="n">objs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tok</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">verb</span><span class="o">.</span><span class="n">rights</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s2">&quot;xcomp&quot;</span><span class="p">)</span>
     <span class="c1"># get additional conjunct objects</span>
     <span class="n">objs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tok</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">_get_conjuncts</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">objs</span></div>
@@ -329,7 +338,7 @@
 <span class="sd">    Return conjunct dependents of the leftmost conjunct in a coordinated phrase,</span>
 <span class="sd">    e.g. &quot;Burton, [Dan], and [Josh] ...&quot;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">right</span> <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="n">tok</span><span class="o">.</span><span class="n">rights</span> <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s1">&#39;conj&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">right</span> <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="n">tok</span><span class="o">.</span><span class="n">rights</span> <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s2">&quot;conj&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="get_span_for_compound_noun"><a class="viewcode-back" href="../../../api_reference.html#textacy.spacier.utils.get_span_for_compound_noun">[docs]</a><span class="k">def</span> <span class="nf">get_span_for_compound_noun</span><span class="p">(</span><span class="n">noun</span><span class="p">):</span>
@@ -337,8 +346,12 @@
 <span class="sd">    Return document indexes spanning all (adjacent) tokens</span>
 <span class="sd">    in a compound noun.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">min_i</span> <span class="o">=</span> <span class="n">noun</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s1">&#39;compound&#39;</span><span class="p">,</span>
-                                                        <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">noun</span><span class="o">.</span><span class="n">lefts</span><span class="p">))))</span>
+    <span class="n">min_i</span> <span class="o">=</span> <span class="n">noun</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="o">==</span> <span class="s2">&quot;compound&quot;</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">noun</span><span class="o">.</span><span class="n">lefts</span><span class="p">))</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">min_i</span><span class="p">,</span> <span class="n">noun</span><span class="o">.</span><span class="n">i</span><span class="p">)</span></div>
 
 
@@ -347,10 +360,18 @@
 <span class="sd">    Return document indexes spanning all (adjacent) tokens</span>
 <span class="sd">    around a verb that are auxiliary verbs or negations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">min_i</span> <span class="o">=</span> <span class="n">verb</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span><span class="p">,</span>
-                                                        <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">verb</span><span class="o">.</span><span class="n">lefts</span><span class="p">))))</span>
-    <span class="n">max_i</span> <span class="o">=</span> <span class="n">verb</span><span class="o">.</span><span class="n">i</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span><span class="p">,</span>
-                                                        <span class="n">verb</span><span class="o">.</span><span class="n">rights</span><span class="p">))</span>
+    <span class="n">min_i</span> <span class="o">=</span> <span class="n">verb</span><span class="o">.</span><span class="n">i</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">verb</span><span class="o">.</span><span class="n">lefts</span><span class="p">))</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">max_i</span> <span class="o">=</span> <span class="n">verb</span><span class="o">.</span><span class="n">i</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dep_</span> <span class="ow">in</span> <span class="n">constants</span><span class="o">.</span><span class="n">AUX_DEPS</span><span class="p">,</span> <span class="n">verb</span><span class="o">.</span><span class="n">rights</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">min_i</span><span class="p">,</span> <span class="n">max_i</span><span class="p">)</span></div>
 </pre></div>
 

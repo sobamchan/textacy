@@ -393,17 +393,24 @@
 <span class="sd">            vectorized outputs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tf_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
-                 <span class="n">apply_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idf_type</span><span class="o">=</span><span class="s1">&#39;smooth&#39;</span><span class="p">,</span>
-                 <span class="n">apply_dl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dl_type</span><span class="o">=</span><span class="s1">&#39;sqrt&#39;</span><span class="p">,</span>
-                 <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">vocabulary_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tf_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="n">apply_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">idf_type</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">,</span>
+        <span class="n">apply_dl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dl_type</span><span class="o">=</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabulary_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="c1"># sanity check numeric arguments</span>
         <span class="k">if</span> <span class="n">min_df</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">max_df</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`min_df` and `max_df` must be positive numbers or None&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`min_df` and `max_df` must be positive numbers or None&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">max_n_terms</span> <span class="ow">and</span> <span class="n">max_n_terms</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`max_n_terms` must be a positive integer or None&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`max_n_terms` must be a positive integer or None&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">=</span> <span class="n">tf_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apply_idf</span> <span class="o">=</span> <span class="n">apply_idf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">idf_type</span> <span class="o">=</span> <span class="n">idf_type</span>
@@ -413,7 +420,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">min_df</span> <span class="o">=</span> <span class="n">min_df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_df</span> <span class="o">=</span> <span class="n">max_df</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_n_terms</span> <span class="o">=</span> <span class="n">max_n_terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_vocabulary</span><span class="p">(</span><span class="n">vocabulary_terms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_vocabulary</span><span class="p">(</span>
+            <span class="n">vocabulary_terms</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id_to_term_</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_idf_diag</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_avg_doc_length</span> <span class="o">=</span> <span class="kc">None</span>
@@ -439,26 +448,31 @@
                     <span class="k">if</span> <span class="n">vocab</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                             <span class="s1">&#39;Terms in `vocabulary` must be unique, but &quot;</span><span class="si">{}</span><span class="s1">&quot; &#39;</span>
-                            <span class="s1">&#39;was found more than once.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">term</span><span class="p">))</span>
+                            <span class="s2">&quot;was found more than once.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+                        <span class="p">)</span>
                 <span class="n">vocabulary</span> <span class="o">=</span> <span class="n">vocab</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">):</span>
                     <span class="n">counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
                     <span class="n">n_dupe_term_ids</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-                        <span class="mi">1</span> <span class="k">for</span> <span class="n">term_id</span><span class="p">,</span> <span class="n">term_id_count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                        <span class="k">if</span> <span class="n">term_id_count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="mi">1</span>
+                        <span class="k">for</span> <span class="n">term_id</span><span class="p">,</span> <span class="n">term_id_count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">term_id_count</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                    <span class="p">)</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s1">&#39;Term ids in `vocabulary` must be unique, but </span><span class="si">{}</span><span class="s1"> ids&#39;</span>
-                        <span class="s1">&#39;were assigned to more than one term.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_dupe_term_ids</span><span class="p">))</span>
+                        <span class="s2">&quot;Term ids in `vocabulary` must be unique, but </span><span class="si">{}</span><span class="s2"> ids&quot;</span>
+                        <span class="s2">&quot;were assigned to more than one term.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_dupe_term_ids</span><span class="p">)</span>
+                    <span class="p">)</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)):</span>
                     <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="s1">&#39;Term ids in `vocabulary` must be compact, i.e. &#39;</span>
-                            <span class="s1">&#39;not have any gaps, but term id </span><span class="si">{}</span><span class="s1"> is missing from &#39;</span>
-                            <span class="s1">&#39;a vocabulary of </span><span class="si">{}</span><span class="s1"> terms&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)))</span>
+                            <span class="s2">&quot;Term ids in `vocabulary` must be compact, i.e. &quot;</span>
+                            <span class="s2">&quot;not have any gaps, but term id </span><span class="si">{}</span><span class="s2"> is missing from &quot;</span>
+                            <span class="s2">&quot;a vocabulary of </span><span class="si">{}</span><span class="s2"> terms&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span>
+                        <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">vocabulary</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`vocabulary` must not be empty.&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`vocabulary` must not be empty.&quot;</span><span class="p">)</span>
             <span class="n">is_fixed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">is_fixed</span> <span class="o">=</span> <span class="kc">False</span>
@@ -470,10 +484,9 @@
 <span class="sd">        if not, raise a ValueError.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;vocabulary hasn</span><span class="se">\&#39;</span><span class="s1">t been built; call `Vectorizer.fit()`&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;vocabulary hasn&#39;t been built; call `Vectorizer.fit()`&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;vocabulary is empty&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;vocabulary is empty&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id_to_term</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -485,7 +498,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_to_term_</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_to_term_</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">term_id</span><span class="p">:</span> <span class="n">term_str</span> <span class="k">for</span> <span class="n">term_str</span><span class="p">,</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="n">term_id</span><span class="p">:</span> <span class="n">term_str</span> <span class="k">for</span> <span class="n">term_str</span><span class="p">,</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_to_term_</span>
 
     <span class="c1"># TODO: Do we *want* to allow setting to this property?</span>
@@ -503,8 +517,12 @@
 <span class="sd">        output doc-term-matrix, ``doc_term_matrix[:, 0]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_vocabulary</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">term_str</span> <span class="k">for</span> <span class="n">term_str</span><span class="p">,</span> <span class="n">_</span>
-                <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">term_str</span>
+            <span class="k">for</span> <span class="n">term_str</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
 
 <div class="viewcode-block" id="Vectorizer.fit"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.vectorizers.Vectorizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenized_docs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -608,15 +626,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># count terms and, if not provided on init, build up a vocabulary</span>
         <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_terms</span><span class="p">(</span>
-            <span class="n">tokenized_docs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span><span class="p">)</span>
+            <span class="n">tokenized_docs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="c1"># filter terms by doc freq or info content, as specified in init</span>
             <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_terms</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">)</span>
+                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span>
+            <span class="p">)</span>
             <span class="c1"># sort features alphabetically (vocabulary_terms modified in-place)</span>
             <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_vocab_and_matrix</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span>
+            <span class="p">)</span>
             <span class="c1"># *now* vocabulary_terms are known and fixed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span> <span class="o">=</span> <span class="n">vocabulary_terms</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="o">=</span> <span class="kc">True</span>
@@ -627,13 +648,15 @@
             <span class="c1"># store the global weights as a diagonal sparse matrix of idfs</span>
             <span class="n">idfs</span> <span class="o">=</span> <span class="n">get_inverse_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">idf_type</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_idf_diag</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">spdiags</span><span class="p">(</span>
-                <span class="n">idfs</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">)</span>
+                <span class="n">idfs</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span>
+            <span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;bm25&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;bm25&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># store the avg document length, used in bm25 weighting to normalize</span>
             <span class="c1"># term weights by the length of the containing documents</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_avg_doc_length</span> <span class="o">=</span> <span class="n">get_doc_lengths</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">doc_term_matrix</span>
 
@@ -657,8 +680,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vocabulary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span>
 
-        <span class="n">indices</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">))</span>
-        <span class="n">indptr</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">))</span>
+        <span class="n">indptr</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">terms</span> <span class="ow">in</span> <span class="n">tokenized_docs</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -681,7 +704,8 @@
         <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
             <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">),</span>
             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indptr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)),</span>
-            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>
 
         <span class="c1"># pretty sure this is a good thing to do... o_O</span>
@@ -704,8 +728,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_df</span> <span class="o">!=</span> <span class="mf">1.0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_df</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_n_terms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary</span> <span class="o">=</span> <span class="n">filter_terms_by_df</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">,</span>
-                <span class="n">max_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_n_terms</span><span class="p">)</span>
+                <span class="n">doc_term_matrix</span><span class="p">,</span>
+                <span class="n">vocabulary</span><span class="p">,</span>
+                <span class="n">max_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_df</span><span class="p">,</span>
+                <span class="n">min_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_df</span><span class="p">,</span>
+                <span class="n">max_n_terms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_n_terms</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">vocabulary</span>
 
     <span class="k">def</span> <span class="nf">_sort_vocab_and_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
@@ -728,13 +756,16 @@
             <span class="n">new_idx_array</span><span class="p">[</span><span class="n">new_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_idx</span>
             <span class="n">vocabulary</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_idx</span>
         <span class="c1"># use fancy indexing to reorder rows or columns</span>
-        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s1">&#39;rows&#39;</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;rows&quot;</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">matrix</span><span class="p">[</span><span class="n">new_idx_array</span><span class="p">,</span> <span class="p">:]</span>
-        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s1">&#39;columns&#39;</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s2">&quot;columns&quot;</span> <span class="ow">or</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">new_idx_array</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`axis` = </span><span class="si">{}</span><span class="s1"> is invalid; must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">axis</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;rows&#39;</span><span class="p">,</span> <span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;`axis` = </span><span class="si">{}</span><span class="s2"> is invalid; must be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">axis</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_reweight_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -749,33 +780,38 @@
 <span class="sd">            :class:`scipy.sparse.csr_matrix`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># re-weight the local components (term freqs)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;binary&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
             <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;bm25&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;bm25&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span>
-                    <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span>
+                    <span class="o">*</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+                    <span class="o">/</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">dls</span> <span class="o">=</span> <span class="n">get_doc_lengths</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span>
                 <span class="n">length_norm</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">BM25_B</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">BM25_B</span> <span class="o">*</span> <span class="p">(</span><span class="n">dls</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_avg_doc_length</span><span class="p">))</span>
                 <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">tocoo</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span>
-                    <span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">+</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">*</span> <span class="n">length_norm</span><span class="p">[</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">row</span><span class="p">]))</span>
+                    <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span>
+                    <span class="o">*</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+                    <span class="o">/</span> <span class="p">(</span>
+                        <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span>
+                        <span class="o">+</span> <span class="p">(</span><span class="n">BM25_K1</span> <span class="o">*</span> <span class="n">length_norm</span><span class="p">[</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">row</span><span class="p">])</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
                 <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">:</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">casting</span><span class="o">=</span><span class="s1">&#39;unsafe&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">casting</span><span class="o">=</span><span class="s1">&#39;unsafe&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">casting</span><span class="o">=</span><span class="s2">&quot;unsafe&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">casting</span><span class="o">=</span><span class="s2">&quot;unsafe&quot;</span><span class="p">)</span>
             <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="mf">1.0</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
             <span class="k">pass</span>  <span class="c1"># tfs are already linear</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># this should never raise, i&#39;m just being a worrywart</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`tf_type` = </span><span class="si">{}</span><span class="s1"> is invalid&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`tf_type` = </span><span class="si">{}</span><span class="s2"> is invalid&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span><span class="p">))</span>
 
         <span class="c1"># apply the global component (idfs), column-wise</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_idf</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -783,14 +819,15 @@
 
         <span class="c1"># apply normalizations, row-wise</span>
         <span class="c1"># unless we&#39;ve already handled it for bm25-style tf</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">!=</span> <span class="s1">&#39;bm25&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">!=</span> <span class="s2">&quot;bm25&quot;</span><span class="p">:</span>
             <span class="n">n_docs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">shape</span>
             <span class="n">dls</span> <span class="o">=</span> <span class="n">get_doc_lengths</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span>
-            <span class="n">dl_diag</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">spdiags</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">dls</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_docs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_docs</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">)</span>
+            <span class="n">dl_diag</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">spdiags</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">dls</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_docs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_docs</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span><span class="p">)</span>
             <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="n">dl_diag</span> <span class="o">*</span> <span class="n">doc_term_matrix</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="n">normalize_mat</span><span class="p">(</span>
-                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">doc_term_matrix</span>
 
@@ -803,26 +840,34 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">w</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">tf_types</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;binary&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span> <span class="s1">&#39;tf&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">:</span> <span class="s1">&#39;sqrt(tf)&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span> <span class="s1">&#39;log(tf)&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bm25&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="kc">True</span><span class="p">:</span> <span class="s1">&#39;(tf * (k + 1)) / (tf + k * (1 - b + b * (length / avg(lengths)))&#39;</span><span class="p">,</span>
-                <span class="kc">False</span><span class="p">:</span> <span class="s1">&#39;(tf * (k + 1)) / (tf + k)&#39;</span><span class="p">}</span>
+            <span class="s2">&quot;binary&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;linear&quot;</span><span class="p">:</span> <span class="s2">&quot;tf&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sqrt&quot;</span><span class="p">:</span> <span class="s2">&quot;sqrt(tf)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;log(tf)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bm25&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="kc">True</span><span class="p">:</span> <span class="s2">&quot;(tf * (k + 1)) / (tf + k * (1 - b + b * (length / avg(lengths)))&quot;</span><span class="p">,</span>
+                <span class="kc">False</span><span class="p">:</span> <span class="s2">&quot;(tf * (k + 1)) / (tf + k)&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">}</span>
         <span class="n">idf_types</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;standard&#39;</span><span class="p">:</span> <span class="s1">&#39;log(n_docs / df) + 1&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;smooth&#39;</span><span class="p">:</span> <span class="s1">&#39;log((n_docs + 1) / (df + 1)) + 1&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;bm25&#39;</span><span class="p">:</span> <span class="s1">&#39;log((n_docs - df + 0.5) / (df + 0.5))&#39;</span><span class="p">}</span>
+            <span class="s2">&quot;standard&quot;</span><span class="p">:</span> <span class="s2">&quot;log(n_docs / df) + 1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;smooth&quot;</span><span class="p">:</span> <span class="s2">&quot;log((n_docs + 1) / (df + 1)) + 1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bm25&quot;</span><span class="p">:</span> <span class="s2">&quot;log((n_docs - df + 0.5) / (df + 0.5))&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="n">dl_types</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;linear&#39;</span><span class="p">:</span> <span class="s1">&#39;1/length&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">:</span> <span class="s1">&#39;1/sqrt(length)&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span> <span class="s1">&#39;1/log(length) + 1&#39;</span><span class="p">}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;bm25&#39;</span><span class="p">:</span>
+            <span class="s2">&quot;linear&quot;</span><span class="p">:</span> <span class="s2">&quot;1/length&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sqrt&quot;</span><span class="p">:</span> <span class="s2">&quot;1/sqrt(length)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="s2">&quot;1/log(length) + 1&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;bm25&quot;</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span><span class="p">])</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_idf</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idf_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">idf_type</span><span class="p">])</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">!=</span> <span class="s1">&#39;bm25&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">!=</span> <span class="s2">&quot;bm25&quot;</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">])</span>
-        <span class="k">return</span> <span class="s1">&#39; * &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot; * &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="GroupVectorizer"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.vectorizers.GroupVectorizer">[docs]</a><span class="k">class</span> <span class="nc">GroupVectorizer</span><span class="p">(</span><span class="n">Vectorizer</span><span class="p">):</span>
@@ -980,19 +1025,36 @@
 <span class="sd">        :class:`Vectorizer`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tf_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
-                 <span class="n">apply_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">idf_type</span><span class="o">=</span><span class="s1">&#39;smooth&#39;</span><span class="p">,</span>
-                 <span class="n">apply_dl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dl_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
-                 <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">vocabulary_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vocabulary_grps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tf_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="n">apply_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">idf_type</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">,</span>
+        <span class="n">apply_dl</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dl_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabulary_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabulary_grps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">GroupVectorizer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">tf_type</span><span class="o">=</span><span class="n">tf_type</span><span class="p">,</span> <span class="n">apply_idf</span><span class="o">=</span><span class="n">apply_idf</span><span class="p">,</span> <span class="n">idf_type</span><span class="o">=</span><span class="n">idf_type</span><span class="p">,</span>
-            <span class="n">apply_dl</span><span class="o">=</span><span class="n">apply_dl</span><span class="p">,</span> <span class="n">dl_type</span><span class="o">=</span><span class="n">dl_type</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
-            <span class="n">min_df</span><span class="o">=</span><span class="n">min_df</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="n">max_df</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="n">max_n_terms</span><span class="p">,</span>
-            <span class="n">vocabulary_terms</span><span class="o">=</span><span class="n">vocabulary_terms</span><span class="p">)</span>
+            <span class="n">tf_type</span><span class="o">=</span><span class="n">tf_type</span><span class="p">,</span>
+            <span class="n">apply_idf</span><span class="o">=</span><span class="n">apply_idf</span><span class="p">,</span>
+            <span class="n">idf_type</span><span class="o">=</span><span class="n">idf_type</span><span class="p">,</span>
+            <span class="n">apply_dl</span><span class="o">=</span><span class="n">apply_dl</span><span class="p">,</span>
+            <span class="n">dl_type</span><span class="o">=</span><span class="n">dl_type</span><span class="p">,</span>
+            <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+            <span class="n">min_df</span><span class="o">=</span><span class="n">min_df</span><span class="p">,</span>
+            <span class="n">max_df</span><span class="o">=</span><span class="n">max_df</span><span class="p">,</span>
+            <span class="n">max_n_terms</span><span class="o">=</span><span class="n">max_n_terms</span><span class="p">,</span>
+            <span class="n">vocabulary_terms</span><span class="o">=</span><span class="n">vocabulary_terms</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="c1"># now do the same thing for grps as was done for terms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_vocabulary</span><span class="p">(</span><span class="n">vocabulary_grps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_vocabulary</span><span class="p">(</span>
+            <span class="n">vocabulary_grps</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id_to_grp_</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="nd">@property</span>
@@ -1005,7 +1067,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_to_grp_</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id_to_grp_</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">grp_id</span><span class="p">:</span> <span class="n">grp_str</span> <span class="k">for</span> <span class="n">grp_str</span><span class="p">,</span> <span class="n">grp_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="n">grp_id</span><span class="p">:</span> <span class="n">grp_str</span> <span class="k">for</span> <span class="n">grp_str</span><span class="p">,</span> <span class="n">grp_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_to_grp_</span>
 
     <span class="c1"># @id_to_grp.setter</span>
@@ -1022,8 +1085,12 @@
 <span class="sd">        output group-term-matrix, ``grp_term_matrix[0, :]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_vocabulary</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">grp_str</span> <span class="k">for</span> <span class="n">grp_str</span><span class="p">,</span> <span class="n">_</span>
-                <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">grp_str</span>
+            <span class="k">for</span> <span class="n">grp_str</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
 
 <div class="viewcode-block" id="GroupVectorizer.fit"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.vectorizers.GroupVectorizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1123,8 +1190,7 @@
 <span class="sd">            all uppercased: The output group-term-matrix will be empty.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_vocabulary</span><span class="p">()</span>
-        <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_terms</span><span class="p">(</span>
-            <span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_terms</span><span class="p">(</span><span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reweight_values</span><span class="p">(</span><span class="n">grp_term_matrix</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">):</span>
@@ -1144,22 +1210,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># count terms and, if not provided on init, build up a vocabulary</span>
         <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">vocabulary_grps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count_terms</span><span class="p">(</span>
-            <span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span><span class="p">)</span>
+            <span class="n">tokenized_docs</span><span class="p">,</span> <span class="n">grps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="c1"># filter terms by doc freq or info content, as specified in init</span>
             <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_terms</span><span class="p">(</span>
-                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">)</span>
+                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span>
+            <span class="p">)</span>
             <span class="c1"># sort features alphabetically (vocabulary_terms modified in-place)</span>
             <span class="n">grp_term_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_vocab_and_matrix</span><span class="p">(</span>
-                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span>
+            <span class="p">)</span>
             <span class="c1"># *now* vocabulary_terms are known and fixed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_terms</span> <span class="o">=</span> <span class="n">vocabulary_terms</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_terms</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="c1"># sort groups alphabetically (vocabulary_grps modified in-place)</span>
             <span class="n">grp_term_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_vocab_and_matrix</span><span class="p">(</span>
-                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_grps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)</span>
+                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_grps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;rows&quot;</span>
+            <span class="p">)</span>
             <span class="c1"># *now* vocabulary_grps are known and fixed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span> <span class="o">=</span> <span class="n">vocabulary_grps</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_grps</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1170,13 +1240,15 @@
             <span class="c1"># store the global weights as a diagonal sparse matrix of idfs</span>
             <span class="n">idfs</span> <span class="o">=</span> <span class="n">get_inverse_doc_freqs</span><span class="p">(</span><span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">idf_type</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_idf_diag</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">spdiags</span><span class="p">(</span>
-                <span class="n">idfs</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">)</span>
+                <span class="n">idfs</span><span class="p">,</span> <span class="n">diags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_terms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csr&quot;</span>
+            <span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s1">&#39;bm25&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_type</span> <span class="o">==</span> <span class="s2">&quot;bm25&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_dl</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># store the avg document length, used in bm25 weighting to normalize</span>
             <span class="c1"># term weights by the length of the containing documents</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_avg_doc_length</span> <span class="o">=</span> <span class="n">get_doc_lengths</span><span class="p">(</span>
-                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_type</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">grp_term_matrix</span>
 
@@ -1211,9 +1283,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vocabulary_grps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_grps</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">))</span>
-        <span class="n">cols</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">))</span>
-        <span class="n">rows</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">))</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">))</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">grp</span><span class="p">,</span> <span class="n">terms</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">zip_</span><span class="p">(</span><span class="n">grps</span><span class="p">,</span> <span class="n">tokenized_docs</span><span class="p">):</span>
 
             <span class="k">try</span><span class="p">:</span>
@@ -1248,7 +1320,8 @@
         <span class="n">grp_term_matrix</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
             <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">)),</span>
             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vocabulary_grps</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary_terms</span><span class="p">)),</span>
-            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">grp_term_matrix</span><span class="o">.</span><span class="n">sort_indices</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">grp_term_matrix</span><span class="p">,</span> <span class="n">vocabulary_terms</span><span class="p">,</span> <span class="n">vocabulary_grps</span></div>

@@ -166,7 +166,7 @@
 <span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
 
 
-<div class="viewcode-block" id="get_term_freqs"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_term_freqs">[docs]</a><span class="k">def</span> <span class="nf">get_term_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="get_term_freqs"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_term_freqs">[docs]</a><span class="k">def</span> <span class="nf">get_term_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute frequencies for all terms in a document-term matrix, with optional</span>
 <span class="sd">    sub-linear scaling.</span>
@@ -188,18 +188,20 @@
 <span class="sd">            if ``type_`` isn&#39;t one of {&quot;linear&quot;, &quot;sqrt&quot;, &quot;log&quot;}.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">nnz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`doc_term_matrix` must have at least 1 non-zero entry&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`doc_term_matrix` must have at least 1 non-zero entry&quot;</span><span class="p">)</span>
     <span class="n">tfs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">tfs</span>  <span class="c1"># tfs is already linear</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tfs</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tfs</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;type_ = </span><span class="si">{}</span><span class="s1"> is invalid; value must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">}))</span></div>
+            <span class="s2">&quot;type_ = </span><span class="si">{}</span><span class="s2"> is invalid; value must be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_doc_freqs"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_doc_freqs">[docs]</a><span class="k">def</span> <span class="nf">get_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">):</span>
@@ -221,12 +223,12 @@
 <span class="sd">        ValueError: if ``doc_term_matrix`` doesn&#39;t have any non-zero entries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">nnz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`doc_term_matrix` must have at least 1 non-zero entry&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`doc_term_matrix` must have at least 1 non-zero entry&quot;</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">n_terms</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_inverse_doc_freqs"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_inverse_doc_freqs">[docs]</a><span class="k">def</span> <span class="nf">get_inverse_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;smooth&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="get_inverse_doc_freqs"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_inverse_doc_freqs">[docs]</a><span class="k">def</span> <span class="nf">get_inverse_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute inverse document frequencies for all terms in a document-term matrix,</span>
 <span class="sd">    using one of several IDF formulations.</span>
@@ -253,21 +255,23 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dfs</span> <span class="o">=</span> <span class="n">get_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
     <span class="n">n_docs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;standard&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;standard&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_docs</span> <span class="o">/</span> <span class="n">dfs</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;smooth&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;smooth&quot;</span><span class="p">:</span>
         <span class="n">n_docs</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">dfs</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_docs</span> <span class="o">/</span> <span class="n">dfs</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;bm25&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;bm25&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">n_docs</span> <span class="o">-</span> <span class="n">dfs</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">dfs</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;type_ = </span><span class="si">{}</span><span class="s1"> is invalid; value must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;standard&#39;</span><span class="p">,</span> <span class="s1">&#39;smooth&#39;</span><span class="p">,</span> <span class="s1">&#39;bm25&#39;</span><span class="p">}))</span></div>
+            <span class="s2">&quot;type_ = </span><span class="si">{}</span><span class="s2"> is invalid; value must be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="s2">&quot;smooth&quot;</span><span class="p">,</span> <span class="s2">&quot;bm25&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_doc_lengths"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_doc_lengths">[docs]</a><span class="k">def</span> <span class="nf">get_doc_lengths</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="get_doc_lengths"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_doc_lengths">[docs]</a><span class="k">def</span> <span class="nf">get_doc_lengths</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the lengths (i.e. number of terms) for all documents in a</span>
 <span class="sd">    document-term matrix.</span>
@@ -288,16 +292,18 @@
 <span class="sd">        ValueError: if ``type_`` isn&#39;t one of {&quot;linear&quot;, &quot;sqrt&quot;, &quot;log&quot;}.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dls</span>  <span class="c1"># dls is already linear</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dls</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dls</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;`type_` = </span><span class="si">{}</span><span class="s1"> invalid; must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">}))</span></div>
+            <span class="s2">&quot;`type_` = </span><span class="si">{}</span><span class="s2"> invalid; must be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">type_</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_information_content"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.get_information_content">[docs]</a><span class="k">def</span> <span class="nf">get_information_content</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">):</span>
@@ -329,7 +335,7 @@
     <span class="k">return</span> <span class="n">ics</span></div>
 
 
-<div class="viewcode-block" id="apply_idf_weighting"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.apply_idf_weighting">[docs]</a><span class="k">def</span> <span class="nf">apply_idf_weighting</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;smooth&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="apply_idf_weighting"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.apply_idf_weighting">[docs]</a><span class="k">def</span> <span class="nf">apply_idf_weighting</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;smooth&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Apply inverse document frequency (idf) weighting to a term-frequency (tf)</span>
 <span class="sd">    weighted document-term matrix, using one of several IDF formulations.</span>
@@ -350,8 +356,9 @@
     <span class="k">return</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">idfs</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="filter_terms_by_df"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.filter_terms_by_df">[docs]</a><span class="k">def</span> <span class="nf">filter_terms_by_df</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span><span class="p">,</span>
-                       <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="filter_terms_by_df"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.filter_terms_by_df">[docs]</a><span class="k">def</span> <span class="nf">filter_terms_by_df</span><span class="p">(</span>
+    <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter out terms that are too common and/or too rare (by document frequency),</span>
 <span class="sd">    and compactify the top ``max_n_terms`` in the ``id_to_term`` mapping accordingly.</span>
@@ -386,13 +393,13 @@
     <span class="k">if</span> <span class="n">max_df</span> <span class="o">==</span> <span class="mf">1.0</span> <span class="ow">and</span> <span class="n">min_df</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">max_n_terms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span>
     <span class="k">if</span> <span class="n">max_df</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">min_df</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">max_n_terms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_n_terms</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_df, min_df, and max_n_terms may not be negative&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max_df, min_df, and max_n_terms may not be negative&quot;</span><span class="p">)</span>
 
     <span class="n">n_docs</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">max_doc_count</span> <span class="o">=</span> <span class="n">max_df</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_df</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_df</span> <span class="o">*</span> <span class="n">n_docs</span><span class="p">)</span>
     <span class="n">min_doc_count</span> <span class="o">=</span> <span class="n">min_df</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">min_df</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">min_df</span> <span class="o">*</span> <span class="n">n_docs</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">max_doc_count</span> <span class="o">&lt;</span> <span class="n">min_doc_count</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_df corresponds to fewer documents than min_df&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max_df corresponds to fewer documents than min_df&quot;</span><span class="p">)</span>
 
     <span class="c1"># calculate a mask based on document frequencies</span>
     <span class="n">dfs</span> <span class="o">=</span> <span class="n">get_doc_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
@@ -402,7 +409,7 @@
     <span class="k">if</span> <span class="n">min_doc_count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">mask</span> <span class="o">&amp;=</span> <span class="n">dfs</span> <span class="o">&gt;=</span> <span class="n">min_doc_count</span>
     <span class="k">if</span> <span class="n">max_n_terms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">max_n_terms</span><span class="p">:</span>
-        <span class="n">tfs</span> <span class="o">=</span> <span class="n">get_term_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">tfs</span> <span class="o">=</span> <span class="n">get_term_freqs</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
         <span class="n">top_mask_inds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">tfs</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[:</span><span class="n">max_n_terms</span><span class="p">]</span>
         <span class="n">new_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_terms</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="n">new_mask</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="n">top_mask_inds</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -410,21 +417,23 @@
 
     <span class="c1"># map old term indices to new ones</span>
     <span class="n">new_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">term_to_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="p">:</span> <span class="n">new_indices</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
-                  <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">old_index</span> <span class="ow">in</span> <span class="n">term_to_id</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                  <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">old_index</span><span class="p">]}</span>
+    <span class="n">term_to_id</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">term</span><span class="p">:</span> <span class="n">new_indices</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">old_index</span> <span class="ow">in</span> <span class="n">term_to_id</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
+    <span class="p">}</span>
 
     <span class="n">kept_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kept_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;After filtering, no terms remain; &#39;</span>
-            <span class="s1">&#39;try a lower `min_df` or higher `max_df`&#39;</span><span class="p">)</span>
+            <span class="s2">&quot;After filtering, no terms remain; &quot;</span>
+            <span class="s2">&quot;try a lower `min_df` or higher `max_df`&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">[:,</span> <span class="n">kept_indices</span><span class="p">],</span> <span class="n">term_to_id</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="filter_terms_by_ic"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.filter_terms_by_ic">[docs]</a><span class="k">def</span> <span class="nf">filter_terms_by_ic</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span><span class="p">,</span>
-                       <span class="n">min_ic</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="filter_terms_by_ic"><a class="viewcode-back" href="../../../api_reference.html#textacy.vsm.matrix_utils.filter_terms_by_ic">[docs]</a><span class="k">def</span> <span class="nf">filter_terms_by_ic</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span><span class="p">,</span> <span class="n">min_ic</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_n_terms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter out terms that are too common and/or too rare (by information content),</span>
 <span class="sd">    and compactify the top ``max_n_terms`` in the ``id_to_term`` mapping accordingly.</span>
@@ -453,9 +462,9 @@
     <span class="k">if</span> <span class="n">min_ic</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">max_n_terms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">term_to_id</span>
     <span class="k">if</span> <span class="n">min_ic</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">min_ic</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;min_ic must be a float in [0.0, 1.0]&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;min_ic must be a float in [0.0, 1.0]&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">max_n_terms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_n_terms</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_n_terms may not be negative&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max_n_terms may not be negative&quot;</span><span class="p">)</span>
 
     <span class="n">_</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">=</span> <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">shape</span>
 
@@ -472,13 +481,15 @@
 
     <span class="c1"># map old term indices to new ones</span>
     <span class="n">new_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">term_to_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="p">:</span> <span class="n">new_indices</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
-                  <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">old_index</span> <span class="ow">in</span> <span class="n">term_to_id</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                  <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">old_index</span><span class="p">]}</span>
+    <span class="n">term_to_id</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">term</span><span class="p">:</span> <span class="n">new_indices</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">old_index</span> <span class="ow">in</span> <span class="n">term_to_id</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">old_index</span><span class="p">]</span>
+    <span class="p">}</span>
 
     <span class="n">kept_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kept_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;After filtering, no terms remain; try a lower `min_ic`&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;After filtering, no terms remain; try a lower `min_ic`&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">[:,</span> <span class="n">kept_indices</span><span class="p">],</span> <span class="n">term_to_id</span><span class="p">)</span></div>
 </pre></div>

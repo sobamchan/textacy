@@ -167,7 +167,7 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">open_sesame</span>
 
 
-<div class="viewcode-block" id="read_sparse_matrix"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.matrix.read_sparse_matrix">[docs]</a><span class="k">def</span> <span class="nf">read_sparse_matrix</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="read_sparse_matrix"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.matrix.read_sparse_matrix">[docs]</a><span class="k">def</span> <span class="nf">read_sparse_matrix</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;csc&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read the data, indices, indptr, and shape arrays from a ``.npz`` file on disk</span>
 <span class="sd">    at ``fname``, and return an instantiated sparse matrix.</span>
@@ -184,17 +184,20 @@
 <span class="sd">        https://docs.scipy.org/doc/numpy-1.13.0/reference/routines.io.html#numpy-binary-files-npy-npz</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">npz_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;csc&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;csc&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;indices&#39;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;indptr&#39;</span><span class="p">]),</span>
-            <span class="n">shape</span><span class="o">=</span><span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;csr&#39;</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;indices&quot;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;indptr&quot;</span><span class="p">]),</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;csr&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;indices&#39;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;indptr&#39;</span><span class="p">]),</span>
-            <span class="n">shape</span><span class="o">=</span><span class="n">npz_file</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">])</span>
+            <span class="p">(</span><span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;indices&quot;</span><span class="p">],</span> <span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;indptr&quot;</span><span class="p">]),</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">npz_file</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;kind=&quot;</span><span class="si">{}</span><span class="s1">&quot; is invalid; valid values are </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;csc&#39;</span><span class="p">,</span> <span class="s1">&#39;csr&#39;</span><span class="p">]))</span></div>
+            <span class="s1">&#39;kind=&quot;</span><span class="si">{}</span><span class="s1">&quot; is invalid; valid values are </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;csc&quot;</span><span class="p">,</span> <span class="s2">&quot;csr&quot;</span><span class="p">])</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="write_sparse_matrix"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.matrix.write_sparse_matrix">[docs]</a><span class="k">def</span> <span class="nf">write_sparse_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">compressed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -217,20 +220,27 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s1">&#39;`data` must be a scipy sparse csr or csc matrix, &#39;</span>
-            <span class="s1">&#39;not &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+            <span class="s2">&quot;`data` must be a scipy sparse csr or csc matrix, &quot;</span>
+            <span class="s1">&#39;not &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">make_dirs</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">_make_dirs</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">_make_dirs</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">compressed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
             <span class="n">fname</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
-            <span class="n">indptr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">indices</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
+            <span class="n">indptr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span>
             <span class="n">fname</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
-            <span class="n">indptr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">indices</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
+            <span class="n">indptr</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+        <span class="p">)</span></div>
 </pre></div>
 
            </div>

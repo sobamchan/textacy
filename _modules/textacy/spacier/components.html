@@ -220,18 +220,28 @@
 <span class="sd">        :class:`textacy.text_stats.TextStats`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;textacy_text_stats&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;textacy_text_stats&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s1">&#39;n_sents&#39;</span><span class="p">,</span> <span class="s1">&#39;n_words&#39;</span><span class="p">,</span> <span class="s1">&#39;n_chars&#39;</span><span class="p">,</span> <span class="s1">&#39;n_syllables&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;n_unique_words&#39;</span><span class="p">,</span> <span class="s1">&#39;n_long_words&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;n_monosyllable_words&#39;</span><span class="p">,</span> <span class="s1">&#39;n_polysyllable_words&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;flesch_kincaid_grade_level&#39;</span><span class="p">,</span> <span class="s1">&#39;flesch_reading_ease&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;smog_index&#39;</span><span class="p">,</span> <span class="s1">&#39;gunning_fog_index&#39;</span><span class="p">,</span> <span class="s1">&#39;coleman_liau_index&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;automated_readability_index&#39;</span><span class="p">,</span> <span class="s1">&#39;lix&#39;</span><span class="p">,</span> <span class="s1">&#39;gulpease_index&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;wiener_sachtextformel&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;n_sents&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_words&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_chars&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_syllables&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_unique_words&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_long_words&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_monosyllable_words&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;n_polysyllable_words&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;flesch_kincaid_grade_level&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;flesch_reading_ease&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;smog_index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gunning_fog_index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;coleman_liau_index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;automated_readability_index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lix&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gulpease_index&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;wiener_sachtextformel&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">compat</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">attrs</span><span class="p">,)</span>
@@ -251,7 +261,8 @@
                     <span class="s2">&quot;`TextStats` class doesn&#39;t have &#39;</span><span class="si">%s</span><span class="s2">&#39; attribute, so it can&#39;t &quot;</span>
                     <span class="s2">&quot;be set on this `SpacyDoc`. Check the attrs used to initialize &quot;</span>
                     <span class="s2">&quot;the `TextStatsComponent` in this pipeline for errors.&quot;</span><span class="p">,</span>
-                    <span class="n">attr</span><span class="p">)</span>
+                    <span class="n">attr</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="k">raise</span>
         <span class="k">return</span> <span class="n">doc</span></div>
 

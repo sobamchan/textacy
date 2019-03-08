@@ -171,7 +171,7 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">open_sesame</span><span class="p">,</span> <span class="n">_validate_read_mode</span><span class="p">,</span> <span class="n">_validate_write_mode</span>
 
 
-<div class="viewcode-block" id="read_json"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.read_json">[docs]</a><span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="read_json"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.read_json">[docs]</a><span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read the contents of a JSON file at ``fname``, either all at once</span>
 <span class="sd">    or streaming item-by-item.</span>
@@ -198,7 +198,8 @@
     <span class="n">_validate_read_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="p">(</span><span class="n">compat</span><span class="o">.</span><span class="n">unicode_</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;lines=&quot;</span><span class="si">{}</span><span class="s1">&quot; is invalid; must be a string or boolean value&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+            <span class="s1">&#39;lines=&quot;</span><span class="si">{}</span><span class="s1">&quot; is invalid; must be a string or boolean value&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">with</span> <span class="n">open_sesame</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">lines</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -210,7 +211,7 @@
                 <span class="k">yield</span> <span class="n">item</span></div>
 
 
-<div class="viewcode-block" id="read_json_mash"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.read_json_mash">[docs]</a><span class="k">def</span> <span class="nf">read_json_mash</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">):</span>
+<div class="viewcode-block" id="read_json_mash"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.read_json_mash">[docs]</a><span class="k">def</span> <span class="nf">read_json_mash</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read the contents of a JSON file at ``fname`` one item at a time,</span>
 <span class="sd">    where all of the items have been mashed together, end-to-end, on a single line.</span>
@@ -233,8 +234,8 @@
     <span class="n">_validate_read_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
     <span class="n">json_decoder</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecoder</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">open_sesame</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">buffer_</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">,</span> <span class="n">buffer_size</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">buffer_</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">,</span> <span class="n">buffer_size</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
             <span class="n">buffer_</span> <span class="o">+=</span> <span class="n">chunk</span>
             <span class="k">while</span> <span class="n">buffer_</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -246,9 +247,18 @@
                     <span class="k">break</span></div>
 
 
-<div class="viewcode-block" id="write_json"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.write_json">[docs]</a><span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-               <span class="n">make_dirs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-               <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="write_json"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.write_json">[docs]</a><span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">fname</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wt&quot;</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">make_dirs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">),</span>
+    <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">indent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Write JSON ``data`` to disk at ``fname``, either all at once</span>
 <span class="sd">    or streaming item-by-item.</span>
@@ -292,16 +302,30 @@
     <span class="n">_validate_write_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">open_sesame</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="n">make_dirs</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="n">ensure_ascii</span><span class="p">,</span>
-                               <span class="n">separators</span><span class="o">=</span><span class="n">separators</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">,</span>
-                               <span class="bp">cls</span><span class="o">=</span><span class="n">ExtendedJSONEncoder</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">,</span>
+                    <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+                    <span class="n">ensure_ascii</span><span class="o">=</span><span class="n">ensure_ascii</span><span class="p">,</span>
+                    <span class="n">separators</span><span class="o">=</span><span class="n">separators</span><span class="p">,</span>
+                    <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">,</span>
+                    <span class="bp">cls</span><span class="o">=</span><span class="n">ExtendedJSONEncoder</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">newline</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="s1">&#39;t&#39;</span> <span class="ow">in</span> <span class="n">mode</span> <span class="k">else</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="n">newline</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="s2">&quot;t&quot;</span> <span class="ow">in</span> <span class="n">mode</span> <span class="k">else</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="n">ensure_ascii</span><span class="p">,</span>
-                                   <span class="n">separators</span><span class="o">=</span><span class="n">separators</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">,</span>
-                                   <span class="bp">cls</span><span class="o">=</span><span class="n">ExtendedJSONEncoder</span><span class="p">)</span> <span class="o">+</span>
-                        <span class="n">newline</span><span class="p">)</span></div>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                        <span class="n">item</span><span class="p">,</span>
+                        <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+                        <span class="n">ensure_ascii</span><span class="o">=</span><span class="n">ensure_ascii</span><span class="p">,</span>
+                        <span class="n">separators</span><span class="o">=</span><span class="n">separators</span><span class="p">,</span>
+                        <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">,</span>
+                        <span class="bp">cls</span><span class="o">=</span><span class="n">ExtendedJSONEncoder</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="o">+</span> <span class="n">newline</span>
+                <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ExtendedJSONEncoder"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.json.ExtendedJSONEncoder">[docs]</a><span class="k">class</span> <span class="nc">ExtendedJSONEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>

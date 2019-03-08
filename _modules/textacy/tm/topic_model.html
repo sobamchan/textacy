@@ -256,6 +256,7 @@
 <span class="sd">        - http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.LatentDirichletAllocation.html</span>
 <span class="sd">        - http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">n_topics</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">NMF</span><span class="p">,</span> <span class="n">LatentDirichletAllocation</span><span class="p">,</span> <span class="n">TruncatedSVD</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
@@ -263,46 +264,49 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">init_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n_topics</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">init_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">n_topics</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="s1">&#39;nmf&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;nmf&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span>
                 <span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
-                <span class="n">l1_ratio</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l1_ratio&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-                <span class="n">max_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_iter&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;random_state&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                <span class="n">shuffle</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;shuffle&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s1">&#39;lda&#39;</span><span class="p">:</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                <span class="n">l1_ratio</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;l1_ratio&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+                <span class="n">max_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_iter&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">shuffle</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shuffle&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;lda&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span>
                 <span class="n">n_topics</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span>
-                <span class="n">max_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_iter&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;random_state&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                <span class="n">learning_method</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_method&#39;</span><span class="p">,</span> <span class="s1">&#39;online&#39;</span><span class="p">),</span>
-                <span class="n">learning_offset</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_offset&#39;</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
-                <span class="n">batch_size</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
-                <span class="n">n_jobs</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s1">&#39;lsa&#39;</span><span class="p">:</span>
+                <span class="n">max_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_iter&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">learning_method</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;learning_method&quot;</span><span class="p">,</span> <span class="s2">&quot;online&quot;</span><span class="p">),</span>
+                <span class="n">learning_offset</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;learning_offset&quot;</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+                <span class="n">batch_size</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;batch_size&quot;</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+                <span class="n">n_jobs</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;lsa&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span>
                 <span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span>
-                <span class="n">algorithm</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;algorithm&#39;</span><span class="p">,</span> <span class="s1">&#39;randomized&#39;</span><span class="p">),</span>
-                <span class="n">n_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_iter&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;random_state&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">algorithm</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;algorithm&quot;</span><span class="p">,</span> <span class="s2">&quot;randomized&quot;</span><span class="p">),</span>
+                <span class="n">n_iter</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_iter&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="n">random_state</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;random_state&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;model &quot;</span><span class="si">{}</span><span class="s1">&quot; invalid; must be </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">model</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;nmf&#39;</span><span class="p">,</span> <span class="s1">&#39;lda&#39;</span><span class="p">,</span> <span class="s1">&#39;lsa&#39;</span><span class="p">})</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;model &quot;</span><span class="si">{}</span><span class="s1">&quot; invalid; must be </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;nmf&quot;</span><span class="p">,</span> <span class="s2">&quot;lda&quot;</span><span class="p">,</span> <span class="s2">&quot;lsa&quot;</span><span class="p">})</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;TopicModel(n_topics=</span><span class="si">{}</span><span class="s1">, model=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_topics</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;TopicModel(n_topics=</span><span class="si">{}</span><span class="s2">, model=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_topics</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> model saved to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> model saved to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="n">n_topics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">n_topics</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;n_topics&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">model</span><span class="o">.</span><span class="n">n_components</span>
+        <span class="n">n_topics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">n_topics</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;n_topics&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">model</span><span class="o">.</span><span class="n">n_components</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n_topics</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="p">):</span>
@@ -312,7 +316,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">LatentDirichletAllocation</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;only LatentDirichletAllocation models have partial_fit&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;only LatentDirichletAllocation models have partial_fit&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
@@ -382,14 +386,20 @@
         <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
             <span class="n">topic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">topic_idx</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">(</span><span class="n">id2term</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">topic</span><span class="p">)[:</span><span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">yield</span> <span class="p">(</span>
+                    <span class="n">topic_idx</span><span class="p">,</span>
+                    <span class="nb">tuple</span><span class="p">(</span><span class="n">id2term</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">topic</span><span class="p">)[:</span> <span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">((</span><span class="n">id2term</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">topic</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">topic</span><span class="p">)[:</span><span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
+                <span class="k">yield</span> <span class="p">(</span>
+                    <span class="n">topic_idx</span><span class="p">,</span>
+                    <span class="nb">tuple</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">id2term</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">topic</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">topic</span><span class="p">)[:</span> <span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="p">),</span>
+                <span class="p">)</span></div>
 
-<div class="viewcode-block" id="TopicModel.top_topic_docs"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.top_topic_docs">[docs]</a>    <span class="k">def</span> <span class="nf">top_topic_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">,</span>
-                       <span class="n">topics</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TopicModel.top_topic_docs"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.top_topic_docs">[docs]</a>    <span class="k">def</span> <span class="nf">top_topic_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">,</span> <span class="n">topics</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the top ``top_n`` docs by weight per topic in ``doc_topic_matrix``.</span>
 
@@ -421,13 +431,17 @@
             <span class="n">topics</span> <span class="o">=</span> <span class="p">(</span><span class="n">topics</span><span class="p">,)</span>
 
         <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
-            <span class="n">top_doc_idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">[:,</span> <span class="n">topic_idx</span><span class="p">])[:</span><span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">top_doc_idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">[:,</span> <span class="n">topic_idx</span><span class="p">])[:</span> <span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">(</span><span class="n">doc_idx</span> <span class="k">for</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">top_doc_idxs</span><span class="p">))</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">doc_idx</span> <span class="k">for</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">top_doc_idxs</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">((</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">topic_idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">top_doc_idxs</span><span class="p">))</span></div>
+                <span class="k">yield</span> <span class="p">(</span>
+                    <span class="n">topic_idx</span><span class="p">,</span>
+                    <span class="nb">tuple</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">topic_idx</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">top_doc_idxs</span>
+                    <span class="p">),</span>
+                <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TopicModel.top_doc_topics"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.top_doc_topics">[docs]</a>    <span class="k">def</span> <span class="nf">top_doc_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">,</span> <span class="n">docs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -461,13 +475,17 @@
             <span class="n">docs</span> <span class="o">=</span> <span class="p">(</span><span class="n">docs</span><span class="p">,)</span>
 
         <span class="k">for</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
-            <span class="n">top_topic_idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="p">:])[:</span><span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">top_topic_idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="p">:])[:</span> <span class="o">-</span><span class="n">top_n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">doc_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">(</span><span class="n">topic_idx</span> <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">top_topic_idxs</span><span class="p">))</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">doc_idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">topic_idx</span> <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">top_topic_idxs</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="p">(</span><span class="n">doc_idx</span><span class="p">,</span>
-                       <span class="nb">tuple</span><span class="p">((</span><span class="n">topic_idx</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">topic_idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">top_topic_idxs</span><span class="p">))</span></div>
+                <span class="k">yield</span> <span class="p">(</span>
+                    <span class="n">doc_idx</span><span class="p">,</span>
+                    <span class="nb">tuple</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">topic_idx</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">,</span> <span class="n">topic_idx</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">topic_idx</span> <span class="ow">in</span> <span class="n">top_topic_idxs</span>
+                    <span class="p">),</span>
+                <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TopicModel.topic_weights"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.topic_weights">[docs]</a>    <span class="k">def</span> <span class="nf">topic_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_topic_matrix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -490,10 +508,18 @@
     <span class="c1"># def get_model_coherence(self):</span>
     <span class="c1">#     raise NotImplementedError()</span>
 
-<div class="viewcode-block" id="TopicModel.termite_plot"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.termite_plot">[docs]</a>    <span class="k">def</span> <span class="nf">termite_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_term_matrix</span><span class="p">,</span> <span class="n">id2term</span><span class="p">,</span>
-                     <span class="n">topics</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_topics_by</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">highlight_topics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">n_terms</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">rank_terms_by</span><span class="o">=</span><span class="s1">&#39;topic_weight&#39;</span><span class="p">,</span> <span class="n">sort_terms_by</span><span class="o">=</span><span class="s1">&#39;seriation&#39;</span><span class="p">,</span>
-                     <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TopicModel.termite_plot"><a class="viewcode-back" href="../../../api_reference.html#textacy.tm.topic_model.TopicModel.termite_plot">[docs]</a>    <span class="k">def</span> <span class="nf">termite_plot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">doc_term_matrix</span><span class="p">,</span>
+        <span class="n">id2term</span><span class="p">,</span>
+        <span class="n">topics</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">sort_topics_by</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+        <span class="n">highlight_topics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_terms</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+        <span class="n">rank_terms_by</span><span class="o">=</span><span class="s2">&quot;topic_weight&quot;</span><span class="p">,</span>
+        <span class="n">sort_terms_by</span><span class="o">=</span><span class="s2">&quot;seriation&quot;</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make a &quot;termite&quot; plot for assessing topic models using a tabular layout</span>
 <span class="sd">        to promote comparison of terms both within and across topics.</span>
@@ -545,7 +571,7 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">highlight_topics</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="n">highlight_topics</span> <span class="o">=</span> <span class="p">(</span><span class="n">highlight_topics</span><span class="p">,)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">highlight_topics</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;no more than 6 topics may be highlighted at once&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no more than 6 topics may be highlighted at once&quot;</span><span class="p">)</span>
 
         <span class="c1"># get topics indices</span>
         <span class="k">if</span> <span class="n">topics</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -556,49 +582,71 @@
             <span class="n">topic_inds</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span>
 
         <span class="c1"># get topic indices in sorted order</span>
-        <span class="k">if</span> <span class="n">sort_topics_by</span> <span class="o">==</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sort_topics_by</span> <span class="o">==</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span>
             <span class="n">topic_inds</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">topic_inds</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">sort_topics_by</span> <span class="o">==</span> <span class="s1">&#39;weight&#39;</span><span class="p">:</span>
-            <span class="n">topic_inds</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">topic_ind</span> <span class="k">for</span> <span class="n">topic_ind</span>
-                               <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topic_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                               <span class="k">if</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sort_topics_by</span> <span class="o">==</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span>
+            <span class="n">topic_inds</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="n">topic_ind</span>
+                <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">topic_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">))</span>
+                <span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;invalid sort_topics_by value; must be in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">})</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;invalid sort_topics_by value; must be in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="c1"># get column index of any topics to highlight in termite plot</span>
         <span class="k">if</span> <span class="n">highlight_topics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">highlight_cols</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topic_inds</span><span class="p">))</span>
-                                   <span class="k">if</span> <span class="n">topic_inds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">highlight_topics</span><span class="p">)</span>
+            <span class="n">highlight_cols</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+                <span class="n">i</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">compat</span><span class="o">.</span><span class="n">range_</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topic_inds</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">topic_inds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">highlight_topics</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">highlight_cols</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># get top term indices</span>
-        <span class="k">if</span> <span class="n">rank_terms_by</span> <span class="o">==</span> <span class="s1">&#39;corpus_weight&#39;</span><span class="p">:</span>
-            <span class="n">term_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)))[:</span><span class="o">-</span><span class="n">n_terms</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">rank_terms_by</span> <span class="o">==</span> <span class="s1">&#39;topic_weight&#39;</span><span class="p">:</span>
-            <span class="n">term_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))[:</span><span class="o">-</span><span class="n">n_terms</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">rank_terms_by</span> <span class="o">==</span> <span class="s2">&quot;corpus_weight&quot;</span><span class="p">:</span>
+            <span class="n">term_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)))[</span>
+                <span class="p">:</span> <span class="o">-</span><span class="n">n_terms</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="p">]</span>
+        <span class="k">elif</span> <span class="n">rank_terms_by</span> <span class="o">==</span> <span class="s2">&quot;topic_weight&quot;</span><span class="p">:</span>
+            <span class="n">term_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))[</span>
+                <span class="p">:</span> <span class="o">-</span><span class="n">n_terms</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;invalid rank_terms_by value; must be in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="p">{</span><span class="s1">&#39;corpus_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;topic_weight&#39;</span><span class="p">})</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;invalid rank_terms_by value; must be in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;corpus_weight&quot;</span><span class="p">,</span> <span class="s2">&quot;topic_weight&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="c1"># get top term indices in sorted order</span>
-        <span class="k">if</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s1">&#39;weight&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span>
             <span class="n">term_inds</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">term_inds</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s1">&#39;alphabetical&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s2">&quot;alphabetical&quot;</span><span class="p">:</span>
             <span class="n">term_inds</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">term_inds</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">id2term</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s1">&#39;seriation&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">sort_terms_by</span> <span class="o">==</span> <span class="s2">&quot;seriation&quot;</span><span class="p">:</span>
             <span class="n">topic_term_weights_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">topic_ind</span><span class="p">][</span><span class="n">term_inds</span><span class="p">]</span>
-                          <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">]))</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">topic_ind</span><span class="p">][</span><span class="n">term_inds</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">T</span>
             <span class="c1"># calculate similarity matrix</span>
-            <span class="n">topic_term_weights_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">topic_term_weights_mat</span><span class="p">,</span> <span class="n">topic_term_weights_mat</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="n">topic_term_weights_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                <span class="n">topic_term_weights_mat</span><span class="p">,</span> <span class="n">topic_term_weights_mat</span><span class="o">.</span><span class="n">T</span>
+            <span class="p">)</span>
             <span class="c1"># substract minimum of sim mat in order to keep sim mat nonnegative</span>
-            <span class="n">topic_term_weights_sim</span> <span class="o">=</span> <span class="n">topic_term_weights_sim</span> <span class="o">-</span> <span class="n">topic_term_weights_sim</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">topic_term_weights_sim</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">topic_term_weights_sim</span> <span class="o">-</span> <span class="n">topic_term_weights_sim</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="p">)</span>
             <span class="c1"># compute Laplacian matrice and its 2nd eigenvector</span>
             <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">topic_term_weights_sim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="n">topic_term_weights_sim</span>
             <span class="n">D</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
@@ -608,21 +656,27 @@
             <span class="c1"># get permutation corresponding to sorting the 2nd eigenvector</span>
             <span class="n">term_inds</span> <span class="o">=</span> <span class="p">[</span><span class="n">term_inds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">fiedler</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;invalid sort_terms_by value; must be in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="p">{</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;alphabetical&#39;</span><span class="p">,</span> <span class="s1">&#39;seriation&#39;</span><span class="p">})</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;invalid sort_terms_by value; must be in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;alphabetical&quot;</span><span class="p">,</span> <span class="s2">&quot;seriation&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="c1"># get topic and term labels</span>
-        <span class="n">topic_labels</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="s1">&#39;topic </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">topic_ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">)</span>
+        <span class="n">topic_labels</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="s2">&quot;topic </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">topic_ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">)</span>
         <span class="n">term_labels</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">id2term</span><span class="p">[</span><span class="n">term_ind</span><span class="p">]</span> <span class="k">for</span> <span class="n">term_ind</span> <span class="ow">in</span> <span class="n">term_inds</span><span class="p">)</span>
 
         <span class="c1"># get topic-term weights to size dots</span>
-        <span class="n">term_topic_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">topic_ind</span><span class="p">][</span><span class="n">term_inds</span><span class="p">]</span>
-                                      <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">term_topic_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">topic_ind</span><span class="p">][</span><span class="n">term_inds</span><span class="p">]</span> <span class="k">for</span> <span class="n">topic_ind</span> <span class="ow">in</span> <span class="n">topic_inds</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
         <span class="k">return</span> <span class="n">viz</span><span class="o">.</span><span class="n">draw_termite_plot</span><span class="p">(</span>
-            <span class="n">term_topic_weights</span><span class="p">,</span> <span class="n">topic_labels</span><span class="p">,</span> <span class="n">term_labels</span><span class="p">,</span>
-            <span class="n">highlight_cols</span><span class="o">=</span><span class="n">highlight_cols</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">)</span></div></div>
+            <span class="n">term_topic_weights</span><span class="p">,</span>
+            <span class="n">topic_labels</span><span class="p">,</span>
+            <span class="n">term_labels</span><span class="p">,</span>
+            <span class="n">highlight_cols</span><span class="o">=</span><span class="n">highlight_cols</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

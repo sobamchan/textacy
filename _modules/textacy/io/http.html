@@ -170,8 +170,9 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">_make_dirs</span>
 
 
-<div class="viewcode-block" id="read_http_stream"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.http.read_http_stream">[docs]</a><span class="k">def</span> <span class="nf">read_http_stream</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                     <span class="n">decode_unicode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="read_http_stream"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.http.read_http_stream">[docs]</a><span class="k">def</span> <span class="nf">read_http_stream</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">decode_unicode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read data from ``url`` in a stream, either all at once or line-by-line.</span>
 
@@ -198,22 +199,22 @@
     <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">))</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
         <span class="c1"># set fallback encoding if unable to infer from headers</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;utf-8&quot;</span>
         <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">decode_unicode</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">(</span>
-                <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">decode_unicode</span><span class="o">=</span><span class="n">decode_unicode</span><span class="p">)</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">decode_unicode</span><span class="o">=</span><span class="n">decode_unicode</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">line</span></div>
 
 
-<div class="viewcode-block" id="write_http_stream"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.http.write_http_stream">[docs]</a><span class="k">def</span> <span class="nf">write_http_stream</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                      <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="write_http_stream"><a class="viewcode-back" href="../../../api_reference.html#textacy.io.http.write_http_stream">[docs]</a><span class="k">def</span> <span class="nf">write_http_stream</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wt&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">make_dirs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Download data from ``url`` in a stream, and write successive chunks</span>
 <span class="sd">    to disk at ``fname``.</span>
@@ -238,20 +239,21 @@
 
 <span class="sd">            .. seealso:: http://docs.python-requests.org/en/master/user/authentication/</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">decode_unicode</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">&#39;t&#39;</span> <span class="ow">in</span> <span class="n">mode</span> <span class="k">else</span> <span class="kc">False</span>
+    <span class="n">decode_unicode</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s2">&quot;t&quot;</span> <span class="ow">in</span> <span class="n">mode</span> <span class="k">else</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">make_dirs</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">_make_dirs</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
     <span class="c1"># always close the connection</span>
     <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">))</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
         <span class="c1"># set fallback encoding if unable to infer from headers</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;utf-8&quot;</span>
         <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
-                <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">total</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content-length&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content-length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="p">)</span>
             <span class="n">chunks</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span>
-                <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">decode_unicode</span><span class="o">=</span><span class="n">decode_unicode</span><span class="p">)</span>
+                <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">decode_unicode</span><span class="o">=</span><span class="n">decode_unicode</span>
+            <span class="p">)</span>
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
                 <span class="c1"># needed (?) to filter out &quot;keep-alive&quot; new chunks</span>
                 <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
