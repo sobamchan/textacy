@@ -388,32 +388,40 @@ def subject_verb_object_triples(doc):
         for verb in verbs:
             subjs = spacy_utils.get_subjects_of_verb(verb)
             if not subjs:
-                continue
+                subjs = [None]
+            # if not subjs:
+            #     continue
             objs = spacy_utils.get_objects_of_verb(verb)
             if not objs:
-                continue
+                objs = [None]
+            # if not objs:
+            #     continue
 
             # add adjacent auxiliaries to verbs, for context
             # and add compounds to compound nouns
             verb_span = spacy_utils.get_span_for_verb_auxiliaries(verb)
             verb = sent[verb_span[0] - start_i : verb_span[1] - start_i + 1]
             for subj in subjs:
-                subj = sent[
-                    spacy_utils.get_span_for_compound_noun(subj)[0]
-                    - start_i : subj.i
-                    - start_i
-                    + 1
-                ]
+                if subj:
+                    subj = sent[
+                        spacy_utils.get_span_for_compound_noun(subj)[0]
+                        - start_i : subj.i
+                        - start_i
+                        + 1
+                    ]
                 for obj in objs:
-                    if obj.pos == NOUN:
-                        span = spacy_utils.get_span_for_compound_noun(obj)
-                    elif obj.pos == VERB:
-                        span = spacy_utils.get_span_for_verb_auxiliaries(obj)
+                    if obj is None:
+                        yield (subj, verb, obj)
                     else:
-                        span = (obj.i, obj.i)
-                    obj = sent[span[0] - start_i : span[1] - start_i + 1]
+                        if obj.pos == NOUN:
+                            span = spacy_utils.get_span_for_compound_noun(obj)
+                        elif obj.pos == VERB:
+                            span = spacy_utils.get_span_for_verb_auxiliaries(obj)
+                        else:
+                            span = (obj.i, obj.i)
+                        obj = sent[span[0] - start_i : span[1] - start_i + 1]
 
-                    yield (subj, verb, obj)
+                        yield (subj, verb, obj)
 
 
 def acronyms_and_definitions(doc, known_acro_defs=None):

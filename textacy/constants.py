@@ -13,7 +13,7 @@ from . import compat
 
 NUMERIC_NE_TYPES = {'ORDINAL', 'CARDINAL', 'MONEY', 'QUANTITY', 'PERCENT', 'TIME', 'DATE'}
 SUBJ_DEPS = {'agent', 'csubj', 'csubjpass', 'expl', 'nsubj', 'nsubjpass'}
-OBJ_DEPS = {'attr', 'dobj', 'dative', 'oprd'}
+OBJ_DEPS = {'attr', 'dobj', 'dative', 'oprd', 'pobj', 'acomp'}
 AUX_DEPS = {'aux', 'auxpass', 'neg'}
 
 REPORTING_VERBS = {'according', 'accuse', 'acknowledge', 'add', 'admit', 'agree',
