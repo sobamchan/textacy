@@ -3,6 +3,7 @@ import pickle
 from collections import Counter
 
 import fire
+import pandas as pd
 import spacy
 from textacy import extract
 from lineflow.core import CsvDataset
@@ -34,7 +35,33 @@ def extract_events(doc, lemmatize=True):
     return events
 
 
-def preprocess(x):
+def build_vocab(tokens, max_size=500000):
+    counter = Counter(tokens)
+    words, _ = zip(*counter.most_common(max_size))
+    words = [PAD_TOKEN, UNK_TOKEN, SEP_TOKEN] + list(words)
+    t2i = dict(zip(words, range(len(words))))
+    if START_TOKEN not in t2i:
+        t2i[START_TOKEN] = len(t2i)
+        words += [START_TOKEN]
+    if END_TOKEN not in t2i:
+        t2i[END_TOKEN] = len(t2i)
+        words += [END_TOKEN]
+    if PAD_TOKEN not in t2i:
+        t2i[PAD_TOKEN] = len(t2i)
+        words += [PAD_TOKEN]
+    if SEP_TOKEN not in t2i:
+        t2i[SEP_TOKEN] = len(t2i)
+        words += [SEP_TOKEN]
+    if NONE_TOKEN not in t2i:
+        t2i[NONE_TOKEN] = len(t2i)
+        words += [NONE_TOKEN]
+    return t2i, words
+
+
+def preprocess_story(x):
+    '''
+    output: [[<s>, s, v, o, <sep>, s, v, o, ..., </s>], [], [], [], []]
+    '''
     contexts = (
             x['sentence1'].lower(),
             x['sentence2'].lower(),
@@ -59,43 +86,23 @@ def preprocess(x):
     return events
 
 
-def postprocess(t2i):
+def postprocess_story(t2i):
     def _f(events):
         return [[t2i.get(e, UNK_TOKEN) for e in event] for event in events]
     return _f
 
 
-def build_vocab(tokens, max_size=500000):
-    counter = Counter(tokens)
-    words, _ = zip(*counter.most_common(max_size))
-    words = [PAD_TOKEN, UNK_TOKEN, SEP_TOKEN] + list(words)
-    t2i = dict(zip(words, range(len(words))))
-    if START_TOKEN not in t2i:
-        t2i[START_TOKEN] = len(t2i)
-        words += [START_TOKEN]
-    if END_TOKEN not in t2i:
-        t2i[END_TOKEN] = len(t2i)
-        words += [END_TOKEN]
-    if PAD_TOKEN not in t2i:
-        t2i[PAD_TOKEN] = len(t2i)
-        words += [PAD_TOKEN]
-    if SEP_TOKEN not in t2i:
-        t2i[SEP_TOKEN] = len(t2i)
-        words += [SEP_TOKEN]
-    if NONE_TOKEN not in t2i:
-        t2i[NONE_TOKEN] = len(t2i)
-        words += [NONE_TOKEN]
-    return t2i, words
-
-
-def build(dpath, savedir):
+def build_story(dpath, savedir):
+    '''
+    Building dataset for step 2.
+    '''
     savedir = Path(savedir)
 
     # path = '/home/takeshita/mnt/DATA/NLP/ROC/ROCStories_winter2.csv'
     dataset = CsvDataset(
             dpath,
             header=True
-            ).map(preprocess)
+            ).map(preprocess_story)
 
     tokens = [
             item
@@ -105,10 +112,66 @@ def build(dpath, savedir):
             ]
 
     t2i, words = build_vocab(tokens)
-    dataset = dataset.map(postprocess(t2i))
+    dataset = dataset.map(postprocess_story(t2i))
     dataset.save(savedir / 'dataset.token.pkl')
     with open(savedir / 'vocab.pkl', 'wb') as f:
         pickle.dump((t2i, words), f)
+
+
+def preprocess_event(x):
+    '''
+    output: [[<s>, s, v, o, <sep>, s, v, o, ..., </s>], [], [], [], []]
+    '''
+    contexts = (
+            x['sentence1'].lower(),
+            x['sentence2'].lower(),
+            x['sentence3'].lower(),
+            x['sentence4'].lower(),
+            x['sentence5'].lower()
+            )
+    story = [extract_events(NLP(context)) for context in contexts]
+
+    events = []
+    # Merge events
+    for line in story:
+        for tokens in line:
+            events.append([START_TOKEN] + tokens + [END_TOKEN])
+    return events
+
+
+def build_event(dpath, savedir):
+    '''
+    Building dataset forr step 1.
+    '''
+    savedir = Path(savedir)
+    dataset = CsvDataset(
+            dpath,
+            header=True
+            ).map(preprocess_event)
+    return dataset
+
+
+def csv_to_event(datapath, savepath):
+    datapath = Path(datapath)
+    df = pd.read_csv(datapath)
+    events = []
+    storyids = []
+    for _, row in df.iterrows():
+        for i in [1, 2, 3, 4, 5]:
+            for event in extract_events(NLP(row['sentence%d' % i])):
+                events.append('\t'.join(event))
+                storyids.append(row['storyid'])
+    eventidxes = list(range(len(events)))
+
+    newdf = pd.DataFrame({
+        'eventid': eventidxes,
+        'storyid': storyids,
+        'event': events,
+        })
+
+    assert len(events) == len(storyids) == len(eventidxes)
+
+    newdf.to_csv(savepath, index=False)
 
 
 if __name__ == '__main__':
