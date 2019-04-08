@@ -186,14 +186,33 @@ def csv_to_event_step2(datapath, savepath):
     datapath = Path(datapath)
     df = pd.read_csv(datapath)
 
-    events_dic = {}
+    storyids = []
+    sent_events = {}
+    sent_events['sentence1'] = []
+    sent_events['sentence2'] = []
+    sent_events['sentence3'] = []
+    sent_events['sentence4'] = []
+    sent_events['sentence5'] = []
+    eventid = 0
     for _, row in df.iterrows():
         storyid = row['storyid']
-        events_dic[storyid] = []
         for i in [1, 2, 3, 4, 5]:
             _events = extract_events(NLP(row['sentence%d' % i]))
-            events_dic[storyid].append(_events)
-    return events_dic
+            _subevents = []
+            for _event in _events:
+                _subevents.append(eventid)
+                eventid += 1
+            sent_events['sentence%d' % i].append(_subevents)
+        storyids.append(storyid)
+    df = pd.DataFrame({
+        'storyid': storyids,
+        'sentence1': sent_events['sentence1'],
+        'sentence2': sent_events['sentence2'],
+        'sentence3': sent_events['sentence3'],
+        'sentence4': sent_events['sentence4'],
+        'sentence5': sent_events['sentence5'],
+        })
+    df.to_csv(savepath)
 
 
 if __name__ == '__main__':
