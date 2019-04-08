@@ -181,21 +181,19 @@ def csv_to_event(datapath, savepath):
 def csv_to_event_step2(datapath, savepath):
     '''
     This func is used to generate dataset for Step 2 in event2vec.
-    Events in oen same sentence will be united.
+    Events in one same sentence will be united.
     '''
     datapath = Path(datapath)
     df = pd.read_csv(datapath)
 
     events_dic = {}
     for _, row in df.iterrows():
+        storyid = row['storyid']
+        events_dic[storyid] = []
         for i in [1, 2, 3, 4, 5]:
-            for event in extract_events(NLP(row['sentence%d' % i])):
-                storyid = row['storyid']
-                if events_dic.get(storyid, None):
-                    events_dic[storyid].append(row[''])
-                else:
-                    events_dic[storyid] = []
-                    events_dic[storyid].append()
+            _events = extract_events(NLP(row['sentence%d' % i]))
+            events_dic[storyid].append(_events)
+    return events_dic
 
 
 if __name__ == '__main__':
