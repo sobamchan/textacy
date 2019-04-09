@@ -3,6 +3,7 @@ import pickle
 from collections import Counter
 
 import fire
+from tqdm import tqdm
 import pandas as pd
 import spacy
 from textacy import extract
@@ -194,7 +195,7 @@ def csv_to_event_step2(datapath, savepath):
     sent_events['sentence4'] = []
     sent_events['sentence5'] = []
     eventid = 0
-    for _, row in df.iterrows():
+    for _, row in tqdm(df.iterrows(), total=len(df)):
         storyid = row['storyid']
         for i in [1, 2, 3, 4, 5]:
             _events = extract_events(NLP(row['sentence%d' % i]))
@@ -202,7 +203,7 @@ def csv_to_event_step2(datapath, savepath):
             for _event in _events:
                 _subevents.append(eventid)
                 eventid += 1
-            sent_events['sentence%d' % i].append(_subevents)
+            sent_events['sentence%d' % i].append('\t'.join(map(str, _subevents)))
         storyids.append(storyid)
     df = pd.DataFrame({
         'storyid': storyids,
@@ -212,7 +213,9 @@ def csv_to_event_step2(datapath, savepath):
         'sentence4': sent_events['sentence4'],
         'sentence5': sent_events['sentence5'],
         })
-    df.to_csv(savepath)
+
+    print('Saving to %s ...' % savepath)
+    df.to_csv(savepath, index=False)
 
 
 if __name__ == '__main__':
