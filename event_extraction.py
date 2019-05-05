@@ -152,7 +152,7 @@ def build_event(dpath, savedir):
     return dataset
 
 
-def csv_to_event(datapath, savepath):
+def csv_to_event(datapath, savepath, lemmatize=False):
     '''
     This func is used to generate dataset for Step 1 in event2vec.
     Events in one same sentence will be separeted.
@@ -163,7 +163,7 @@ def csv_to_event(datapath, savepath):
     storyids = []
     for _, row in df.iterrows():
         for i in [1, 2, 3, 4, 5]:
-            for event in extract_events(NLP(row['sentence%d' % i])):
+            for event in extract_events(NLP(row['sentence%d' % i]), lemmatize):
                 events.append('\t'.join(event))
                 storyids.append(row['storyid'])
     eventidxes = list(range(len(events)))
@@ -179,7 +179,7 @@ def csv_to_event(datapath, savepath):
     newdf.to_csv(savepath, index=False)
 
 
-def csv_to_event_step2(datapath, savepath):
+def csv_to_event_step2(datapath, savepath, lemmatize=False):
     '''
     This func is used to generate dataset for Step 2 in event2vec.
     Events in one same sentence will be united.
@@ -198,7 +198,7 @@ def csv_to_event_step2(datapath, savepath):
     for _, row in tqdm(df.iterrows(), total=len(df)):
         storyid = row['storyid']
         for i in [1, 2, 3, 4, 5]:
-            _events = extract_events(NLP(row['sentence%d' % i]))
+            _events = extract_events(NLP(row['sentence%d' % i]), lemmatize)
             _subevents = []
             for _event in _events:
                 _subevents.append(eventid)
