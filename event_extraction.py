@@ -161,7 +161,7 @@ def csv_to_event(datapath, savepath, lemmatize=False):
     df = pd.read_csv(datapath)
     events = []
     storyids = []
-    for _, row in df.iterrows():
+    for _, row in tqdm(df.iterrows(), total=len(df)):
         for i in [1, 2, 3, 4, 5]:
             for event in extract_events(NLP(row['sentence%d' % i]), lemmatize):
                 events.append('\t'.join(event))
