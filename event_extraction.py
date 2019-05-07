@@ -218,5 +218,28 @@ def csv_to_event_step2(datapath, savepath, lemmatize=False):
     df.to_csv(savepath, index=False)
 
 
+def csv_to_svo2sent(datapath, savepath, lemmatize=False):
+    datapath = Path(datapath)
+    df = pd.read_csv(datapath)
+
+    svos = []
+    sents = []
+    for _, row in tqdm(df.iterrows(), total=len(df)):
+        for i in [1, 2, 3, 4, 5]:
+            _sent = row['sentence%d' % i]
+            _events = extract_events(NLP(_sent), lemmatize)
+            svos.append(_events)
+            sents.append(_sent)
+
+    assert len(svos) == len(sents)
+
+    print('Saving to %s' % savepath)
+    df = pd.DataFrame({
+            'svos': svos,
+            'sentence': sents
+            })
+    df.to_csv(savepath, index=True)
+
+
 if __name__ == '__main__':
     fire.Fire()
