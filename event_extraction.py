@@ -31,7 +31,7 @@ def extract_events(doc, lemmatize=True):
         if lemmatize:
             event = [item.lemma_ if item else NONE_TOKEN for item in event]
         else:
-            event = [item.text if item else NONE_TOKEN for item in event]
+            event = [item.text.lower() if item else NONE_TOKEN for item in event]
         events.append(event)
     return events
 
